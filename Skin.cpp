@@ -263,9 +263,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE)
         return;
     char buf[255] = { 0 };
-    if (args.ArgC() != 2 && args.ArgC() != 4)
+    if (args.ArgC() != 2 && args.ArgC() != 4 && args.ArgC() != 5)
     {
-        sprintf(buf, " \x04 %s You need one or three parameters to modify the skin using the skin command!", pPlayerController->m_iszPlayerName());
+        sprintf(buf, " \x04 %s You need one, three or four parameters to modify the skin using the skin command!", pPlayerController->m_iszPlayerName());
         FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
         return;
     }
@@ -275,18 +275,30 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     int64_t steamid = pPlayerController->m_steamID();
     int64_t weaponId = pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
 
+    if (args.ArgC() == 5)
+    {
+        weaponId = atoi(args.Arg(1));
+    }
+
     auto weapon_name = g_WeaponsMap.find(weaponId);
     if (weapon_name == g_WeaponsMap.end()) return;
 
-    g_PlayerSkins[steamid][weaponId].m_nFallbackPaintKit = atoi(args.Arg(1));
+    if (args.ArgC() == 5)
+    {
+        g_PlayerSkins[steamid][weaponId].m_nFallbackPaintKit = atoi(args.Arg(2)); // paint_kit
+		g_PlayerSkins[steamid][weaponId].m_nFallbackSeed = atoi(args.Arg(3)); // pattern_id
+        g_PlayerSkins[steamid][weaponId].m_flFallbackWear = atof(args.Arg(4)); // wear
+    }
     if (args.ArgC() == 4)
     {
-        g_PlayerSkins[steamid][weaponId].m_nFallbackSeed = atoi(args.Arg(2));
+        g_PlayerSkins[steamid][weaponId].m_nFallbackPaintKit = atoi(args.Arg(1));
+		g_PlayerSkins[steamid][weaponId].m_nFallbackSeed = atoi(args.Arg(2));
         g_PlayerSkins[steamid][weaponId].m_flFallbackWear = atof(args.Arg(3));
     }
-    else
+    if (args.ArgC() == 2)
     {
-        g_PlayerSkins[steamid][weaponId].m_nFallbackSeed = 0;
+        g_PlayerSkins[steamid][weaponId].m_nFallbackPaintKit = atoi(args.Arg(1));
+		g_PlayerSkins[steamid][weaponId].m_nFallbackSeed = 0;
         g_PlayerSkins[steamid][weaponId].m_flFallbackWear = 0.0f;
     }
 
