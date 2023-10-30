@@ -240,6 +240,7 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
+	CEntityInstance* Entity = pEntity->m_pEntity;
 	if(!pBasePlayerWeapon) return;
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
 	{
@@ -265,6 +266,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = 16384;
+		Entity->m_nSubclassID() = skin_parm->second.m_iItemDefinitionIndex;
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, weaponId, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 
 		// remove the first entry of weapon
