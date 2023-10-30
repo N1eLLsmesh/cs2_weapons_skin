@@ -287,6 +287,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 
     auto weapon_name = g_WeaponsMap.find(weapon_id);
 	auto knive_name = g_KnivesMap.find(weapon_id);
+	auto item_name = nullptr;
 
     if (weapon_name == g_WeaponsMap.end() && knive_name == g_KnivesMap.end()) {
 		sprintf(buf, " \x04 %s Unknown Weapon/Knife ID", pPlayerController->m_iszPlayerName());
@@ -294,6 +295,11 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 		return;
 	}
 
+	if (weapon_name == g_WeaponsMap.end()) {
+		item_name = knive_name;
+	} else {
+		item_name = weapon_name;
+	}
 
 
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit = paint_kit; // paint_kit
@@ -310,7 +316,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 
     // pWeaponServices->RemoveWeapon(pPlayerWeapon);
     // FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
-    FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+    FnGiveNamedItem(pPlayerPawn->m_pItemServices(), item_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
 
     META_CONPRINTF("called by %lld\n", steamid);
