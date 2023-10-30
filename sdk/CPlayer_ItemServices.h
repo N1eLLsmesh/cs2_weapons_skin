@@ -32,7 +32,7 @@ public:
 	SCHEMA_FIELD(uint64_t, CEconItemView, m_iItemID);
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDHigh);
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDLow);
-	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
+	SCHEMA_FIELD(int32_t, CEconItemView, m_iAccountID);
 	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
 	SCHEMA_FIELD(CAttributeList, CEconItemView, m_AttributeList);
 	SCHEMA_FIELD(char[161], CEconItemView, m_szCustomName);
