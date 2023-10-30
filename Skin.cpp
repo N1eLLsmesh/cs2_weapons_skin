@@ -291,17 +291,12 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 
 
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
-	CNetworkUtlVectorBase<CBasePlayerWeapon> pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-	for (int i = 0; i < pPlayerWeapons.Count(); i++)
+
+	// loop through pWeaponServices->m_hMyWeapons() to find the weapon
+	for (int i = 0; i < pWeaponServices->m_hMyWeapons().Count(); i++)
 	{
-		pPlayerWeapon = pPlayerWeapons[i];
-		weaponIdTemp = pPlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-		if (weaponIdTemp == weapon_id)
-		{
-			pWeaponServices->RemoveWeapon(pPlayerWeapon);
-			FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
-			break;
-		}
+		CBasePlayerWeapon* pPlayerWeaponTemp = pWeaponServices->m_hMyWeapons()[i];
+		META_CONPRINTF("TEST 2\n by %d\n", pPlayerWeaponTemp->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 	}
 
 	META_CONPRINTF("TEST\n by %d\n", weaponIdTemp);
