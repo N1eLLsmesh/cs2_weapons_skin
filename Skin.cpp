@@ -304,9 +304,11 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     int64_t weaponIdTemp = pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
 
     auto weapon_name = g_WeaponsMap.find(weapon_id);
+	bool isKnife = false;
 
 	if (weapon_name == g_WeaponsMap.end()) {
 		weapon_name = g_KnivesMap.find(weapon_id);
+		isKnife = true;
 	}
 
 	if (weapon_name == g_KnivesMap.end()) {
@@ -322,7 +324,20 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 
 	// return;
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
-	
+
+	const auto pPlayerAllWeapons = pWeaponServices->m_hMyWeapons();
+	for (CHandle* handle = pPlayerAllWeapons.begin(); handle < pPlayerAllWeapons.end(); ++handle) {
+		const auto weapon = handle->Get();
+		if (weapon == nullptr) {
+			continue;
+		}
+		const auto _weaponIndex = weapon->GetRefEHandle().GetEntryIndex();
+		if (weaponIndex != _weaponIndex) {
+			continue;
+		}
+		CBasePlayerWeapon* activeWeapon = handle->Get<CBasePlayerWeapon>();
+		META_CONPRINTF("Weapon Loop - Def Index: %d \n", activeWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+	}
 
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
