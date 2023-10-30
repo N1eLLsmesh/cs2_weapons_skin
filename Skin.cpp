@@ -301,8 +301,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed = pattern_id; // pattern_id
 	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear; // wear
 
-    // sprintf(buf, " \x04 %s Item:%d Paint:%d Pattern:%d Wear:%f", pPlayerController->m_iszPlayerName(), weapon_id, g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
-    // FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
+    sprintf(buf, " \x04 %s Item:%lld Paint:%d Pattern:%d Wear:%f", pPlayerController->m_iszPlayerName(), weapon_id, g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
+    FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
 
 
 	// return;
