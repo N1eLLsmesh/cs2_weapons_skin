@@ -53,7 +53,8 @@ class CPlayer_WeaponServices : public CPlayerPawnComponent
 {
 public:
 	virtual ~CPlayer_WeaponServices() = 0;
-	SCHEMA_FIELD(CHandle<CBasePlayerWeapon>, CPlayer_WeaponServices, m_hActiveWeapon, m_hMyWeapons);
+	SCHEMA_FIELD(CHandle<CBasePlayerWeapon>, CPlayer_WeaponServices, m_hActiveWeapon);
+	SCHEMA_FIELD(CHandle<CBasePlayerWeapon>, CPlayer_WeaponServices, m_hMyWeapons[48]);
 	auto RemoveWeapon(CBasePlayerWeapon* weapon) {
         return CALL_VIRTUAL(void, 20, this, weapon, nullptr, nullptr);
     }
