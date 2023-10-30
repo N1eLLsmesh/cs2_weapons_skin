@@ -237,17 +237,17 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
-	if(!pBasePlayerWeapon)return;
+	if(!pBasePlayerWeapon) return;
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
 	{
 		int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
-		if(!steamid)return;
+		if(!steamid) return;
 		int64_t weaponId = pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
 
 		auto weapon = g_PlayerSkins.find(steamid);
-		if(weapon == g_PlayerSkins.end())return;
+		if(weapon == g_PlayerSkins.end()) return;
 		auto skin_parm = weapon->second.find(weaponId);
-		if(skin_parm == weapon->second.end())return;
+		if(skin_parm == weapon->second.end()) return;
 		
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
@@ -297,13 +297,10 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 		return;
 	}
 
+	g_PlayerSkins[steamid][weapon_id].m_iItemDefinitionIndex = weapon_id; // weapon_id
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit = paint_kit; // paint_kit
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed = pattern_id; // pattern_id
 	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear; // wear
-
-    sprintf(buf, " \x04 %s Item:%lld Paint:%d Pattern:%d Wear:%f", pPlayerController->m_iszPlayerName(), weapon_id, g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
-    FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
-
 
 	// return;
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
