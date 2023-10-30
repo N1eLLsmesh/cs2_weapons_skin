@@ -274,6 +274,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 
     int64_t steamid = pPlayerController->m_steamID();
     int64_t weaponId = pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+    int64_t weaponIdTemp = pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
 
     if (args.ArgC() == 5)
     {
@@ -303,6 +304,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     }
 
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
+
+	META_CONPRINTF("TEST\n by %d\n", weaponIdTemp);
 
     // pWeaponServices->RemoveWeapon(pPlayerWeapon);
     // FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
