@@ -267,6 +267,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = 16384;
 
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomName() = "Hello World";
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomNameOverride() = "Hello World";
 
 
 		META_CONPRINTF( "DEBUG: %d\n", pBasePlayerWeapon->m_iOldOwnerClass());
