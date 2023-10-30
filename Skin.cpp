@@ -325,6 +325,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 	// return;
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
+	META_CONPRINTF("called by %s\n", pPlayerWeapon->m_iClassname);
+
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
     FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
