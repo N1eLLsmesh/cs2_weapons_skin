@@ -4,11 +4,11 @@
 #include "ehandle.h"
 #include "CBaseFlex.h"
 
-template< class T >
-class CNetworkUtlVectorBase
-{
-public:
-	uint8_t unknown[0x18];
+template <typename T>
+class CNetworkUtlVectorBase {
+   public:
+    size_t m_size;
+    T* m_data;
 };
 
 class CEconEntity : public CBaseFlex
