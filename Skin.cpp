@@ -36,6 +36,7 @@ bool g_bPistolRound;
 
 typedef struct SkinParm
 {
+	int m_iItemDefinitionIndex;
 	int m_nFallbackPaintKit;
 	int m_nFallbackSeed;
 	float m_flFallbackWear;
