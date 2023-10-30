@@ -267,7 +267,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 
 
-		pBasePlayerWeapon->m_hPrevOwner() = -1;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_hPrevOwner() = 271098320;
 
