@@ -250,6 +250,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		auto skin_parm = weapon->second.find(weaponId);
 		if(skin_parm == weapon->second.end()) return;
 		
+		pBasePlayerWeapon->m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
