@@ -249,6 +249,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		if(weapon == g_PlayerSkins.end()) return;
 		auto skin_parm = weapon->second.find(weaponId);
 		if(skin_parm == weapon->second.end()) return;
+
+		weaponId = skin_parm->second.m_iItemDefinitionIndex;
 		
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
@@ -256,7 +258,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-		META_CONPRINTF( "steamId: %lld itemId: %d\n", steamid, weaponId);
+		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, weaponId, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 	});
 }
 
