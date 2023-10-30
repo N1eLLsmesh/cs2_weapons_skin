@@ -265,6 +265,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = 16384;
+
+		META_CONPRINTF( "DEBUG: %d\n", pBasePlayerWeapon->m_nSubclassID());
+
 		pBasePlayerWeapon->m_nSubclassID() = skin_parm->second.m_iItemDefinitionIndex;
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, weaponId, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 
