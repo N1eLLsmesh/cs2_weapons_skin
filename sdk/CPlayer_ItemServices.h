@@ -49,6 +49,7 @@ public:
 	SCHEMA_FIELD(float, CEconEntity, m_flFallbackWear);
 	SCHEMA_FIELD(uint64_t, CEconEntity, m_OriginalOwnerXuidLow);
 	SCHEMA_FIELD(uint32_t, CBaseEntity, m_nSubclassID);
+	SCHEMA_FIELD(string_t, CBaseEntity, m_iClassname);
 };
 
 class CPlayer_WeaponServices : public CPlayerPawnComponent
