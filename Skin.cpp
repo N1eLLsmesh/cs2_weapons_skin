@@ -332,8 +332,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
     FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
-	g_pGameRules->PlayerRespawn(static_cast<CCSPlayerPawn*>(pPlayerPawn));
-
+	
     META_CONPRINTF("called by %lld\n", steamid);
     sprintf(buf, " \x04 %s Success skin number:%d Template:%d Wear:%f", pPlayerController->m_iszPlayerName(), g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
     FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
