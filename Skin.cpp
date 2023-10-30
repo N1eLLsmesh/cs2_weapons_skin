@@ -301,11 +301,11 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear; // wear
 
     sprintf(buf, " \x04 %s Item:%d Paint:%d Pattern:%d Wear:%f", pPlayerController->m_iszPlayerName(), weapon_id, g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
-    FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);*/
+    FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
 
 
-	return;
-    /*CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
+	// return;
+    CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	
 
     // pWeaponServices->RemoveWeapon(pPlayerWeapon);
@@ -314,8 +314,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
 
     META_CONPRINTF("called by %lld\n", steamid);
-    sprintf(buf, " \x04 %s Success skin number:%d Template:%d Wear:%f", pPlayerController->m_iszPlayerName(), g_PlayerSkins[steamid][weaponId].m_nFallbackPaintKit, g_PlayerSkins[steamid][weaponId].m_nFallbackSeed, g_PlayerSkins[steamid][weaponId].m_flFallbackWear);
-    FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);*/
+    sprintf(buf, " \x04 %s Success skin number:%d Template:%d Wear:%f", pPlayerController->m_iszPlayerName(), g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
+    FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
 }
 
 const char* Skin::GetLicense()
