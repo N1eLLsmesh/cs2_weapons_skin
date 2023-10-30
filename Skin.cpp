@@ -275,9 +275,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     }
 
 	int64_t weapon_id = atoi(args.Arg(1));
-	int64_t paint_kit = atoi(args.Arg(2)) || 0;
-	int64_t pattern_id = atoi(args.Arg(3)) || 0;
-	float wear = atof(args.Arg(4)) || 0.0f;
+	int64_t paint_kit = atoi(args.Arg(2));
+	int64_t pattern_id = atoi(args.Arg(3));
+	float wear = atof(args.Arg(4));
 
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
