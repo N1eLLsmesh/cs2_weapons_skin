@@ -59,6 +59,7 @@ void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* pa
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
+std::map<int, std::string> g_KnivesMap;
 std::map<uint64_t, std::map<int, SkinParm>> g_PlayerSkins;
 
 class GameSessionConfiguration_t { };
@@ -133,7 +134,8 @@ bool Skin::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool lat
 
 	ConVar_Register(FCVAR_GAMEDLL);
 
-	g_WeaponsMap = { {26,"weapon_bizon"},{27,"weapon_mac10"},{34,"weapon_mp9"},{19,"weapon_p90"},{24,"weapon_ump45"},{7,"weapon_ak47"},{8,"weapon_aug"},{10,"weapon_famas"},{13,"weapon_galilar"},{16,"weapon_m4a1"},{60,"weapon_m4a1_silencer"},{39,"weapon_sg556"},{9,"weapon_awp"},{11,"weapon_g3sg1"},{38,"weapon_scar20"},{40,"weapon_ssg08"},{29,"weapon_mag7"},{35,"weapon_nova"},{29,"weapon_sawedoff"},{25,"weapon_xm1014"},{14,"weapon_m249"},{9,"weapon_awp"},{28,"weapon_negev"},{1,"weapon_deagle"},{2,"weapon_elite"},{3,"weapon_fiveseven"},{4,"weapon_glock"},{32,"weapon_hkp2000"},{36,"weapon_p250"},{30,"weapon_tec9"},{61,"weapon_usp_silencer"},{63,"weapon_cz75a"},{64,"weapon_revolver"},{503,"weapon_knife"},{500, "weapon_knife"},{505, "weapon_knife"},{506, "weapon_knife"},{507, "weapon_knife"},{508, "weapon_knife"},{509, "weapon_knife"},{515, "weapon_knife"},{512, "weapon_knife"},{516, "weapon_knife"},{514, "weapon_knife"},{519, "weapon_knife"},{520, "weapon_knife"},{522, "weapon_knife"},{523, "weapon_knife"},{518, "weapon_knife"},{517, "weapon_knife"},{525, "weapon_knife"},{521, "weapon_knife"}};
+	g_WeaponsMap = { {26,"weapon_bizon"},{27,"weapon_mac10"},{34,"weapon_mp9"},{19,"weapon_p90"},{24,"weapon_ump45"},{7,"weapon_ak47"},{8,"weapon_aug"},{10,"weapon_famas"},{13,"weapon_galilar"},{16,"weapon_m4a1"},{60,"weapon_m4a1_silencer"},{39,"weapon_sg556"},{9,"weapon_awp"},{11,"weapon_g3sg1"},{38,"weapon_scar20"},{40,"weapon_ssg08"},{29,"weapon_mag7"},{35,"weapon_nova"},{29,"weapon_sawedoff"},{25,"weapon_xm1014"},{14,"weapon_m249"},{9,"weapon_awp"},{28,"weapon_negev"},{1,"weapon_deagle"},{2,"weapon_elite"},{3,"weapon_fiveseven"},{4,"weapon_glock"},{32,"weapon_hkp2000"},{36,"weapon_p250"},{30,"weapon_tec9"},{61,"weapon_usp_silencer"},{63,"weapon_cz75a"},{64,"weapon_revolver"} };
+	g_KnivesMap = { {526,"weapon_knife_kukri"},{508,"weapon_knife_m9_bayonet"},{500,"weapon_bayonet"},{514,"weapon_knife_survival_bowie"},{515,"weapon_knife_butterfly"},{512,"weapon_knife_falchion"},{505,"weapon_knife_flip"},{506,"weapon_knife_gut"},{509,"weapon_knife_tactical"},{516,"weapon_knife_push"},{520,"weapon_knife_gypsy_jackknife"},{522,"weapon_knife_stiletto"},{523,"weapon_knife_widowmaker"},{519,"weapon_knife_ursus"},{503,"weapon_knife_css"},{517,"weapon_knife_cord"},{518,"weapon_knife_canis"},{521,"weapon_knife_outdoor"},{525,"weapon_knife_skeleton"},{507,"weapon_knife_karambit"} };
 	
 	#ifdef _WIN32	
 	byte* vscript = (byte*)FindSignature("vscript.dll", "\xBE\x01\x3F\x3F\x3F\x2B\xD6\x74\x61\x3B\xD6");
@@ -273,9 +275,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     }
 
 	int64_t weapon_id = atoi(args.Arg(1));
-	int64_t paint_kit = atoi(args.Arg(2));
-	int64_t pattern_id = atoi(args.Arg(3));
-	float wear = atof(args.Arg(4));
+	int64_t paint_kit = atoi(args.Arg(2)) || 0;
+	int64_t pattern_id = atoi(args.Arg(3)) || 0;
+	float wear = atof(args.Arg(4)) || 0.0f;
 
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
@@ -284,24 +286,20 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     int64_t weaponIdTemp = pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
 
     auto weapon_name = g_WeaponsMap.find(weapon_id);
-    if (weapon_name == g_WeaponsMap.end()) return;
+	auto knive_name = g_KnivesMap.find(weapon_id);
 
-	g_PlayerSkins[steamid][weaponId].m_nFallbackPaintKit = paint_kit; // paint_kit
-	g_PlayerSkins[steamid][weaponId].m_nFallbackSeed = pattern_id; // pattern_id
-	g_PlayerSkins[steamid][weaponId].m_flFallbackWear = wear; // wear
+    if (weapon_name == g_WeaponsMap.end() && knive_name == g_KnivesMap.end()) {
+		sprintf(buf, " \x04 %s Unknown Weapon/Knife ID", pPlayerController->m_iszPlayerName());
+		FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
+		return;
+	}
+
+	g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit = paint_kit; // paint_kit
+	g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed = pattern_id; // pattern_id
+	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear; // wear
 
 
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
-    CBasePlayerWeapon[48] pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-
-	// loop through pPlayerWeapons to find the weapon
-	for (int i = 0; i < 48; i++)
-	{
-		if (pPlayerWeapons[i] == nullptr)
-			continue;
-		META_CONPRINTF("TEST 2\n %d\n", pPlayerWeapons[i]->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-	}
-
 	
 
     // pWeaponServices->RemoveWeapon(pPlayerWeapon);
