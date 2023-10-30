@@ -249,28 +249,20 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		auto weapon = g_PlayerSkins.find(steamid);
 		if(weapon == g_PlayerSkins.end()) return;
-		// auto skin_parm = weapon->second.find(weaponId);
-		// if(skin_parm == weapon->second.end()) return;
-
-		// get the first entry of weapon
 		auto skin_parm = weapon->second.begin();
 		if(skin_parm == weapon->second.end()) return;
 
 		weaponId = skin_parm->second.m_iItemDefinitionIndex;
 		
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = 16384;
-
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
-
-
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
 		META_CONPRINTF( "DEBUG: %d\n", pBasePlayerWeapon->m_iOldOwnerClass());
-
 		// pBasePlayerWeapon->m_nSubclassID() = skin_parm->second.m_iItemDefinitionIndex;
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, weaponId, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 
