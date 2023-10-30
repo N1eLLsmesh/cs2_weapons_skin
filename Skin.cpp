@@ -279,7 +279,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	});
 }
 
-CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
+CON_COMMAND_CHAT(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 {
     if (context.GetPlayerSlot() == -1) return;
     CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
