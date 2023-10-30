@@ -294,14 +294,14 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 		return;
 	}
 
-	return;
 
-	/*g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit = paint_kit; // paint_kit
+
+	g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit = paint_kit; // paint_kit
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed = pattern_id; // pattern_id
 	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear; // wear
 
-
-    CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
+	return;
+    /*CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	
 
     // pWeaponServices->RemoveWeapon(pPlayerWeapon);
