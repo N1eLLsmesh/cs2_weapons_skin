@@ -4,7 +4,7 @@
 #include "ehandle.h"
 #include "CBaseFlex.h"
 
-template <typename T>
+template <class T>
 class CNetworkUtlVectorBase {
    public:
     auto begin() const { return m_data; }
