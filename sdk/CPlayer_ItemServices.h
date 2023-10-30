@@ -29,6 +29,8 @@ public:
 	SCHEMA_FIELD(CAttributeList, CEconItemView, m_AttributeList);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iItemIDLow);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iItemIDHigh);
+	SCHEMA_FIELD(int32_t, CEconItemView, m_OriginalOwnerXuidLow);
+	SCHEMA_FIELD(int32_t, CEconItemView, m_OriginalOwnerXuidHigh);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iAccountID);
 	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
 };
@@ -49,7 +51,6 @@ public:
 	SCHEMA_FIELD(float, CEconEntity, m_flFallbackWear);
 	SCHEMA_FIELD(uint64_t, CEconEntity, m_OriginalOwnerXuidLow);
 	SCHEMA_FIELD(uint32_t, CBaseEntity, m_nSubclassID);
-	SCHEMA_FIELD(string_t, CBaseEntity, m_iClassname);
 };
 
 class CPlayer_WeaponServices : public CPlayerPawnComponent
