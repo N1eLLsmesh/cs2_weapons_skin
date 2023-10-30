@@ -266,6 +266,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = 16384;
 
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_hPrevOwner() = -1;
+
+
 		META_CONPRINTF( "DEBUG: %d\n", pBasePlayerWeapon->m_nSubclassID());
 
 		// pBasePlayerWeapon->m_nSubclassID() = skin_parm->second.m_iItemDefinitionIndex;
