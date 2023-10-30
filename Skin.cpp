@@ -267,11 +267,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = 16384;
 
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomName() = "Hello World";
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomNameOverride() = "Hello World";
 
 
-		META_CONPRINTF( "DEBUG: %d\n", pBasePlayerWeapon->m_iOldOwnerClass());
+		META_CONPRINTF( "DEBUG: %d\n", pBasePlayerWeapon->m_nSubclassID());
 
 		// pBasePlayerWeapon->m_nSubclassID() = skin_parm->second.m_iItemDefinitionIndex;
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, weaponId, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
