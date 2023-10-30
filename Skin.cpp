@@ -325,16 +325,6 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 	// return;
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
-	const auto pPlayerAllWeapons = pWeaponServices->m_hMyWeapons();
-	for (CHandle* handle = pPlayerAllWeapons.begin(); handle < pPlayerAllWeapons.end(); ++handle) {
-		const auto weapon = handle->Get();
-		if (weapon == nullptr) {
-			continue;
-		}
-		CBasePlayerWeapon* activeWeapon = handle->Get<CBasePlayerWeapon>();
-		META_CONPRINTF("Weapon Loop - Def Index: %d \n", activeWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-	}
-
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
     FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
