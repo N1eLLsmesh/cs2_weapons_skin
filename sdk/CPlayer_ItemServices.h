@@ -48,7 +48,7 @@ public:
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackStatTrak);
 	SCHEMA_FIELD(float, CEconEntity, m_flFallbackWear);
 	SCHEMA_FIELD(uint64_t, CEconEntity, m_OriginalOwnerXuidLow);
-	SCHEMA_FIELD(CUtlStringToken, CBaseEntity, m_nSubclassID);
+	SCHEMA_FIELD(uint16_t, CBaseEntity, m_nSubclassID);
 };
 
 class CPlayer_WeaponServices : public CPlayerPawnComponent
