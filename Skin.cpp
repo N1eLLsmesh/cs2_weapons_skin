@@ -331,10 +331,6 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 		if (weapon == nullptr) {
 			continue;
 		}
-		const auto _weaponIndex = weapon->GetRefEHandle().GetEntryIndex();
-		if (weaponIndex != _weaponIndex) {
-			continue;
-		}
 		CBasePlayerWeapon* activeWeapon = handle->Get<CBasePlayerWeapon>();
 		META_CONPRINTF("Weapon Loop - Def Index: %d \n", activeWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 	}
