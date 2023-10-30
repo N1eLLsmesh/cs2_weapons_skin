@@ -40,6 +40,7 @@ typedef struct SkinParm
 	int m_nFallbackPaintKit;
 	int m_nFallbackSeed;
 	float m_flFallbackWear;
+	bool used = false;
 }SkinParm;;
 
 #ifdef _WIN32
@@ -247,7 +248,11 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		auto weapon = g_PlayerSkins.find(steamid);
 		if(weapon == g_PlayerSkins.end()) return;
-		auto skin_parm = weapon->second.find(weaponId);
+		// auto skin_parm = weapon->second.find(weaponId);
+		// if(skin_parm == weapon->second.end()) return;
+
+		// get the first entry of weapon
+		auto skin_parm = weapon->second.begin();
 		if(skin_parm == weapon->second.end()) return;
 
 		weaponId = skin_parm->second.m_iItemDefinitionIndex;
@@ -259,6 +264,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, weaponId, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+
+		// remove the first entry of weapon
+		weapon->second.erase(skin_parm);
 	});
 }
 
