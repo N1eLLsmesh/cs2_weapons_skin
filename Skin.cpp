@@ -65,7 +65,7 @@ ClientPrint_t FnUTIL_ClientPrint;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*,uint64_t) = nullptr;
-void (*FnGiveNamedItem)(void* itemService,const char* pchName, void* iSubType,void* pScriptItem, void* a5,void* a6) = nullptr;
+void (*FnGiveNamedItem)(void* itemService,const char* pchName, int iSubType,void* pScriptItem, void* a5,void* a6) = nullptr;
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void(*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 
@@ -335,7 +335,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
-    FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), weapon_id.c_str(), nullptr, nullptr, nullptr);
+    FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), 507, nullptr, nullptr, nullptr);
     pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
     META_CONPRINTF("called by %lld\n", steamid);
