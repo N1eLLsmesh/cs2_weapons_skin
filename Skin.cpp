@@ -276,7 +276,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = 2048;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = 0;
 
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
 
