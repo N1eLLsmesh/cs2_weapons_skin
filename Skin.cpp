@@ -274,7 +274,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-		pBasePlayerWeapon->m_AttributeManager().>m_Item().m_iItemIDHigh() = -1;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
 		auto itemView = pBasePlayerWeapon->m_AttributeManager().m_Item();
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
