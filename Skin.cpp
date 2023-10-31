@@ -278,12 +278,14 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		auto itemView = pBasePlayerWeapon->m_AttributeManager().m_Item();
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
-		auto itemStaticData = itemView->GetStaticData();
+		auto itemStaticData = itemView.GetStaticData();
 
 
 		META_CONPRINTF("New Item: %d\n", itemStaticData->m_nDefIndex);
 		META_CONPRINTF("New Item: %s\n", itemStaticData->GetSimpleWeaponName());
 		META_CONPRINTF("New Item: %s\n", itemStaticData->m_pszItemBaseName);
+		META_CONPRINTF("index = %d\n", itemView->m_iItemDefinitionIndex());
+		META_CONPRINTF("initialized = %d\n", itemView->m_bInitialized());
 
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
