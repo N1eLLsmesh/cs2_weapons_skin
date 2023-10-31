@@ -282,8 +282,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
 
-		itemView.m_bInitialized() = true;
-		itemView.m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized() = true;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 
 		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
@@ -294,6 +294,21 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		weapon->second.erase(skin_parm);
 	});
+}
+
+CON_COMMAND_CHAT(ws, "test") {
+    if (context.GetPlayerSlot() == -1) {
+		return;
+	}
+    CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
+    CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
+    if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
+		return;
+	}
+    char buf[255] = { 0 };
+	sprintf(buf, "%s\x04 %s\x01 Works!", CHAT_PREFIX, pPlayerController->m_iszPlayerName());
+	// FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
+	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 }
 
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
