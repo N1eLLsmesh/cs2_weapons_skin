@@ -297,7 +297,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     {
         sprintf(buf, " \x04 %s You need four parameters to modify the skin using the skin command!", pPlayerController->m_iszPlayerName());
         // FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
-		FnUTIL_ClientPrint(pPlayerController, 3, CHAT_PREFIX + buf, nullptr, nullptr, nullptr, nullptr);
+		FnUTIL_ClientPrint(pPlayerController, 3, CHAT_PREFIX buf, nullptr, nullptr, nullptr, nullptr);
         return;
     }
 
@@ -323,7 +323,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 	if (weapon_name == g_KnivesMap.end()) {
 		sprintf(buf, " \x04 %s Unknown Weapon/Knife ID", pPlayerController->m_iszPlayerName());
 		// FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
-		FnUTIL_ClientPrint(pPlayerController, 3, CHAT_PREFIX + buf, nullptr, nullptr, nullptr, nullptr);
+		FnUTIL_ClientPrint(pPlayerController, 3, CHAT_PREFIX buf, nullptr, nullptr, nullptr, nullptr);
 		return;
 	}
 
@@ -343,7 +343,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     META_CONPRINTF("called by %lld\n", steamid);
     sprintf(buf, " \x04 %s Success skin number:%d Template:%d Wear:%f", pPlayerController->m_iszPlayerName(), g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
     // FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
-	FnUTIL_ClientPrint(pPlayerController, 3, CHAT_PREFIX + buf, nullptr, nullptr, nullptr, nullptr);
+	FnUTIL_ClientPrint(pPlayerController, 3, CHAT_PREFIX buf, nullptr, nullptr, nullptr, nullptr);
 }
 
 const char* Skin::GetLicense()
@@ -368,20 +368,20 @@ const char* Skin::GetLogTag()
 
 const char* Skin::GetAuthor()
 {
-	return "宇宙遨游";
+	return "Cobra";
 }
 
 const char* Skin::GetDescription()
 {
-	return "武器皮肤插件";
+	return "!ws for CS2";
 }
 
 const char* Skin::GetName()
 {
-	return "武器皮肤插件";
+	return "Change Skin";
 }
 
 const char* Skin::GetURL()
 {
-	return "http://cs2.wssr.top";
+	return "https://google.com";
 }
