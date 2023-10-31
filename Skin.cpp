@@ -334,7 +334,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
-	META_CONPRINTF("Current Item: %lld\n", pPlayerWeapon->GetClassname());
+	META_CONPRINTF("Current Item: %lld\n", pPlayerWeapon->GetClassname().c_str());
 
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
