@@ -55,7 +55,6 @@ public:
 	SCHEMA_FIELD(int32_t, CEconItemView, m_OriginalOwnerXuidHigh);
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
 	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
-	SCHEMA_FIELD(uint16_t, CBaseEntity, m_nModelIndex);
 	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
 	SCHEMA_FIELD(char[32], CEconItemView, m_szCustomName);
 };
