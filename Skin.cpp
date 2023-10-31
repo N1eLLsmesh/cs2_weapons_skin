@@ -43,7 +43,6 @@ typedef struct SkinParm
 	int m_nFallbackSeed;
 	float m_flFallbackWear;
 	bool used = false;
-	auto item_classname;
 }SkinParm;;
 
 #ifdef _WIN32
@@ -280,7 +279,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		itemView.m_iItemIDHigh() = -1;
 
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
-		META_CONPRINTF("Class Name before: %s\n", skin_parm->second.item_classname);
+
+		// pBasePlayerWeapon->SetClassname("weapon_knife_karambit");
 
 		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
@@ -346,7 +346,6 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit = paint_kit; // paint_kit
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed = pattern_id; // pattern_id
 	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear; // wear
-	g_PlayerSkins[steamid][weapon_id].item_classname = weapon_name->second.c_str(); // wear
 
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
