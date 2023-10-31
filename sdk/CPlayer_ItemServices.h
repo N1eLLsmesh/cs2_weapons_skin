@@ -53,7 +53,8 @@ public:
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iItemIDHigh);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_OriginalOwnerXuidLow);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_OriginalOwnerXuidHigh);
-	SCHEMA_FIELD(int32_t, CEconItemView, m_hPrevOwner);
+	SCHEMA_FIELD(CHandle, CEconItemView, m_hPrevOwner);
+	SCHEMA_FIELD(CHandle, CEconItemView, m_hOwnerEntity);
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
 	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
 	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
