@@ -45,7 +45,7 @@ class CRoundPreStartEvent : public IGameEventListener2
 
 class CEntityListener : public IEntityListener
 {
-	void OnEntitySpawned(CBaseEntity* pEntity) override;
+	void OnEntitySpawned(CEntityInstance* pEntity) override;
 };
 
 #endif //_INCLUDE_METAMOD_SOURCE_STUB_PLUGIN_H_

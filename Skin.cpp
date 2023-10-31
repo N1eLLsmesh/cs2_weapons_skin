@@ -250,12 +250,12 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 	}
 }
 
-void CEntityListener::OnEntitySpawned(CBaseEntity* pEntity)
+void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
-	CBaseEntity* CBaseEntity = dynamic_cast<CBaseEntity*>(pEntity);
+	CBaseEntity* pCBaseEntity = dynamic_cast<CBaseEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
-	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, CBaseEntity = CBaseEntity]()
+	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCBaseEntity = pCBaseEntity]()
 	{
 		int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
 		if(!steamid) {
@@ -291,7 +291,7 @@ void CEntityListener::OnEntitySpawned(CBaseEntity* pEntity)
 		META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
 
 
-		META_CONPRINTF("m_nModelIndex = %d\n", CBaseEntity->m_nModelIndex());
+		META_CONPRINTF("m_nModelIndex = %d\n", pCBaseEntity->m_nModelIndex());
 
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized() = true;
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
