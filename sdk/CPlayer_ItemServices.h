@@ -47,6 +47,8 @@ class CEconItemView
 {
 public:
 	SCHEMA_FIELD(CAttributeList, CEconItemView, m_AttributeList);
+	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityLevel);
+	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityQuality);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iItemIDLow);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iItemIDHigh);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_OriginalOwnerXuidLow);
@@ -55,6 +57,7 @@ public:
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
 	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
 	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
+	SCHEMA_FIELD(char[32], CEconItemView, m_szCustomName);
 };
 
 class CAttributeContainer
