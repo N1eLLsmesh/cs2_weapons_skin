@@ -279,7 +279,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		itemView.m_iItemIDHigh() = -1;
 
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
-		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetSubType());
 
 		// pBasePlayerWeapon->SetClassname("weapon_knife_karambit");
 
