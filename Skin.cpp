@@ -280,6 +280,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = 2048;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = 0;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
 
