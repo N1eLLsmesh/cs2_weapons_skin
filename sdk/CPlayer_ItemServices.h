@@ -43,47 +43,6 @@ public:
 	SCHEMA_FIELD(int64_t, CAttributeList, m_Attributes);
 };
 
-class CEconItemDefinition {
-   public:
-    auto GetModelName() {
-        return *reinterpret_cast<const char**>((uintptr_t)(this) + 0xD8);
-    }
-
-    auto GetStickersSupportedCount() {
-        return *reinterpret_cast<int*>((uintptr_t)(this) + 0x100);
-    }
-
-    auto GetSimpleWeaponName() {
-        return *reinterpret_cast<const char**>((uintptr_t)(this) + 0x210);
-    }
-
-    auto GetLoadoutSlot() {
-        return *reinterpret_cast<int*>((uintptr_t)(this) + 0x2E8);
-    }
-
-    char pad0[0x8];  // vtable
-    void* m_pKVItem;
-    uint16_t m_nDefIndex;
-    CUtlVector_NativeSdk<uint16_t> m_nAssociatedItemsDefIndexes;
-    bool m_bEnabled;
-    const char* m_szPrefab;
-    uint8_t m_unMinItemLevel;
-    uint8_t m_unMaxItemLevel;
-    uint8_t m_nItemRarity;
-    uint8_t m_nItemQuality;
-    uint8_t m_nForcedItemQuality;
-    uint8_t m_nDefaultDropItemQuality;
-    uint8_t m_nDefaultDropQuantity;
-    CUtlVector_NativeSdk<void*> m_vecStaticAttributes;
-    uint8_t m_nPopularitySeed;
-    void* m_pPortraitsKV;
-    const char* m_pszItemBaseName;
-    bool m_bProperName;
-    const char* m_pszItemTypeName;
-    uint32_t m_unItemTypeID;
-    const char* m_pszItemDesc;
-};
-
 class CEconItemView
 {
 public:
@@ -96,10 +55,6 @@ public:
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
 	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
 	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
-    auto GetStaticData() {
-        return CALL_VIRTUAL(CEconItemDefinition*, 13, this);
-    }
-
 };
 
 class CAttributeContainer

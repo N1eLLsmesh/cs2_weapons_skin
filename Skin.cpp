@@ -43,6 +43,7 @@ typedef struct SkinParm
 	int m_nFallbackSeed;
 	float m_flFallbackWear;
 	bool used = false;
+	std::string classname = "";
 }SkinParm;;
 
 #ifdef _WIN32
@@ -270,25 +271,22 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		auto itemView = pBasePlayerWeapon->m_AttributeManager().m_Item();
+
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+		itemView.m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		itemView.m_iItemIDHigh() = -1;
 
-		auto itemView = pBasePlayerWeapon->m_AttributeManager().m_Item();
-
-		const auto itemStaticData = itemView.GetStaticData();
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
+		META_CONPRINTF("Class Name before: %s\n", skin_parm->second.classname);
 
 		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
 
-		META_CONPRINTF("m_nDefIndex = %d\n", itemStaticData.m_nDefIndex());
-
-
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized() = true;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		itemView.m_bInitialized() = true;
+		itemView.m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 
 		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
@@ -348,6 +346,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit = paint_kit; // paint_kit
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed = pattern_id; // pattern_id
 	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear; // wear
+	g_PlayerSkins[steamid][weapon_id].classname = weapon_name->second.c_str(); // wear
 
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
