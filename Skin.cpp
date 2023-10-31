@@ -292,7 +292,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
 
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 		// pBasePlayerWeapon->m_nSubclassID() = skin_parm->second.m_iItemDefinitionIndex;
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		weapon->second.erase(skin_parm);
@@ -355,7 +355,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
     FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-    pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
+    pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
     META_CONPRINTF("called by %lld\n", steamid);
     sprintf(buf, "%s\x04 %s\x01 Success skin number:%d Template:%d Wear:%f", CHAT_PREFIX, pPlayerController->m_iszPlayerName(), g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
