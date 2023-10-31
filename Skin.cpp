@@ -282,6 +282,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
 
+		itemView.m_bInitialized(true);
+		itemView.m_iItemDefinitionIndex(skin_parm->second.m_iItemDefinitionIndex);
+
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
 		// pBasePlayerWeapon->m_nSubclassID() = skin_parm->second.m_iItemDefinitionIndex;
