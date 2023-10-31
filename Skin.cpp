@@ -253,7 +253,7 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
-	CBaseEntity* CBaseEntity = dynamic_cast<SC_CBaseEntity*>(pEntity);
+	CBaseEntity* CBaseEntity = dynamic_cast<CBaseEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, CBaseEntity = CBaseEntity]()
 	{
