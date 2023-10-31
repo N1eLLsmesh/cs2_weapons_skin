@@ -292,7 +292,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 
 		META_CONPRINTF("m_nModelIndex = %d\n", pBasePlayerWeapon->m_nModelIndex());
-		pBasePlayerWeapon->m_nModelIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		pBasePlayerWeapon->m_nModelIndex() = 476;
 
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized() = true;
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
