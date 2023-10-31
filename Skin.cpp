@@ -280,7 +280,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
 
-		// pBasePlayerWeapon->SetClassname("weapon_knife_karambit");
+		pBasePlayerWeapon->SetClassname("weapon_knife_karambit");
 
 		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
