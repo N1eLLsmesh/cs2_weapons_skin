@@ -284,6 +284,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
 
+		META_CONPRINTF("m_nDefIndex = %d\n", itemStaticData.m_nDefIndex());
+
+
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized() = true;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 
