@@ -15,6 +15,7 @@ public:
 	SCHEMA_FIELD(uint16_t, CEconItemAttribute, m_iAttributeDefinitionIndex);
 	SCHEMA_FIELD(float, CEconItemAttribute, m_flValue);
 	SCHEMA_FIELD(float, CEconItemAttribute, m_flInitialValue);
+	SCHEMA_FIELD(uint16_t, CEconItemView, m_nDefIndex);
 };
 
 class CAttributeList
@@ -34,6 +35,7 @@ public:
 	SCHEMA_FIELD(int32_t, CEconItemView, m_hPrevOwner);
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
 	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
+	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
 };
 
 class CAttributeContainer
