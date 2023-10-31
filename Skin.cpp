@@ -298,21 +298,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	});
 }
 
-CON_COMMAND_CHAT(ws, "test") {
-    if (context.GetPlayerSlot() == -1) {
-		return;
-	}
-    CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
-    CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
-    if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
-		return;
-	}
-    char buf[255] = { 0 };
-	sprintf(buf, "%s\x04 %s\x01 Works!", CHAT_PREFIX, pPlayerController->m_iszPlayerName());
-	// FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
-	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-}
-
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
 		return;
