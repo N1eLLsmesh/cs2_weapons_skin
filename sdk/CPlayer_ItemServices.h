@@ -45,10 +45,6 @@ public:
 
 class CEconItemDefinition {
    public:
-    bool IsWeapon();
-    bool IsKnife(bool excludeDefault);
-    bool IsGlove(bool excludeDefault);
-
     auto GetModelName() {
         return *reinterpret_cast<const char**>((uintptr_t)(this) + 0xD8);
     }
@@ -87,28 +83,6 @@ class CEconItemDefinition {
     uint32_t m_unItemTypeID;
     const char* m_pszItemDesc;
 };
-
-bool CEconItemDefinition::IsWeapon() {
-    // Every gun supports at least 4 stickers.
-    return GetStickersSupportedCount() >= 4;
-}
-
-bool CEconItemDefinition::IsKnife(bool excludeDefault) {
-    static constexpr auto CSGO_Type_Knife =
-        hash_32_fnv1a_const("#CSGO_Type_Knife");
-
-    if (hash_32_fnv1a_const(m_pszItemTypeName) != CSGO_Type_Knife) return false;
-    return excludeDefault ? m_nDefIndex >= 500 : true;
-}
-
-bool CEconItemDefinition::IsGlove(bool excludeDefault) {
-    static constexpr auto Type_Hands = hash_32_fnv1a_const("#Type_Hands");
-
-    if (hash_32_fnv1a_const(m_pszItemTypeName) != Type_Hands) return false;
-    const bool defaultGlove = m_nDefIndex == 5028 || m_nDefIndex == 5029;
-
-    return excludeDefault ? !defaultGlove : true;
-}
 
 class CEconItemView
 {
