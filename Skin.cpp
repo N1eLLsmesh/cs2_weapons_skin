@@ -277,6 +277,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
 		auto itemView = pBasePlayerWeapon->m_AttributeManager().m_Item();
+
+		const auto itemStaticData = itemView.GetStaticData();
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
 
 		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
