@@ -13,7 +13,7 @@ jobs:
         id: delete-old-workflow-runs
         with:
           repository: Zignixx/cs2_weapons_skin
-          workflow: ".github/workflows/compile.yml"
+          workflow: ".github/workflows/main.yml"
           older-than-seconds: 86400 # 1 day
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
