@@ -254,7 +254,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	if(!pBasePlayerWeapon) return;
-	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
+	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pEntity = pEntity]()
 	{
 		int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
 		if(!steamid) {
