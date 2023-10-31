@@ -76,6 +76,7 @@ public:
 	SCHEMA_FIELD(uint64_t, CEconEntity, m_OriginalOwnerXuidLow);
 	SCHEMA_FIELD(uint32_t, CBaseEntity, m_nSubclassID);
 	SCHEMA_FIELD(int32_t, CBaseEntity, m_iOldOwnerClass);
+	SCHEMA_FIELD(uint16_t, CBaseEntity, m_nModelIndex);
 };
 
 class CPlayer_WeaponServices : public CPlayerPawnComponent

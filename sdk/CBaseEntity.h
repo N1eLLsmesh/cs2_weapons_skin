@@ -26,5 +26,4 @@ public:
 	SCHEMA_FIELD(LifeState_t, CBaseEntity, m_lifeState);
 	SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
 	SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
-	SCHEMA_FIELD(uint16_t, CBaseEntity, m_nModelIndex);
 };
