@@ -34,7 +34,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 CEntityListener g_EntityListener;
 bool g_bPistolRound;
 
-#define CHAT_PREFIX	" \5[Cobra]\1 "
+#define CHAT_PREFIX	" \x05[Cobra]\x01 "
 
 typedef struct SkinParm
 {
@@ -257,29 +257,29 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
 	{
 		int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
-		if(!steamid) return;
-		int64_t weaponId = pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+		if(!steamid) {
+			return;
+		}
 
 		auto weapon = g_PlayerSkins.find(steamid);
-		if(weapon == g_PlayerSkins.end()) return;
+		if(weapon == g_PlayerSkins.end()) {
+			return;
+		}
 		auto skin_parm = weapon->second.begin();
-		if(skin_parm == weapon->second.end()) return;
+		if(skin_parm == weapon->second.end()) {
+			return;
+		}
 
-		weaponId = skin_parm->second.m_iItemDefinitionIndex;
-		
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
-		META_CONPRINTF( "DEBUG: %d\n", pBasePlayerWeapon->m_iOldOwnerClass());
 		// pBasePlayerWeapon->m_nSubclassID() = skin_parm->second.m_iItemDefinitionIndex;
-		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, weaponId, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-
-		// remove the first entry of weapon
+		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		weapon->second.erase(skin_parm);
 	});
 }
@@ -295,9 +295,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 
     if (args.ArgC() != 5)
     {
-        sprintf(buf, " \x04 %s You need four parameters to modify the skin using the skin command!", pPlayerController->m_iszPlayerName());
+        sprintf(buf, "%s\x04 %s\x01 You need four parameters to modify the skin using the skin command!", CHAT_PREFIX, pPlayerController->m_iszPlayerName());
         // FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
-		FnUTIL_ClientPrint(pPlayerController, 3, CHAT_PREFIX buf, nullptr, nullptr, nullptr, nullptr);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
         return;
     }
 
@@ -321,9 +321,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 	}
 
 	if (weapon_name == g_KnivesMap.end()) {
-		sprintf(buf, " \x04 %s Unknown Weapon/Knife ID", pPlayerController->m_iszPlayerName());
+		sprintf(buf, "%s\x04 %s\x01 Unknown Weapon/Knife ID", CHAT_PREFIX,  pPlayerController->m_iszPlayerName());
 		// FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
-		FnUTIL_ClientPrint(pPlayerController, 3, CHAT_PREFIX buf, nullptr, nullptr, nullptr, nullptr);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
 	}
 
@@ -341,9 +341,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
 
     META_CONPRINTF("called by %lld\n", steamid);
-    sprintf(buf, " \x04 %s Success skin number:%d Template:%d Wear:%f", pPlayerController->m_iszPlayerName(), g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
+    sprintf(buf, "%s\x04 %s\x01 Success skin number:%d Template:%d Wear:%f", CHAT_PREFIX, pPlayerController->m_iszPlayerName(), g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
     // FnUTIL_ClientPrintAll(3, buf, nullptr, nullptr, nullptr, nullptr);
-	FnUTIL_ClientPrint(pPlayerController, 3, CHAT_PREFIX buf, nullptr, nullptr, nullptr, nullptr);
+	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 }
 
 const char* Skin::GetLicense()
