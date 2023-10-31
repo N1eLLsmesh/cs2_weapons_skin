@@ -105,13 +105,13 @@ public:
 class CAttributeContainer
 {
 public:
-	SCHEMA_FIELD(CEconItemView, CAttributeContainer, m_Item);
+	PSCHEMA_FIELD(CEconItemView, CAttributeContainer, m_Item);
 };
 
 class CBasePlayerWeapon : public CEconEntity
 {
 public:
-	SCHEMA_FIELD(CAttributeContainer, CEconEntity, m_AttributeManager);
+	PSCHEMA_FIELD(CAttributeContainer, CEconEntity, m_AttributeManager);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackPaintKit);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackSeed);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackStatTrak);
