@@ -276,7 +276,14 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
+		const auto itemView = pBasePlayerWeapon->m_AttributeManager().m_Item();
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
+		const auto itemStaticData = itemView->GetStaticData();
+
+
+		META_CONPRINTF("New Item: %d\n", itemStaticData->m_nDefIndex);
+		META_CONPRINTF("New Item: %s\n", itemStaticData->GetSimpleWeaponName());
+		META_CONPRINTF("New Item: %s\n", itemStaticData->m_pszItemBaseName);
 
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 271098320;
