@@ -275,21 +275,21 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-		itemView.m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		itemView.m_iItemIDHigh() = -1;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
 
 		// pBasePlayerWeapon->SetClassname("weapon_knife_karambit");
 
-		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
-		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
+		META_CONPRINTF("index = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
 
-		itemView.m_bInitialized() = true;
-		itemView.m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized() = true;
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 
-		META_CONPRINTF("index = %d\n", itemView.m_iItemDefinitionIndex());
-		META_CONPRINTF("initialized = %d\n", itemView.m_bInitialized());
+		META_CONPRINTF("index = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		META_CONPRINTF("initialized = %d\n", itempBasePlayerWeapon->m_AttributeManager().m_Item()View.m_bInitialized());
 
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
