@@ -250,7 +250,7 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 	}
 }
 
-void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
+void CEntityListener::OnEntitySpawned(CBaseEntity* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CBaseEntity* CBaseEntity = dynamic_cast<CBaseEntity*>(pEntity);
