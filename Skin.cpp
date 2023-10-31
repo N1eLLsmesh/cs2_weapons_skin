@@ -284,13 +284,15 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	});
 }
 
-CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
-{
-    if (context.GetPlayerSlot() == -1) return;
+CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
+    if (context.GetPlayerSlot() == -1) {
+		return;
+	}
     CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
     CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
-    if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE)
-        return;
+    if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
+		return;
+	}
     char buf[255] = { 0 };
 
     if (args.ArgC() != 5)
@@ -309,8 +311,6 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
     int64_t steamid = pPlayerController->m_steamID();
-    int64_t weaponId = pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-    int64_t weaponIdTemp = pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
 
     auto weapon_name = g_WeaponsMap.find(weapon_id);
 	bool isKnife = false;
@@ -332,8 +332,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE)
 	g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed = pattern_id; // pattern_id
 	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear; // wear
 
-	// return;
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
+
+	META_CONPRINTF("Current Item: %lld\n", pPlayerWeapon->GetClassname());
 
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
