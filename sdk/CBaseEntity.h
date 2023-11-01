@@ -18,6 +18,12 @@ inline CEntityInstance* UTIL_FindEntityByClassname(CEntityInstance* pStart, cons
 	return nullptr;
 }
 
+class CGameSceneNode {
+   public:
+    void SetMeshGroupMask(uint64_t meshGroupMask);
+	SCHEMA_FIELD(Vector, CGameSceneNode, m_vecAbsOrigin);
+};
+
 class SC_CBaseEntity : public CBaseEntity
 {
 public:
@@ -26,4 +32,5 @@ public:
 	SCHEMA_FIELD(LifeState_t, CBaseEntity, m_lifeState);
 	SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
 	SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
+	SCHEMA_FIELD(CGameSceneNode*, CBaseEntity, m_pGameSceneNode);
 };
