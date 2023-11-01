@@ -38,7 +38,7 @@ bool g_bPistolRound;
 
 typedef struct SkinParm
 {
-	int m_iItemDefinitionIndex;
+	int32_t m_iItemDefinitionIndex;
 	int m_nFallbackPaintKit;
 	int m_nFallbackSeed;
 	float m_flFallbackWear;
@@ -65,7 +65,7 @@ ClientPrint_t FnUTIL_ClientPrint;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*,uint64_t) = nullptr;
-void (*FnGiveNamedItem)(void* itemService,const char* pchName, int* iSubType,void* pScriptItem, void* a5,void* a6) = nullptr;
+void (*FnGiveNamedItem)(void* itemService,const char* pchName, int32_t* iSubType,void* pScriptItem, void* a5,void* a6) = nullptr;
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void(*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 
@@ -304,7 +304,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
         return;
     }
 
-	int64_t weapon_id = atoi(args.Arg(1));
+	int32_t weapon_id = atoi(args.Arg(1));
 	int64_t paint_kit = atoi(args.Arg(2));
 	int64_t pattern_id = atoi(args.Arg(3));
 	float wear = atof(args.Arg(4));
