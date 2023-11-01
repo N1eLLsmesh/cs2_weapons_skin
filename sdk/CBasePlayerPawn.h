@@ -7,7 +7,7 @@
 
 class CCSPlayer_ViewModelServices {
    public:
-	SCHEMA_FIELD(CHandle, CCSPlayer_ViewModelServices, m_hViewModel);	
+	PSCHEMA_FIELD(m_hViewModel, "CCSPlayer_ViewModelServices", "m_hViewModel", CHandle);
 };
 
 class CBasePlayerPawn : public CBaseCombatCharacter
