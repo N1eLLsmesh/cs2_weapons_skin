@@ -276,18 +276,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
-
-		CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
-		CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
-		CGameSceneNode* pWeaponSceneNode = pWeapon->m_pGameSceneNode();
-		CCSPlayer_ViewModelServices* pViewmodelServices = pPlayerPawn->m_pViewModelServices();
-		CBaseEntity* pViewmodel = pViewmodelServices->m_hViewModel()[0].Get();
-		CGameSceneNode* pViewmodelSceneNode = pViewmodel->m_pGameSceneNode();
-
-
-		// pWeaponSceneNode->SetMeshGroupMask(skinMeshGroupMask);
-		// pViewmodelSceneNode->SetMeshGroupMask(skinMeshGroupMask);
-
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
 
 		META_CONPRINTF("index = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
