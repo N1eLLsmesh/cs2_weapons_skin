@@ -65,7 +65,7 @@ ClientPrint_t FnUTIL_ClientPrint;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*,uint64_t) = nullptr;
-void (*FnGiveNamedItem)(void* itemService,const char* pchName, int32_t* iSubType,void* pScriptItem, void* a5,void* a6) = nullptr;
+void (*FnGiveNamedItem)(void* itemService,const char* pchName, int32_t iSubType,void* pScriptItem, void* a5,void* a6) = nullptr;
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void(*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 
