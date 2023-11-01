@@ -12,7 +12,7 @@
 
 #include <cstdint>
 #include <type_traits>
-#include <hash_fnv1a_constexpr.h>
+#include "hash_fnv1a_constexpr.h"
 
 #if defined(_WIN32)
 #define FASTCALL __fastcall
