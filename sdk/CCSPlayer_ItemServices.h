@@ -22,10 +22,10 @@ private:
 	virtual void unk_12() = 0;
 	virtual void unk_13() = 0;
 	virtual void unk_14() = 0;
-	virtual SC_CBaseEntity* _GiveNamedItem(const char* pchName) = 0;
+	virtual SC_CBaseEntity* _GiveNamedItem(const char* pchName, int iSubType = 0, bool removeIfNotCarried = true ) = 0;
 public:
-	virtual bool GiveNamedItemBool(const char* pchName) = 0;
-	virtual SC_CBaseEntity* GiveNamedItem(const char* pchName) = 0;
+	virtual bool GiveNamedItemBool(const char* pchName, int iSubType = 0, bool removeIfNotCarried = true ) = 0;
+	virtual SC_CBaseEntity* GiveNamedItem(const char* pchName, int iSubType = 0, bool removeIfNotCarried = true ) = 0;
 
 	SCHEMA_FIELD(bool, CCSPlayer_ItemServices, m_bHasDefuser);
 	SCHEMA_FIELD(bool, CCSPlayer_ItemServices, m_bHasHelmet);
