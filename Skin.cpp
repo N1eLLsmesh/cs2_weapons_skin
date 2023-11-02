@@ -363,6 +363,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
 CON_COMMAND_F(i_subclass_change, "subclass change", FCVAR_NONE)
 {
+	META_CONPRINTF("i_subclass_change\n");
 	FnSubClassChange(context,args);
 }
 
