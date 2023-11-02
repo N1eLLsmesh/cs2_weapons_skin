@@ -1,4 +1,4 @@
-name: Build Linux
+name: Build Windows
 
 on:
   push:
@@ -22,14 +22,14 @@ jobs:
       matrix:
         # Compile on Linux & Windows.
         os: 
-          - ubuntu-20.04
-        #  - windows-latest
+        #  - ubuntu-20.04
+          - windows-latest
 
         include:
-          - os: ubuntu-20.04
-            os_short: linux
-        #  - os: windows-latest
-        #    os_short: win
+        #  - os: ubuntu-20.04
+        #    os_short: linux
+          - os: windows-latest
+            os_short: win
     steps:
       # Setup Python for AMBuild.
       - name: Setup Python 3.10
