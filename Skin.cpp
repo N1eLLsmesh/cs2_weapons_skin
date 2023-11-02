@@ -342,7 +342,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
     FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 
-    pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+    pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = -1;
 	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
 	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
