@@ -334,6 +334,10 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
 
+    pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = -1;
+	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
+	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
 
@@ -341,11 +345,6 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	// pItemServices->GiveNamedItemBool(weapon_name->second.c_str(), (int)weapon_id);
 
     FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-
-    pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = -1;
-	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
-	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-
 
     META_CONPRINTF("called by %lld\n", steamid);
     sprintf(buf, "%s\x04 %s\x01 Success skin number:%d Template:%d Wear:%f", CHAT_PREFIX, pPlayerController->m_iszPlayerName(), g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
