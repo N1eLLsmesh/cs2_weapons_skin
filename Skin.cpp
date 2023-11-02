@@ -338,7 +338,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
 
 	CCSPlayer_ItemServices* pItemServices = static_cast<CCSPlayer_ItemServices*>(pPlayerPawn->m_pItemServices());
-	pItemServices->GiveNamedItem(weapon_name->second.c_str(), (int)weapon_id);
+	pItemServices->GiveNamedItemBool(weapon_name->second.c_str(), (int)weapon_id);
 
     // FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 
