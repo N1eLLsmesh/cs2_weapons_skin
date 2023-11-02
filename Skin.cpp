@@ -282,13 +282,12 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 
 		META_CONPRINTF( "weaponId: %d\n", weaponId);
-
-
-		if(pBasePlayerWeapon->GetClassname() == "weapon_knife")
+		auto knife_name = g_KnivesMap.find(weaponId);
+		if(knife_name != g_KnivesMap.end())
 		{
 			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-			sprintf(buf,"i_subclass_change %d %d",skin_parm->second.m_iItemDefinitionIndex, index);
+			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
 			engine->ServerCommand(buf);
 		}
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
