@@ -284,7 +284,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF( "weaponId: %d\n", weaponId);
 
 
-		if(weaponId == 59 || weaponId == 42)
+		if(pBasePlayerWeapon->GetClassname() == "weapon_knife")
 		{
 			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
