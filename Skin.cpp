@@ -276,16 +276,16 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 
-		if(skin_parm->second.m_iItemDefinitionIndex == 59 || skin_parm->second.m_iItemDefinitionIndex == 42)
+		if(pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() == 59 || pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() == 42)
 		{
 			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-			sprintf(buf,"i_subclass_change %d %d",skin_parm->second.m_iItemDefinitionIndex,index);
+			sprintf(buf,"i_subclass_change %d %d",skin_parm->second.m_iItemDefinitionIndex, index);
 			engine->ServerCommand(buf);
 		}
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
