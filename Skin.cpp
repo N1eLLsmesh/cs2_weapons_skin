@@ -334,19 +334,17 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
 
-    pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = -1;
-	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
-	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
 
-	CCSPlayer_ItemServices* pItemServices = static_cast<CCSPlayer_ItemServices*>(pPlayerPawn->m_pItemServices());
-	pItemServices->GiveNamedItemBool(weapon_name->second.c_str(), (int)weapon_id);
+	// CCSPlayer_ItemServices* pItemServices = static_cast<CCSPlayer_ItemServices*>(pPlayerPawn->m_pItemServices());
+	// pItemServices->GiveNamedItemBool(weapon_name->second.c_str(), (int)weapon_id);
 
-    // FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+    FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 
-
+    pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
+	pPlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
 
     META_CONPRINTF("called by %lld\n", steamid);
