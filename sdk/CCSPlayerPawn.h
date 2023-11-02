@@ -5,5 +5,4 @@
 class CCSPlayerPawn : public CCSPlayerPawnBase
 {
 public:
-    SCHEMA_FIELD(CEconItemView, CCSPlayerPawnBase, m_EconGloves);
 };
