@@ -286,9 +286,12 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		if(knife_name != g_KnivesMap.end())
 		{
 			char buf[64] = {0};
+			char buf2[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+			sprintf(buf2, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
 			engine->ServerCommand(buf);
+			engine->ServerCommand(buf2);
 			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d Index %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex, index);
 		}
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
