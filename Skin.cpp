@@ -353,6 +353,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	CBasePlayerWeapon* pPlayerWeapons[48];
 
 	for (int i = 0; i < 48; i++) {
+		if (pWeaponServices->GetWeapon(i) == nullptr)
+			continue;
 		pPlayerWeapons[i] = pWeaponServices->GetWeapon(i);
 	}
 
