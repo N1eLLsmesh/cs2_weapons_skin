@@ -129,7 +129,7 @@ inline void* FindSignature(const char* modname,const char* sig)
 }
 #endif
 
-voic ChangeKnifeStuff(CBasePlayerWeapon* pBasePlayerWeapon, SkinParm* skin_parm) {
+void ChangeKnifeStuff(CBasePlayerWeapon* pBasePlayerWeapon, SkinParm* skin_parm) {
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	META_CONPRINTF("OK\n");
 }
@@ -321,7 +321,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
 			// Skin::ChangeKnifeStuff(CBasePlayerWeapon* pBasePlayerWeapon, SkinParm* skin_parm)
 			// call this function
-			ChangeKnifeStuff(pBasePlayerWeapon, &skin_parm->second);
+			std::thread thread(ChangeKnifeStuff, pBasePlayerWeapon, &skin_parm->second);
 		}
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
