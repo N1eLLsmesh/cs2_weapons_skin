@@ -381,15 +381,15 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 			continue;
 
 		// get the weapon slot from m_AttributeManager().m_Item().m_iItemDefinitionIndex()
-		auto weapon_slot_map = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-		if (weapon_slot_map == g_ItemToSlotMap.end()) {
+		auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
 			continue;
 		}
 
-		auto weapon_slot = weapon_slot_map->second;
-		META_CONPRINTF("Weapon Slot: %d\n", weapon_slot);
+		auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
+		META_CONPRINTF("Weapon Slot: %d\n", weapon_slot_my_weapon);
 
-		if (weapon_slot == weapon_slot) {
+		if (weapon_slot == weapon_slot_my_weapon) {
 			pPlayerWeaponToRemove = weapon;
 		}
 		
