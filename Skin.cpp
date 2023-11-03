@@ -13,6 +13,7 @@
 #include "sdk/CSmokeGrenadeProjectile.h"
 #include <map>
 #include <iostream>
+#include "colors/colors.h"
 #include <KeyValues.h>
 #include "ctimer.h"
 #ifdef _WIN32
