@@ -394,7 +394,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		
 
 		META_CONPRINTF("Array Item: %s\n", weapon->GetClassname());
-		META_CONPRINTF("Array Item: %s\n", weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		META_CONPRINTF("Array Item: %d\n", weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		// 
 	}
 
