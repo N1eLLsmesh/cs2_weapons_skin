@@ -280,7 +280,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			char buf[64] = {0};
 			char bufcheats1[64] = {0};
 			char bufcheats0[64] = {0};
-			int index = static_cast<CEntityInstance*>(pPlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
+			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(bufcheats1, "sv_cheats 1");
 			sprintf(bufcheats0, "sv_cheats 0");
 			sprintf(buf, "subclass_change %d %d", weapon_id, index);
@@ -301,12 +301,15 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		if(knife_name != g_KnivesMap.end())
 		{
 			char buf[64] = {0};
-			char buf2[64] = {0};
+			char bufcheats1[64] = {0};
+			char bufcheats0[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
-			sprintf(buf2, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+			sprintf(bufcheats1, "sv_cheats 1");
+			sprintf(bufcheats0, "sv_cheats 0");
+			sprintf(buf, "subclass_change %d %d", weapon_id, index);
+			engine->ServerCommand(bufcheats1);
 			engine->ServerCommand(buf);
-			engine->ServerCommand(buf2);
+			engine->ServerCommand(bufcheats0);
 			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
 		}
 
