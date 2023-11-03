@@ -348,6 +348,10 @@ bool Skin::LoadConfig() {
 		META_CONPRINTF("Failed to load config.ini\n");
 		return false;
 	}
+	FOR_EACH_VALUE(pKVConfig, subkey)
+	{
+		META_CONPRINTF("FOR_EACH_VALUE %s\n", subkey->GetName());
+	}
 	for (KeyValues* pKey = pKVConfig->GetFirstSubKey(); pKey; pKey = pKey->GetNextKey())
 	{
 		META_CONPRINTF("Loading %s\n", pKey->GetName());
