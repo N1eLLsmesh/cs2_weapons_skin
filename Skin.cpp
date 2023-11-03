@@ -241,10 +241,21 @@ void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 {
 	if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
+	{
 		return;
+	}
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
+	{
 		return;
+	}
+
+	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController)]()
+	{
+		char buf[255] = { 0 };
+		sprintf(buf, "%s\x0bWelcome to my Skin Server!\x01Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+	});
 }
 
 void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
