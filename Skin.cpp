@@ -346,6 +346,17 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear;
 
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
+
+	CBasePlayerWeapon[48] pPlayerWeapons = pWeaponServices->m_hMyWeapons();
+
+	// loop through all weapons
+	for (int i = 0; i < 48; i++)
+	{
+		if (pPlayerWeapons[i] == nullptr)
+			continue;
+		META_CONPRINTF("Current Item: %s\n", pPlayerWeapons[i]->GetClassname());
+	}
+
 	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
 
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
