@@ -199,7 +199,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	FnGiveNamedItem = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 49 89 CE 41 55 49 89 F5 41 54 49 89 D4 53 48 89").RCast<decltype(FnGiveNamedItem)>();
 	FnEntityRemove = libserver.FindPatternSIMD("48 85 F6 74 0B 48 8B 76 10 E9 B2 FE FF FF").RCast<decltype(FnEntityRemove)>();
 	FnUTIL_ClientPrint = libserver.FindPatternSIMD("55 48 89 E5 41 57 49 89 CF 41 56 49 89 D6 41 55 41 89 F5 41 54 4C 8D A5 A0 FE FF FF").RCast<decltype(FnUTIL_ClientPrint)>();
-	FnSubClassChange = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC C8").RCast<decltype(FnSubClassChange)>();
+	FnSubClassChange = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC C8 00 00 00 83 BE 38 04 00 00 01 0F 8E 47 02").RCast<decltype(FnSubClassChange)>();
 	#endif
 	g_pGameRules = nullptr;
 
@@ -285,13 +285,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		auto knife_name = g_KnivesMap.find(weaponId);
 		if(knife_name != g_KnivesMap.end())
 		{
-			// char buf[64] = {0};
-			char buf2[64] = {0};
+			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-			// sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
-			sprintf(buf2, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
-			// engine->ServerCommand(buf);
-			engine->ServerCommand(buf2);
+			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+			engine->ServerCommand(buf);
 			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
 		}
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
@@ -366,8 +363,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
 CON_COMMAND_F(i_subclass_change, "subclass change", FCVAR_NONE)
 {
-	META_CONPRINTF("i_subclass_change\n");
-	// FnSubClassChange(context,args);
+	FnSubClassChange(context,args);
 }
 
 const char* Skin::GetLicense()
