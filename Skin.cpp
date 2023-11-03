@@ -351,6 +351,7 @@ bool Skin::LoadConfig() {
 	FOR_EACH_VALUE(pKVConfig, subkey)
 	{
 		META_CONPRINTF("FOR_EACH_VALUE %s\n", subkey->GetName());
+		META_CONPRINTF("FOR_EACH_VALUE %s\n", subkey->GetString(subkey->GetName()));
 	}
 	for (KeyValues* pKey = pKVConfig->GetFirstSubKey(); pKey; pKey = pKey->GetNextKey())
 	{
