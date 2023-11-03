@@ -37,7 +37,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 CEntityListener g_EntityListener;
 bool g_bPistolRound;
 
-#define CHAT_PREFIX	"\x05[Cobra]\x01"
+#define CHAT_PREFIX	" \x05[Cobra]\x01"
 
 typedef struct SkinParm
 {
@@ -350,8 +350,8 @@ bool Skin::LoadConfig() {
 	}
 	for (KeyValues* pKey = pKVConfig->GetFirstSubKey(); pKey; pKey = pKey->GetNextKey())
 	{
-
-
+		META_CONPRINTF("Loading %s\n", pKey->GetName());
+		META_CONPRINTF("Loading %s\n", pKey->GetString());
 	}
 
 	return true;
