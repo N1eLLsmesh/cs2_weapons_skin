@@ -347,7 +347,6 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear;
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-	META_CONPRINTF("Array size: %d\n", pPlayerWeapons.m_size);
 	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
 	if (weapon_slot_map == g_ItemToSlotMap.end()) {
 		sprintf(buf, "%s\x04 %s\x01 Unknown Weapon/Knife ID", CHAT_PREFIX, pPlayerController->m_iszPlayerName());
@@ -355,7 +354,6 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		return;
 	}
 	auto weapon_slot = weapon_slot_map->second;
-	META_CONPRINTF("Weapon Slot: %d\n", weapon_slot);
 	CBasePlayerWeapon* pPlayerWeaponToRemove = nullptr;
 	for (size_t i = 0; i < pPlayerWeapons.m_size; i++)
 	{
@@ -364,30 +362,22 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 			continue;
 		auto weapon = static_cast<CBasePlayerWeapon*>(currentWeapon.Get());
 		if (!weapon)
-			continue
+			continue;
 		auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
 			continue;
 		}
 		auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
-		META_CONPRINTF("Weapon Slot: %d\n", weapon_slot_my_weapon);
 		if (weapon_slot == weapon_slot_my_weapon) {
 			pPlayerWeaponToRemove = weapon;
 		}
-		META_CONPRINTF("Array Item: %s\n", weapon->GetClassname());
-		META_CONPRINTF("Array Item: %d\n", weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 	}
 	if (pPlayerWeaponToRemove) {
-		META_CONPRINTF("pPlayerWeaponToRemove Item: %s\n", pPlayerWeaponToRemove->GetClassname());
 		pWeaponServices->RemoveWeapon(pPlayerWeaponToRemove);
 		FnEntityRemove(g_pGameEntitySystem, pPlayerWeaponToRemove, nullptr, -1);
 	}
-	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
-
     FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-
     pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
-
     META_CONPRINTF("called by %lld\n", steamid);
     sprintf(buf, "%s\x04 %s\x01 Success skin number:%d Template:%d Wear:%f", CHAT_PREFIX, pPlayerController->m_iszPlayerName(), g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
