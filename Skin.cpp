@@ -250,7 +250,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		return;
 	}
 
-	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController)]()
+	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
 		char buf[255] = { 0 };
 		sprintf(buf, "%s\x0bWelcome to my Skin Server!\x01Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
