@@ -15,7 +15,6 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include "ctimer.h"
 #ifdef _WIN32
 #include <Windows.h>
 #include <TlHelp32.h>
