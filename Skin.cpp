@@ -13,8 +13,8 @@
 #include "sdk/CSmokeGrenadeProjectile.h"
 #include <map>
 #include <iostream>
-#include <chrono>
-#include <thread>
+#include <KeyValues.h>
+#include "ctimer.h"
 #ifdef _WIN32
 #include <Windows.h>
 #include <TlHelp32.h>
@@ -23,6 +23,8 @@
 #endif
 #include <string>
 
+
+IFileSystem* filesystem = NULL;
 Skin g_Skin;
 PLUGIN_EXPOSE(Skin, g_Skin);
 IVEngineServer2* engine = nullptr;
@@ -36,6 +38,19 @@ CPlayerSpawnEvent g_PlayerSpawnEvent;
 CRoundPreStartEvent g_RoundPreStartEvent;
 CEntityListener g_EntityListener;
 bool g_bPistolRound;
+
+int countAdv;
+
+float g_flUniversalTime;
+float g_flLastTickedTime;
+bool g_bHasTicked;
+
+struct BlockAdv {
+	int dest;
+	std::string text;
+};
+
+std::vector< BlockAdv > advs;
 
 #define CHAT_PREFIX	" \x05[Cobra]\x01 "
 
