@@ -360,6 +360,12 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		if (!currentWeapon)
 			continue;
 		
+		auto weapon = static_cast<CBasePlayerWeapon*>(currentWeapon.Get());
+		if (!weapon)
+			continue;
+
+		META_CONPRINTF("Array Item: %s\n", weapon->GetClassname());
+		
 
 		
 		
