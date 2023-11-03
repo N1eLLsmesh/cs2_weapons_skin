@@ -283,7 +283,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(bufcheats1, "sv_cheats 1");
 			sprintf(bufcheats0, "sv_cheats 0");
-			sprintf(buf, "subclass_change %d %d", weapon_id, index);
+			sprintf(buf, "subclass_change %d %d", weaponId, index);
 			engine->ServerCommand(bufcheats1);
 			engine->ServerCommand(buf);
 			engine->ServerCommand(bufcheats0);
@@ -306,7 +306,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(bufcheats1, "sv_cheats 1");
 			sprintf(bufcheats0, "sv_cheats 0");
-			sprintf(buf, "subclass_change %d %d", weapon_id, index);
+			sprintf(buf, "subclass_change %d %d", weaponId, index);
 			engine->ServerCommand(bufcheats1);
 			engine->ServerCommand(buf);
 			engine->ServerCommand(bufcheats0);
