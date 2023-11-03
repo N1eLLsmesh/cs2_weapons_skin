@@ -352,6 +352,19 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	META_CONPRINTF("Array size: %d\n", pPlayerWeapons.m_size);
+
+	for (size_t i = 0; i < pWeapons.m_size; i++)
+	{
+		META_CONPRINTF("Array i: %d\n", i);
+		auto currentWeapon = pWeapons.m_data[i];
+		if (!currentWeapon)
+			continue;
+		
+
+		
+		
+	
+	}
 	/*for (auto i = 0; i <= 48; i++)
 	{
 		META_CONPRINTF("Array i: %d\n", i);
