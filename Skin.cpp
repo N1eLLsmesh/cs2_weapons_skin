@@ -356,7 +356,18 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	META_CONPRINTF("Array size: %d\n", pPlayerWeapons.m_size);
 
 	// get the weapon slot from the weapon_id
-	auto weapon_slot = g_ItemToSlotMap.find(weapon_id);
+	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
+	if (weapon_slot_map == g_ItemToSlotMap.end()) {
+		sprintf(buf, "%s\x04 %s\x01 Unknown Weapon/Knife ID", CHAT_PREFIX, pPlayerController->m_iszPlayerName());
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		return;
+	}
+
+	auto weapon_slot = weapon_slot_map->second;
+	META_CONPRINTF("Weapon Slot: %d\n", weapon_slot);
+
+	CBasePlayerWeapon* pPlayerWeaponToRemove = nullptr;
+
 
 
 	for (size_t i = 0; i < pPlayerWeapons.m_size; i++)
@@ -369,10 +380,31 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		if (!weapon)
 			continue;
 
+		// get the weapon slot from m_AttributeManager().m_Item().m_iItemDefinitionIndex()
+		auto weapon_slot_map = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		if (weapon_slot_map == g_ItemToSlotMap.end()) {
+			continue;
+		}
+
+		auto weapon_slot = weapon_slot_map->second;
+		META_CONPRINTF("Weapon Slot: %d\n", weapon_slot);
+
+		if (weapon_slot == weapon_slot) {
+			pPlayerWeaponToRemove = weapon;
+		}
+		
+
 		META_CONPRINTF("Array Item: %s\n", weapon->GetClassname());
 		META_CONPRINTF("Array Item: %s\n", weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		// 
 	}
+
+	// if pPlayerWeaponToRemove is not null, print the classname
+	if (pPlayerWeaponToRemove) {
+		META_CONPRINTF("pPlayerWeaponToRemove Item: %s\n", pPlayerWeaponToRemove->GetClassname());
+	}
+
+
 
 	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
 
