@@ -352,20 +352,10 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
 	CBasePlayerWeapon* pPlayerWeapons[48];
 
-	for (int i = 0; i < 48; i++) {
-		if (pWeaponServices->GetWeapon(i) == nullptr)
-			continue;
-		pPlayerWeapons[i] = pWeaponServices->GetWeapon(i);
-	}
+	META_CONPRINTF("Current Item0: %s\n", pWeaponServices->GetWeapon(0)->GetClassname());
+	META_CONPRINTF("Current Item1: %s\n", pWeaponServices->GetWeapon(1)->GetClassname());
+	META_CONPRINTF("Current Item2: %s\n", pWeaponServices->GetWeapon(2)->GetClassname());
 
-
-	// loop through all weapons
-	for (int i = 0; i < 48; i++)
-	{
-		if (pPlayerWeapons[i] == nullptr)
-			continue;
-		META_CONPRINTF("Current Item: %s\n", pPlayerWeapons[i]->GetClassname());
-	}
 
 	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
 
