@@ -12,6 +12,9 @@
 #include "sdk/CCSPlayer_ItemServices.h"
 #include "sdk/CSmokeGrenadeProjectile.h"
 #include <map>
+#include <iostream>
+#include <chrono>
+#include <thread>
 #ifdef _WIN32
 #include <Windows.h>
 #include <TlHelp32.h>
@@ -354,7 +357,6 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		return;
 	}
 	auto weapon_slot = weapon_slot_map->second;
-	CBasePlayerWeapon* pPlayerWeaponToRemove = nullptr;
 	for (size_t i = 0; i < pPlayerWeapons.m_size; i++)
 	{
 		auto currentWeapon = pPlayerWeapons.m_data[i];
@@ -369,12 +371,10 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 		auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
 		if (weapon_slot == weapon_slot_my_weapon) {
-			pPlayerWeaponToRemove = weapon;
+			pWeaponServices->RemoveWeapon(weapon);
+			FnEntityRemove(g_pGameEntitySystem, weapon, nullptr, -1);
+			break;
 		}
-	}
-	if (pPlayerWeaponToRemove) {
-		pWeaponServices->RemoveWeapon(pPlayerWeaponToRemove);
-		FnEntityRemove(g_pGameEntitySystem, pPlayerWeaponToRemove, nullptr, -1);
 	}
     FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
