@@ -350,12 +350,16 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	// CBasePlayerWeapon* pPlayerWeapons[48] = pWeaponServices->m_hMyWeapons();
 	// array initializer must be an initializer list, fix this
 
-	CBasePlayerWeapon* pPlayerWeapons[48];
-
-	META_CONPRINTF("Current Item0: %s\n", pWeaponServices->GetWeapon(0)->GetClassname());
-	META_CONPRINTF("Current Item1: %s\n", pWeaponServices->GetWeapon(1)->GetClassname());
-	META_CONPRINTF("Current Item2: %s\n", pWeaponServices->GetWeapon(2)->GetClassname());
-
+	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
+	for (auto i = 0; pPlayerWeapons[i].IsValid(); i++)
+	{
+		auto weapon = static_cast<CBasePlayerWeapon*>(m_entitylist()->GetClientEntityFromHandle(pPlayerWeapons[i]));
+		if (!weapon)
+			continue;
+		
+		META_CONPRINTF("Current Item: %s\n", weapon->GetClassname());
+		
+	}
 
 	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
 
