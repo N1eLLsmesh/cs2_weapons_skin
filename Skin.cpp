@@ -351,7 +351,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	// array initializer must be an initializer list, fix this
 
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-	META_CONPRINTF("Array size: %d\n", pPlayerWeapons->m_size);
+	META_CONPRINTF("Array size: %d\n", pPlayerWeapons.m_size);
 	/*for (auto i = 0; i <= 48; i++)
 	{
 		META_CONPRINTF("Array i: %d\n", i);
