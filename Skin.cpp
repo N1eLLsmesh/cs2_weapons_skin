@@ -276,9 +276,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 			META_CONPRINTF("CTimer!\n");
 			return 5.0f;
 		});
-
-
-
+		srand(time(0));
 	});
 }
 
