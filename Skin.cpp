@@ -15,6 +15,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include "ctimer.h"
 #ifdef _WIN32
 #include <Windows.h>
 #include <TlHelp32.h>
@@ -269,6 +270,15 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
 		g_PlayerMessages[steamid] = 1;
+
+		new CTimer(5.0f, true, []()
+		{
+			META_CONPRINTF("CTimer!\n");
+			return 5.0f;
+		});
+
+
+
 	});
 }
 

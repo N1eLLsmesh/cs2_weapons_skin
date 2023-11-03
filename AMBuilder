@@ -23,6 +23,7 @@ for sdk_name in MMSPlugin.sdks:
       'Skin.cpp',
       'utils/module.cpp',
       'utils/memaddr.cpp',
+      'ctimer.cpp',
       os.path.join('sdk', 'schemasystem.cpp')
     ]
 
