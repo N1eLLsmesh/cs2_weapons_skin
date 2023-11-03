@@ -257,10 +257,18 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	if(!pBasePlayerWeapon) return;
-	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
+	int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
+	int64_t weaponId = pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+	auto knife_name = g_KnivesMap.find(skin_parm->second.m_iItemDefinitionIndex);
+	if(knife_name != g_KnivesMap.end())
 	{
-		int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
-		int64_t weaponId = pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+		char buf[64] = {0};
+		int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
+		sprintf(buf, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+		engine->ServerCommand(buf);
+	}
+	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, steamid, weaponId]()
+	{
 		if(!steamid) {
 			return;
 		}
@@ -274,14 +282,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		auto knife_name = g_KnivesMap.find(skin_parm->second.m_iItemDefinitionIndex);
-		if(knife_name != g_KnivesMap.end())
-		{
-			char buf[64] = {0};
-			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-			sprintf(buf, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
-			engine->ServerCommand(buf);
-		}
 
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
