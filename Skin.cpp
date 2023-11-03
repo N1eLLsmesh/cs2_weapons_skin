@@ -353,7 +353,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	for (auto i = 0; pPlayerWeapons[i].IsValid(); i++)
 	{
-		auto weapon = static_cast<CBasePlayerWeapon*>(pPlayerWeapons[i]);
+		auto weapon = dynamic_cast<CBasePlayerWeapon*>(pPlayerWeapons[i]);
 		if (!weapon)
 			continue;
 		
