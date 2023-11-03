@@ -361,7 +361,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		char buf[64] = {0};
 		char bufcheats1[64] = {0};
 		char bufcheats0[64] = {0};
-		int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
+		int index = static_cast<CEntityInstance*>(pPlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 		sprintf(bufcheats1, "sv_cheats 1");
 		sprintf(bufcheats0, "sv_cheats 0");
 		sprintf(buf, "subclass_change %d %d", weapon_id, index);
