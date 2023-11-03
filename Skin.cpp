@@ -347,7 +347,15 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
-	CBasePlayerWeapon* pPlayerWeapons[48] = pWeaponServices->m_hMyWeapons();
+	// CBasePlayerWeapon* pPlayerWeapons[48] = pWeaponServices->m_hMyWeapons();
+	// array initializer must be an initializer list, fix this
+
+	CBasePlayerWeapon* pPlayerWeapons[48];
+
+	for (int i = 0; i < 48; i++) {
+		pPlayerWeapons[i] = pWeaponServices->GetWeapon(i);
+	}
+
 
 	// loop through all weapons
 	for (int i = 0; i < 48; i++)

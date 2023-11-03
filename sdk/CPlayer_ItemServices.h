@@ -111,6 +111,9 @@ public:
 	virtual ~CPlayer_WeaponServices() = 0;
 	SCHEMA_FIELD(CHandle<CBasePlayerWeapon>, CPlayer_WeaponServices, m_hActiveWeapon);
 	SCHEMA_FIELD(CHandle<CBasePlayerWeapon>[48], CPlayer_WeaponServices, m_hMyWeapons);
+	CBasePlayerWeapon *GetWeapon(int32_t i) {
+		return CALL_VIRTUAL(CBasePlayerWeapon*, 19, this, i);
+	}
 	auto RemoveWeapon(CBasePlayerWeapon* weapon) {
         return CALL_VIRTUAL(void, 20, this, weapon, nullptr, nullptr);
     }
