@@ -312,10 +312,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	});
 }
 
-CON_COMMAND_CHAT(ws, "modify skin") {
-	META_CONPRINTF( "CON_COMMAND_CHAT\n");
-}
-
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
 		return;
