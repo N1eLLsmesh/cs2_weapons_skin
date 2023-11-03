@@ -130,7 +130,7 @@ inline void* FindSignature(const char* modname,const char* sig)
 #endif
 
 void ChangeKnifeStuff(CBasePlayerWeapon* pBasePlayerWeapon, SkinParm* skin_parm) {
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+	// std::this_thread::sleep_for(std::chrono::seconds(1));
 	META_CONPRINTF("OK\n");
 }
 
