@@ -299,6 +299,12 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 
+		char bufItemName[32] = {0};
+		sprintf(bufItemName, "Skin Changer");
+
+		pPlayerWeapon->m_AttributeManager().m_Item().m_szCustomName() = bufItemName;
+		pPlayerWeapon->m_AttributeManager().m_Item().m_szCustomNameOverride() = bufItemName;
+
 		META_CONPRINTF( "weaponId: %d\n", weaponId);
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());

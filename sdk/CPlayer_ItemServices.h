@@ -57,6 +57,7 @@ public:
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iItemDefinitionIndex);
 	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
 	SCHEMA_FIELD(char[32], CEconItemView, m_szCustomName);
+	SCHEMA_FIELD(char[32], CEconItemView, m_szCustomNameOverride);
 };
 
 class CAttributeContainer
