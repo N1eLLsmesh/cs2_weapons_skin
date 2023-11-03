@@ -292,7 +292,7 @@ void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityIns
 			// META_CONPRINTF("index = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 			// META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
 			// META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-			weapon->second.erase(skin_parm);
+			// weapon->second.erase(skin_parm);
 		}
 	});
 }
