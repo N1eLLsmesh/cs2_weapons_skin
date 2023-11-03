@@ -257,35 +257,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	if(!pBasePlayerWeapon) return;
-
-	int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
-	int64_t weaponId = pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-	if(!steamid) {
-		return;
-	}
-
-	auto weapon = g_PlayerSkins.find(steamid);
-	if(weapon == g_PlayerSkins.end()) {
-		return;
-	}
-	auto skin_parm = weapon->second.begin();
-	if(skin_parm == weapon->second.end()) {
-		return;
-	}
-	auto knife_name = g_KnivesMap.find(skin_parm->second.m_iItemDefinitionIndex);
-	if(knife_name != g_KnivesMap.end())
-	{
-		char buf[64] = {0};
-		char bufcheats1[64] = {0};
-		char bufcheats0[64] = {0};
-		int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-		sprintf(bufcheats1, "sv_cheats 1");
-		sprintf(bufcheats0, "sv_cheats 0");
-		sprintf(buf, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
-		engine->ServerCommand(bufcheats1);
-		engine->ServerCommand(buf);
-		engine->ServerCommand(bufcheats0);
-	}
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
 	{
 		int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
@@ -303,6 +274,15 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
+		auto knife_name = g_KnivesMap.find(skin_parm->second.m_iItemDefinitionIndex);
+		if(knife_name != g_KnivesMap.end())
+		{
+			char buf[64] = {0};
+			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
+			sprintf(buf, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+			engine->ServerCommand(buf);
+		}
+
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
@@ -311,16 +291,15 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 
 		META_CONPRINTF( "weaponId: %d\n", weaponId);
-
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
-
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
-
 		META_CONPRINTF("index = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
-
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		weapon->second.erase(skin_parm);
+		char bufcheats0[64] = {0};
+		sprintf(bufcheats0, "sv_cheats 0");
+		engine->ServerCommand(bufcheats0);
 	});
 }
 
@@ -341,6 +320,10 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
         return;
     }
+
+	char bufcheats1[64] = {0};
+	sprintf(bufcheats1, "sv_cheats 1");
+	engine->ServerCommand(bufcheats1);
 
 	int32_t weapon_id = atoi(args.Arg(1));
 	int64_t paint_kit = atoi(args.Arg(2));
