@@ -257,7 +257,6 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
-	META_CONPRINTF( "OnEntitySpawned\n");
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	if(!pBasePlayerWeapon) return;
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
