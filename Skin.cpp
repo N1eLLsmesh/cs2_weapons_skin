@@ -274,7 +274,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		auto knife_name = g_KnivesMap.find(weaponId);
+		auto knife_name = g_KnivesMap.find(skin_parm->second.m_iItemDefinitionIndex);
 		if(knife_name != g_KnivesMap.end())
 		{
 			char buf[64] = {0};
@@ -283,7 +283,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(bufcheats1, "sv_cheats 1");
 			sprintf(bufcheats0, "sv_cheats 0");
-			sprintf(buf, "subclass_change %d %d", weaponId, index);
+			sprintf(buf, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
 			engine->ServerCommand(bufcheats1);
 			engine->ServerCommand(buf);
 			engine->ServerCommand(bufcheats0);
@@ -306,11 +306,11 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(bufcheats1, "sv_cheats 1");
 			sprintf(bufcheats0, "sv_cheats 0");
-			sprintf(buf, "subclass_change %d %d", weaponId, index);
+			sprintf(buf, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
 			engine->ServerCommand(bufcheats1);
 			engine->ServerCommand(buf);
 			engine->ServerCommand(bufcheats0);
-			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
+			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", skin_parm->second.m_iItemDefinitionIndex, skin_parm->second.m_iItemDefinitionIndex);
 		}
 
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
