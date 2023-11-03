@@ -37,7 +37,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 CEntityListener g_EntityListener;
 bool g_bPistolRound;
 
-#define CHAT_PREFIX	" \x05[Cobra]\x01"
+#define CHAT_PREFIX	"\x05[Cobra]\x01"
 
 typedef struct SkinParm
 {
@@ -169,6 +169,12 @@ bool Skin::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool lat
 		VirtualProtect(vscript, 2, pOld, &pOld);
 	}
 	#endif
+
+	if (!g_Skin.LoadConfig())
+	{
+		META_CONPRINTF("Failed to load config\n");
+	}
+
 	return true;
 }
 
@@ -334,6 +340,30 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	});
 }
 
+bool Skin::LoadConfig() {
+	KeyValues* pKVConfig = new KeyValues("Config");
+	KeyValues::AutoDelete autoDelete(pKVConfig);
+	if (!pKVConfig->LoadFromFile(g_pFullFileSystem, "addons/Skin/config.ini"))
+	{
+		META_CONPRINTF("Failed to load config.ini\n");
+		return false;
+	}
+	for (KeyValues* pKey = pKVConfig->GetFirstSubKey(); pKey; pKey = pKey->GetNextKey())
+	{
+
+
+	}
+
+	return true;
+}
+
+CON_COMMAND_F(skin_reload, "reload config file", FCVAR_NONE)
+{
+	if (!g_Skin.LoadConfig())
+	{
+		META_CONPRINTF("Failed to load config\n");
+	}
+}
 
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
