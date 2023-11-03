@@ -357,11 +357,11 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		if (!weapon)
 			continue;
 		
-		META_CONPRINTF("Current Item: %s\n", weapon->GetClassname());
+		META_CONPRINTF("Array Item: %s\n", weapon->GetClassname());
 		
 	}
 
-	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
+	// META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
 
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
