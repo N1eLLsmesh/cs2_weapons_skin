@@ -102,6 +102,14 @@ SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const G
 SH_DECL_HOOK3_void(IServerGameDLL, GameFrame, SH_NOATTRIB, 0, bool, bool, bool);
 
 CGlobalVars *GetGameGlobals()
+{
+	INetworkGameServer *server = g_pNetworkServerService->GetIGameServer();
+
+	if(!server)
+		return nullptr;
+
+	return g_pNetworkServerService->GetIGameServer()->GetGlobals();
+}
 
 #ifdef _WIN32
 inline void* FindSignature(const char* modname,const char* sig)
