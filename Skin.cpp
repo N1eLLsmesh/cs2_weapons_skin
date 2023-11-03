@@ -353,7 +353,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	for (auto i = 0; i <= 64; i++)
 	{
-		if (pPlayerWeapons[i] == -1)
+		if (!pPlayerWeapons[i])
 			continue;
 		
 		META_CONPRINTF("Array i: %d\n", i);
