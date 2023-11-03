@@ -101,6 +101,8 @@ class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
 SH_DECL_HOOK3_void(IServerGameDLL, GameFrame, SH_NOATTRIB, 0, bool, bool, bool);
 
+CGlobalVars *GetGameGlobals()
+
 #ifdef _WIN32
 inline void* FindSignature(const char* modname,const char* sig)
 {
