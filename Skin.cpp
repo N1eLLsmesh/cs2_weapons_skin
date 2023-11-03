@@ -262,11 +262,10 @@ void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityIns
 {
 	META_CONPRINTF("OnEntityParentChanged\n");
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
-	CBasePlayerWeapon* pBasePlayerWeaponNew = dynamic_cast<CBasePlayerWeapon*>(pNewParent);
-	if(!pBasePlayerWeapon || !pBasePlayerWeaponNew) return;
-	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pBasePlayerWeaponNew = pBasePlayerWeaponNew]()
+	if(!pBasePlayerWeapon) return;
+	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
 	{
-		META_CONPRINTF( "Index1: %d Index2 %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex(), pBasePlayerWeaponNew->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		META_CONPRINTF( "Index1: %d Index2\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 	});
 }
 
