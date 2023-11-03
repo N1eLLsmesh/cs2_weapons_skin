@@ -351,8 +351,12 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	// array initializer must be an initializer list, fix this
 
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-	for (auto i = 0; pPlayerWeapons[i].IsValid(); i++)
+	for (auto i = 0; i <= 64; i++)
 	{
+		if (pPlayerWeapons[i] == -1)
+			continue;
+		
+		META_CONPRINTF("Array i: %d\n", i);
 		auto weapon = static_cast<CBasePlayerWeapon*>(pPlayerWeapons[i]);
 		if (!weapon)
 			continue;
