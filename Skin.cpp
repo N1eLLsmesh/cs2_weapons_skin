@@ -302,8 +302,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		char bufItemName[32] = {0};
 		sprintf(bufItemName, "Skin Changer");
 
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomName() = "Skin Changer";
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomNameOverride() = "Skin Changer";
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomName() = "Skin Changer";
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomNameOverride() = "Skin Changer";
+		strcpy(pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomName(), "Skin Changer");
+		strcpy(pBasePlayerWeapon->m_AttributeManager().m_Item().m_szCustomNameOverride(), "Skin Changer");
 
 		META_CONPRINTF( "weaponId: %d\n", weaponId);
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
