@@ -411,8 +411,13 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 		auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
 		if (weapon_slot == weapon_slot_my_weapon) {
-			pWeaponServices->RemoveWeapon(weapon);
-			FnEntityRemove(g_pGameEntitySystem, weapon, nullptr, -1);
+			// pWeaponServices->RemoveWeapon(weapon);
+			// FnEntityRemove(g_pGameEntitySystem, weapon, nullptr, -1);
+			char buf[64] = {0};
+			int index = static_cast<CEntityInstance*>(weapon)->m_pEntity->m_EHandle.GetEntryIndex();
+			sprintf(buf, "i_subclass_change %d %d", weapon_id, index);
+			engine->ServerCommand(buf);
+			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weapon_id, weapon_id);
 			break;
 		}
 	}
