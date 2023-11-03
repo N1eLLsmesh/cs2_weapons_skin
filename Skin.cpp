@@ -348,6 +348,8 @@ bool Skin::LoadConfig() {
 		META_CONPRINTF("Failed to load config.ini\n");
 		return false;
 	}
+
+	META_CONPRINTF("CHAT_PREFIX: %s\n", pKVConfig->GetString("CHAT_PREFIX"));
 	FOR_EACH_VALUE(pKVConfig, subkey)
 	{
 		META_CONPRINTF("FOR_EACH_VALUE %s\n", subkey->GetName());
