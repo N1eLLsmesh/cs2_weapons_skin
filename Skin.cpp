@@ -292,7 +292,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			sprintf(buf2, "subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
 			engine->ServerCommand(buf);
 			engine->ServerCommand(buf2);
-			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d Index %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex, index);
+			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
 		}
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
 
