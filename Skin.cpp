@@ -274,13 +274,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
-		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
-		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-
 		META_CONPRINTF( "weaponId: %d\n", weaponId);
 		auto knife_name = g_KnivesMap.find(weaponId);
 		if(knife_name != g_KnivesMap.end())
@@ -294,6 +287,15 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			engine->ServerCommand(buf2);
 			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
 		}
+
+
+		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
+		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
+		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
 
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
