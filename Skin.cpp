@@ -261,6 +261,13 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityInstance *pNewParent)
 {
 	META_CONPRINTF("OnEntityParentChanged\n");
+	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
+	CBasePlayerWeapon* pBasePlayerWeaponNew = dynamic_cast<CBasePlayerWeapon*>(pNewParent);
+	if(!pBasePlayerWeapon || !pBasePlayerWeaponNew) return;
+	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pBasePlayerWeaponNew = pBasePlayerWeaponNew]()
+	{
+		META_CONPRINTF( "Index1: %d Index2 %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex(), pBasePlayerWeaponNew->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+	});
 }
 
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
@@ -293,7 +300,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			engine->ServerCommand(buf);
 			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
 		}
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		// std::this_thread::sleep_for(std::chrono::seconds(1));
 
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
