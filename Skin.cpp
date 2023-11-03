@@ -322,7 +322,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     char buf[255] = { 0 };
     if (args.ArgC() != 5)
     {
-        sprintf(buf, "%s\x02Wrong usage!\x01Use: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
+        sprintf(buf, "%s\x02Wrong usage!\x01Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
         return;
     }
