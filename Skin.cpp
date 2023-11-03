@@ -353,7 +353,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	for (auto i = 0; pPlayerWeapons[i].IsValid(); i++)
 	{
-		auto weapon = dynamic_cast<CBasePlayerWeapon*>(pPlayerWeapons[i]);
+		auto weapon = static_cast<CBasePlayerWeapon*>(pPlayerWeapons[i]);
 		if (!weapon)
 			continue;
 		
@@ -361,7 +361,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		
 	}
 
-	// META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
+	META_CONPRINTF("Current Item: %s\n", pPlayerWeapon->GetClassname());
 
     pWeaponServices->RemoveWeapon(pPlayerWeapon);
     FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
