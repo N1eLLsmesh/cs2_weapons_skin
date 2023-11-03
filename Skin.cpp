@@ -351,7 +351,7 @@ bool Skin::LoadConfig() {
 	for (KeyValues* pKey = pKVConfig->GetFirstSubKey(); pKey; pKey = pKey->GetNextKey())
 	{
 		META_CONPRINTF("Loading %s\n", pKey->GetName());
-		META_CONPRINTF("Loading %s\n", pKey->GetString());
+		META_CONPRINTF("Loading %s\n", pKey->GetString(pKey->GetName()));
 	}
 
 	return true;
