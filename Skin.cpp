@@ -351,17 +351,14 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	// array initializer must be an initializer list, fix this
 
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-	for (auto i = 0; i <= 64; i++)
+	for (size_t i = 0; i < pWeapons->m_size; i++)
 	{
-		if (!pPlayerWeapons[i])
-			continue;
-		
 		META_CONPRINTF("Array i: %d\n", i);
-		auto weapon = static_cast<CBasePlayerWeapon*>(pPlayerWeapons[i]);
+		/*auto weapon = static_cast<CBasePlayerWeapon*>(pPlayerWeapons[i]);
 		if (!weapon)
 			continue;
 		
-		META_CONPRINTF("Array Item: %s\n", weapon->GetClassname());
+		META_CONPRINTF("Array Item: %s\n", weapon->GetClassname());*/
 		
 	}
 
