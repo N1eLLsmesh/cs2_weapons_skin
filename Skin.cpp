@@ -75,6 +75,7 @@ void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) =
 
 std::map<int, std::string> g_WeaponsMap;
 std::map<int, std::string> g_KnivesMap;
+std::map<int, int> g_ItemToSlotMap;
 std::map<uint64_t, std::map<int, SkinParm>> g_PlayerSkins;
 
 class GameSessionConfiguration_t { };
@@ -353,6 +354,10 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	META_CONPRINTF("Array size: %d\n", pPlayerWeapons.m_size);
+
+	// get the weapon slot from the weapon_id
+	auto weapon_slot = g_ItemToSlotMap.find(weapon_id);
+
 
 	for (size_t i = 0; i < pPlayerWeapons.m_size; i++)
 	{
