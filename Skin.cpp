@@ -77,6 +77,7 @@ std::map<int, std::string> g_WeaponsMap;
 std::map<int, std::string> g_KnivesMap;
 std::map<int, int> g_ItemToSlotMap;
 std::map<uint64_t, std::map<int, SkinParm>> g_PlayerSkins;
+std::map<uint64_t, int> g_PlayerMessages;
 
 class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
@@ -252,9 +253,16 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
+		int64_t steamid = pPlayerController->m_steamID();
+		auto message = g_PlayerMessages.find(steamid);
+		if (message != g_PlayerMessages.end())
+		{
+			return;
+		}
 		char buf[255] = { 0 };
 		sprintf(buf, "%s\x0bWelcome to my Skin Server!\x01 Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		g_PlayerMessages[steamid] = 1;
 	});
 }
 
