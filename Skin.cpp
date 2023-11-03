@@ -12,10 +12,6 @@
 #include "sdk/CCSPlayer_ItemServices.h"
 #include "sdk/CSmokeGrenadeProjectile.h"
 #include <map>
-#include <iostream>
-#include "colors/colors.h"
-#include <KeyValues.h>
-#include "ctimer.h"
 #ifdef _WIN32
 #include <Windows.h>
 #include <TlHelp32.h>
@@ -24,8 +20,6 @@
 #endif
 #include <string>
 
-
-IFileSystem* filesystem = NULL;
 Skin g_Skin;
 PLUGIN_EXPOSE(Skin, g_Skin);
 IVEngineServer2* engine = nullptr;
@@ -39,19 +33,6 @@ CPlayerSpawnEvent g_PlayerSpawnEvent;
 CRoundPreStartEvent g_RoundPreStartEvent;
 CEntityListener g_EntityListener;
 bool g_bPistolRound;
-
-int countAdv;
-
-float g_flUniversalTime;
-float g_flLastTickedTime;
-bool g_bHasTicked;
-
-struct BlockAdv {
-	int dest;
-	std::string text;
-};
-
-std::vector< BlockAdv > advs;
 
 #define CHAT_PREFIX	" \x05[Cobra]\x01 "
 
@@ -100,16 +81,6 @@ std::map<uint64_t, std::map<int, SkinParm>> g_PlayerSkins;
 class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
 SH_DECL_HOOK3_void(IServerGameDLL, GameFrame, SH_NOATTRIB, 0, bool, bool, bool);
-
-CGlobalVars *GetGameGlobals()
-{
-	INetworkGameServer *server = g_pNetworkServerService->GetIGameServer();
-
-	if(!server)
-		return nullptr;
-
-	return g_pNetworkServerService->GetIGameServer()->GetGlobals();
-}
 
 #ifdef _WIN32
 inline void* FindSignature(const char* modname,const char* sig)
@@ -194,36 +165,6 @@ bool Skin::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool lat
 		VirtualProtect(vscript, 2, pOld, &pOld);
 	}
 	#endif
-
-
-	KeyValues* kv = new KeyValues("advertisement");
-	kv->LoadFromFile(filesystem, "addons/Skin/advertisement.ini");
-
-	new CTimer(kv->GetInt("update time"), true, true, []() {
-		auto&adv = advs[countAdv];
-
-		FnUTIL_ClientPrintAll(adv.dest, adv.text.c_str(), nullptr, nullptr, nullptr, nullptr);
-
-		countAdv = (countAdv+1)%advs.size();
-	});
-
-	const KeyValues *listAdv = kv->FindKey("list");
-	if (listAdv) {
-		for ( KeyValues *pKey = listAdv->GetFirstTrueSubKey(); pKey; pKey = pKey->GetNextTrueSubKey() )
-		{
-			std::string text(pKey->GetString("text"));
-
-			for (int i = 0; i < std::size(colors_hex); i++) {
-				text = ReplaceAll(text, colors_text[i], colors_hex[i]);
-			}
-
-			advs.push_back({pKey->GetInt("dest"), std::move(text)});
-		}
-	}
-
-	delete kv;
-
-
 	return true;
 }
 
@@ -294,43 +235,6 @@ void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 	{
 		m_nextFrame.front()();
 		m_nextFrame.pop_front();
-	}
-
-if (simulating && g_bHasTicked)
-	{
-		g_flUniversalTime += GetGameGlobals()->curtime - g_flLastTickedTime;
-	}
-	else
-	{
-		g_flUniversalTime += GetGameGlobals()->interval_per_tick;
-	}
-
-	g_flLastTickedTime = GetGameGlobals()->curtime;
-	g_bHasTicked = true;
-
-	for (int i = g_timers.Tail(); i != g_timers.InvalidIndex();)
-	{
-		auto timer = g_timers[i];
-
-		int prevIndex = i;
-		i = g_timers.Previous(i);
-
-		if (timer->m_flLastExecute == -1)
-			timer->m_flLastExecute = g_flUniversalTime;
-
-		// Timer execute
-		if (timer->m_flLastExecute + timer->m_flTime <= g_flUniversalTime)
-		{
-			timer->Execute();
-
-			if (!timer->m_bRepeat)
-			{
-				delete timer;
-				g_timers.Remove(prevIndex);
-			}
-			else
-				timer->m_flLastExecute = g_flUniversalTime;
-		}
 	}
 }
 
@@ -404,6 +308,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 	});
 }
+
 
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
