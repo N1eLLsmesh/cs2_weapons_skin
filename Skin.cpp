@@ -258,6 +258,11 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 	}
 }
 
+void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityInstance *pNewParent)
+{
+	META_CONPRINTF("OnEntityParentChanged\n");
+}
+
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);

@@ -46,6 +46,7 @@ class CRoundPreStartEvent : public IGameEventListener2
 class CEntityListener : public IEntityListener
 {
 	void OnEntitySpawned(CEntityInstance* pEntity) override;
+	void OnEntityParentChanged(CEntityInstance *pEntity, CEntityInstance *pNewParent) override;
 	// void OnEntityCreated(CEntityInstance* pEntity) override;
 };
 
