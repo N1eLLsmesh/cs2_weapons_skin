@@ -360,6 +360,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
 			// Do it after a small delay
 			new CTimer(1.0f, false, false, [pBasePlayerWeapon, skin_parm, weapon]() {
+				META_CONPRINTF( "Timer executed\n");
 				pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 				pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 				pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
