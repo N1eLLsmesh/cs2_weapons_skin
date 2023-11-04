@@ -332,34 +332,31 @@ void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	if(!pBasePlayerWeapon) return;
 	META_CONPRINTF("OnCBasePlayerWeaponCreated\n");
-	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
-	{
-		int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
-		int64_t weaponId = pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-		if(!steamid) {
-			return;
-		}
 
-		auto weapon = g_PlayerSkins.find(steamid);
-		if(weapon == g_PlayerSkins.end()) {
-			return;
-		}
-		auto skin_parm = weapon->second.begin();
-		if(skin_parm == weapon->second.end()) {
-			return;
-		}
+	int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
+	int64_t weaponId = pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+	if(!steamid) {
+		return;
+	}
 
-		auto knife_name = g_KnivesMap.find(weaponId);
-		if(knife_name != g_KnivesMap.end()) {
-			char buf[64] = {0};
-			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
-			// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-			engine->ServerCommand(buf);
-			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
-		}
+	auto weapon = g_PlayerSkins.find(steamid);
+	if(weapon == g_PlayerSkins.end()) {
+		return;
+	}
+	auto skin_parm = weapon->second.begin();
+	if(skin_parm == weapon->second.end()) {
+		return;
+	}
 
-	});
+	auto knife_name = g_KnivesMap.find(weaponId);
+	if(knife_name != g_KnivesMap.end()) {
+		char buf[64] = {0};
+		int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
+		sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		engine->ServerCommand(buf);
+		META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
+	}
 }
 
 void CEntityListener::OnEntityDeleted(CEntityInstance *pEntity) {
