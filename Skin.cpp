@@ -365,7 +365,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = 0;
 
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iEntityLevel() = 1;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iEntityQuality() = 3;
@@ -373,7 +372,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pBasePlayerWeapon->m_hPrevOwner() = -1;
 
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
 		auto knife_name = g_KnivesMap.find(weaponId);
 		if(knife_name != g_KnivesMap.end()) {
@@ -390,7 +389,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = 0;
 
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iEntityLevel() = 1;
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iEntityQuality() = 3;
@@ -399,7 +397,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 
 				pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+				// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 				weapon->second.erase(skin_parm);
 			});
 		}
@@ -488,7 +486,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	// pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
     // FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-    pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+    // pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
     META_CONPRINTF("called by %lld\n", steamid);
     sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid][weapon_id].m_iItemDefinitionIndex, g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
