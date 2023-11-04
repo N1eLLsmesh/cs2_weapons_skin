@@ -328,16 +328,43 @@ void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityIns
 	META_CONPRINTF("OnEntityParentChanged\n");
 }
 
-
 void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
-	META_CONPRINTF("OnEntityCreated\n");
-}
+	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
+	if(!pBasePlayerWeapon) return;
+	META_CONPRINTF("OnCBasePlayerWeaponCreated\n");
+	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
+	{
+		int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
+		int64_t weaponId = pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+		if(!steamid) {
+			return;
+		}
 
+		auto weapon = g_PlayerSkins.find(steamid);
+		if(weapon == g_PlayerSkins.end()) {
+			return;
+		}
+		auto skin_parm = weapon->second.begin();
+		if(skin_parm == weapon->second.end()) {
+			return;
+		}
+
+		auto knife_name = g_KnivesMap.find(weaponId);
+		if(knife_name != g_KnivesMap.end()) {
+			char buf[64] = {0};
+			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
+			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+			// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+			engine->ServerCommand(buf);
+			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
+		}
+
+	});
+}
 
 void CEntityListener::OnEntityDeleted(CEntityInstance *pEntity) {
 	META_CONPRINTF("OnEntityDeleted\n");
 }
-
 
 
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
@@ -363,9 +390,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		}
 
 		auto knife_name = g_KnivesMap.find(weaponId);
-		if(knife_name != g_KnivesMap.end())
-		{
-			char buf[64] = {0};
+		if(knife_name != g_KnivesMap.end()) {
+			/*char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
 			// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
@@ -383,7 +409,23 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 				weapon->second.erase(skin_parm);
 				META_CONPRINTF( "itemId: %d itemId2: %d\n", skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-			});
+			});*/
+			pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
+			pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
+			pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+			pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+			pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+			pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+
+			META_CONPRINTF( "weaponId: %d\n", weaponId);
+			META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
+			META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
+			META_CONPRINTF("index = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+			META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
+			META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+
+			weapon->second.erase(skin_parm);
 		} else {
 			pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 			pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
