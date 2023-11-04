@@ -477,7 +477,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
 		if (weapon_slot == weapon_slot_my_weapon) {
 			pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
-			FnEntityRemove(g_pGameEntitySystem, weapon, nullptr, -1);
+			FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
 		}
 	}
 
