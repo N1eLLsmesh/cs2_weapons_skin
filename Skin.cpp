@@ -394,8 +394,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 
 		dynamic_cast<CCSWeaponBase*>(pBasePlayerWeapon)->m_hPrevOwner() = -1;
-		pBasePlayerWeapon->m_hPrevOwner() = -1;
-
 
 		// pBasePlayerWeapon->m_OriginalOwnerXuidLow() = -1;
 
