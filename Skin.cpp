@@ -369,8 +369,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iEntityLevel() = 1;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iEntityQuality() = 3;
-
 		pBasePlayerWeapon->m_OriginalOwnerXuidLow() = -1;
+		pBasePlayerWeapon->m_hPrevOwner() = -1;
 
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
@@ -394,8 +394,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iEntityLevel() = 1;
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iEntityQuality() = 3;
-
 				pBasePlayerWeapon->m_OriginalOwnerXuidLow() = -1;
+				pBasePlayerWeapon->m_hPrevOwner() = -1;
+
 
 				pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
