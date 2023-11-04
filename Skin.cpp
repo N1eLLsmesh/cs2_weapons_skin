@@ -407,7 +407,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_OriginalOwnerXuidHigh() = -1;
 
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID() = 0;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
 		auto knife_name = g_KnivesMap.find(weaponId);
 		if(knife_name != g_KnivesMap.end()) {
