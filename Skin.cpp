@@ -325,7 +325,39 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 }
 
 void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityInstance *pNewParent) {
-	META_CONPRINTF("OnEntityParentChanged\n");
+	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
+	if(!pBasePlayerWeapon) return;
+	META_CONPRINTF("OnCBasePlayerWeaponParentChanged\n");
+	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
+	{
+		int64_t steamid = pBasePlayerWeapon->m_OriginalOwnerXuidLow();
+		int64_t weaponId = pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+		if(!steamid) {
+			return;
+		}
+
+		auto weapon = g_PlayerSkins.find(steamid);
+		if(weapon == g_PlayerSkins.end()) {
+			return;
+		}
+		auto skin_parm = weapon->second.begin();
+		if(skin_parm == weapon->second.end()) {
+			return;
+		}
+
+		auto knife_name = g_KnivesMap.find(weaponId);
+		if(knife_name != g_KnivesMap.end()) {
+			pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
+			pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
+			pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+			pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+			pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+			pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+			weapon->second.erase(skin_parm);
+			META_CONPRINTF( "itemId: %d itemId2: %d\n", skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		}
+	});
 }
 
 void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
@@ -396,7 +428,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
 			// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 			engine->ServerCommand(buf);
-			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);*/
+			META_CONPRINTF( "class changed. Def Index: %d ItemIndex %d\n", weaponId, skin_parm->second.m_iItemDefinitionIndex);
 			// Do it after a small delay
 			new CTimer(1.0f, false, false, [pBasePlayerWeapon, skin_parm, weapon]() {
 				META_CONPRINTF( "Timer executed\n");
@@ -409,7 +441,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 				weapon->second.erase(skin_parm);
 				META_CONPRINTF( "itemId: %d itemId2: %d\n", skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-			});
+			});*/
 			/*pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 			pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 			pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
