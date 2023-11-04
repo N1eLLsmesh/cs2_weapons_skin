@@ -1,5 +1,6 @@
 #pragma once
 #include "CPlayerPawnComponent.h"
+#include "CCSPlayerPawn.h"
 #include "schemasystem.h"
 #include "ehandle.h"
 #include "CBaseFlex.h"
