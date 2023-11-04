@@ -416,7 +416,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("itemID2: %d\n", itemID2);
 		
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = g_iItemIDHigh;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = g_iItemIDHigh++;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = g_iItemIDHigh++;
 
@@ -443,14 +443,14 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			engine->ServerCommand(buf);
 			META_CONPRINTF( "i_subclass_change triggered\n");
 
-			/*new CTimer(1.0f, false, false, [pCEconEntityWeapon, skin_parm]() {
+			new CTimer(0.5f, false, false, [pCEconEntityWeapon, skin_parm]() {
 				char buf[255] = { 0 };
 				sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 				FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
 				pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 				pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 				pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-			});*/
+			});
 		}
 
 		META_CONPRINTF("low: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
