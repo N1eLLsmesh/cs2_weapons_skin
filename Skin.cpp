@@ -391,6 +391,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			engine->ServerCommand(buf);
 			META_CONPRINTF( "i_subclass_change triggered\n");
 		}
+		weapon->second.erase(skin_parm);
 		META_CONPRINTF( "weaponId: %d\n", weaponId);
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
 		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
