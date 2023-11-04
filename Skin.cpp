@@ -370,7 +370,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		auto knife_name = g_KnivesMap.find(weaponId);
 		if(knife_name != g_KnivesMap.end()) {
-			new CTimer(1.0f, false, false, [pBasePlayerWeapon, skin_parm]() {
+			new CTimer(1.0f, false, false, [pBasePlayerWeapon, skin_parm, weapon]() {
 				char buf[64] = {0};
 				int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 				sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
