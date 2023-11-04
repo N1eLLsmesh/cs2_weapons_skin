@@ -433,7 +433,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     {
         char buf2[255] = { 0 };
 		sprintf(buf, "%s%s", g_CHAT_PREFIX, g_CHAT_MESSAGE_WRONG_USAGE);
-		sprintf(buf2, "%s%s", g_CHAT_PREFIX, MESSAGE_CMD);
+		sprintf(buf2, "%s%s", g_CHAT_PREFIX, g_CHAT_MESSAGE_CMD);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
         return;
