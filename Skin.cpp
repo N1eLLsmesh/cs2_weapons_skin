@@ -393,6 +393,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 
 
+		dynamic_cast<CCSWeaponBase*>(pEntity)->m_hPrevOwner() = -1;
+		pBasePlayerWeapon->m_hPrevOwner() = -1;
+
+
 		// pBasePlayerWeapon->m_OriginalOwnerXuidLow() = -1;
 
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
