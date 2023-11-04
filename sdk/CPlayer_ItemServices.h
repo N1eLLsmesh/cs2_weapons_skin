@@ -1,6 +1,5 @@
 #pragma once
 #include "CPlayerPawnComponent.h"
-#include "CCSPlayerPawn.h"
 #include "schemasystem.h"
 #include "ehandle.h"
 #include "CBaseFlex.h"
@@ -105,7 +104,6 @@ public:
 	SCHEMA_FIELD(uint64_t, CEconEntity, m_OriginalOwnerXuidLow);
 	SCHEMA_FIELD(uint32_t, CBaseEntity, m_nSubclassID);
 	SCHEMA_FIELD(int32_t, CBaseEntity, m_iOldOwnerClass);
-	SCHEMA_FIELD(CHandle<CCSPlayerPawn>, CCSWeaponBase, m_hPrevOwner);
 };
 
 class CPlayer_WeaponServices : public CPlayerPawnComponent
