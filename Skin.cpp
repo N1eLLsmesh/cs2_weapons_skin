@@ -22,6 +22,7 @@
 #include "utils/module.h"
 #endif
 #include <string>
+#include "utils/ctimer.h"
 
 Skin g_Skin;
 PLUGIN_EXPOSE(Skin, g_Skin);
@@ -36,6 +37,10 @@ CPlayerSpawnEvent g_PlayerSpawnEvent;
 CRoundPreStartEvent g_RoundPreStartEvent;
 CEntityListener g_EntityListener;
 bool g_bPistolRound;
+
+float g_flUniversalTime;
+float g_flLastTickedTime;
+bool g_bHasTicked;
 
 #define CHAT_PREFIX	" \x05[Cobra]\x01"
 
@@ -85,6 +90,15 @@ std::map<uint64_t, int> g_PlayerMessages;
 class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
 SH_DECL_HOOK3_void(IServerGameDLL, GameFrame, SH_NOATTRIB, 0, bool, bool, bool);
+
+CGlobalVars *GetGameGlobals()
+{
+	INetworkGameServer *server = g_pNetworkServerService->GetIGameServer();
+	if(!server) {
+		return nullptr;
+	}
+	return g_pNetworkServerService->GetIGameServer()->GetGlobals();
+}
 
 #ifdef _WIN32
 inline void* FindSignature(const char* modname,const char* sig)
@@ -226,17 +240,47 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 
 void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
-	if (!g_pGameRules)
-	{
+	// CTimer
+	
+	if (simulating && g_bHasTicked) {
+		g_flUniversalTime += GetGameGlobals()->curtime - g_flLastTickedTime;
+	} else {
+		g_flUniversalTime += GetGameGlobals()->interval_per_tick;
+	}
+
+	g_flLastTickedTime = GetGameGlobals()->curtime;
+	g_bHasTicked = true;
+
+	for (int i = g_timers.Tail(); i != g_timers.InvalidIndex();) {
+		auto timer = g_timers[i];
+
+		int prevIndex = i;
+		i = g_timers.Previous(i);
+
+		if (timer->m_flLastExecute == -1) {
+			timer->m_flLastExecute = g_flUniversalTime;
+		}
+
+		// Timer execute
+		if (timer->m_flLastExecute + timer->m_flTime <= g_flUniversalTime) {
+			timer->Execute();
+			if (!timer->m_bRepeat) {
+				delete timer;
+				g_timers.Remove(prevIndex);
+			} else {
+				timer->m_flLastExecute = g_flUniversalTime;
+			}
+		}
+	}
+	
+	if (!g_pGameRules) {
 		CCSGameRulesProxy* pGameRulesProxy = static_cast<CCSGameRulesProxy*>(UTIL_FindEntityByClassname(nullptr, "cs_gamerules"));
-		if (pGameRulesProxy)
-		{
+		if (pGameRulesProxy) {
 			g_pGameRules = pGameRulesProxy->m_pGameRules();
 		}
 	}
 	
-	while (!m_nextFrame.empty())
-	{
+	while (!m_nextFrame.empty()) {
 		m_nextFrame.front()();
 		m_nextFrame.pop_front();
 	}
