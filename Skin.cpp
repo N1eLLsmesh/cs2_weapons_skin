@@ -324,12 +324,25 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 	}
 }
 
-void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityInstance *pNewParent)
-{}
+void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityInstance *pNewParent) {
+	META_CONPRINTF("OnEntityParentChanged\n");
+}
+
+
+void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
+	META_CONPRINTF("OnEntityCreated\n");
+}
+
+
+void CEntityListener::OnEntityDeleted(CEntityInstance *pEntity) {
+	META_CONPRINTF("OnEntityDeleted\n");
+}
+
+
 
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
-	// META_CONPRINTF("OnEntitySpawned\n");
+	META_CONPRINTF("OnEntitySpawned\n");
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	if(!pBasePlayerWeapon) return;
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon]()
