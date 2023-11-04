@@ -551,7 +551,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 	}
 
-	CEconItemView* econItemView = new ECconItemView();
+	CEconItemView* econItemView = new CEconItemView();
 	econItemView->m_iItemDefinitionIndex = weapon_id;
 	econItemView->m_bInitialized = true;
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, econItemView, nullptr, nullptr);
