@@ -552,7 +552,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	}
 
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pPlayerWeapon);
-	CEconItemView econItemView = dynamic_cast<CEconItemView>(pCEconEntityWeapon->m_AttributeManager().m_Item());
+	CEconItemView econItemView = static_cast<CEconItemView>(pCEconEntityWeapon->m_AttributeManager().m_Item());
 	econItemView->m_iItemDefinitionIndex() = weapon_id;
 	econItemView->m_bInitialized() = true;
 	econItemView->m_iItemIDLow() = -1;
