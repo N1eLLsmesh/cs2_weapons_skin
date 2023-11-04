@@ -389,11 +389,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-
-		dynamic_cast<CCSWeaponBase*>(pBasePlayerWeapon)->m_hPrevOwner() = -1;
 
 		// pBasePlayerWeapon->m_OriginalOwnerXuidLow() = -1;
 
