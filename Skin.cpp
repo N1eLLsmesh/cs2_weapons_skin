@@ -383,7 +383,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				engine->ServerCommand(buf);
 				META_CONPRINTF( "i_subclass_change triggered\n");
 			});
-			new CTimer(1.0f, false, false, [pBasePlayerWeapon, skin_parm, weapon]() {
+			new CTimer(1.0f, false, false, [pBasePlayerWeapon, CEconEntityWeapon, skin_parm, weapon]() {
 				CEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 				CEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 				CEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
