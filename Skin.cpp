@@ -84,7 +84,7 @@ void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) =
 std::map<int, std::string> g_WeaponsMap;
 std::map<int, std::string> g_KnivesMap;
 std::map<int, int> g_ItemToSlotMap;
-std::map<uint64_t, std::map<int, SkinParm>> g_PlayerSkins;
+std::map<uint64_t, SkinParm g_PlayerSkins;
 std::map<uint64_t, int> g_PlayerMessages;
 
 class GameSessionConfiguration_t { };
@@ -363,16 +363,12 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		auto weapon = g_PlayerSkins.find(steamid);
-		if(weapon == g_PlayerSkins.end()) {
+		auto skin_parm = g_PlayerSkins.find(steamid);
+		if(skin_parm == g_PlayerSkins.end()) {
 			META_CONPRINTF("NOT g_PlayerSkins?\n");
 			return;
 		}
-		auto skin_parm = weapon->second.begin();
-		if(skin_parm == weapon->second.end()) {
-			META_CONPRINTF("NOT weapon?\n");
-			return;
-		}
+
 		META_CONPRINTF("#1\n");
 
 
@@ -454,10 +450,10 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		return;
 	}
 
-	g_PlayerSkins[steamid][weapon_id].m_iItemDefinitionIndex = weapon_id;
-	g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit = paint_kit;
-	g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed = pattern_id;
-	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear = wear;
+	g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id;
+	g_PlayerSkins[steamid].m_nFallbackPaintKit = paint_kit;
+	g_PlayerSkins[steamid].m_nFallbackSeed = pattern_id;
+	g_PlayerSkins[steamid].m_flFallbackWear = wear;
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
@@ -492,7 +488,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     // FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     // pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
     META_CONPRINTF("called by %lld\n", steamid);
-    sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid][weapon_id].m_iItemDefinitionIndex, g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
+    sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 }
 
