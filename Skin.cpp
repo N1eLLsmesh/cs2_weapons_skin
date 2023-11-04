@@ -378,7 +378,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	});
 }
 
-
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
 		return;
@@ -456,6 +455,18 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid][weapon_id].m_iItemDefinitionIndex, g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 }
+
+CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
+	new CTimer(10.0f, false, false, []() {
+        char buf[255] = { 0 };
+		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
+		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
+	});
+	char buf[255] = { 0 };
+	sprintf(buf, "%s Timer started", CHAT_PREFIX);
+	FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
+}
+
 
 CON_COMMAND_F(i_subclass_change, "subclass change", FCVAR_NONE)
 {
