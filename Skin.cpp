@@ -392,6 +392,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
+		pBasePlayerWeapon->m_OriginalOwnerXuidLow() = -1;
+
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
