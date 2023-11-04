@@ -389,7 +389,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	{
 		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
 		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-
+		META_CONPRINTF( "----------------------------------------------------\n");
 		if(!steamid) {
 			return;
 		}
@@ -475,6 +475,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		skin_parm->second.m_nFallbackPaintKit = -1;
 		skin_parm->second.m_nFallbackSeed = -1;
 		skin_parm->second.m_flFallbackWear = -1;
+
+		META_CONPRINTF( "----------------------------------------------------\n");
 
 	});
 }
