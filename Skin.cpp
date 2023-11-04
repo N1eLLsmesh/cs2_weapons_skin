@@ -84,7 +84,7 @@ void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) =
 std::map<int, std::string> g_WeaponsMap;
 std::map<int, std::string> g_KnivesMap;
 std::map<int, int> g_ItemToSlotMap;
-std::map<uint64_t, SkinParm g_PlayerSkins;
+std::map<uint64_t, SkinParm> g_PlayerSkins;
 std::map<uint64_t, int> g_PlayerMessages;
 
 class GameSessionConfiguration_t { };
@@ -369,6 +369,11 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
+		if(skin_parm->second.m_iItemDefinitionIndex == -1 || skin_parm->second.m_nFallbackPaintKit == -1 || skin_parm->second.m_nFallbackSeed == -1 || skin_parm->second.m_flFallbackWear == -1) {
+			META_CONPRINTF("NOT skin_parm?\n");
+			return;
+		}
+
 		META_CONPRINTF("#1\n");
 
 
@@ -407,6 +412,14 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("index = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		// set the skin_param entities to -1 so they don't get used again
+		skin_parm->second.m_iItemDefinitionIndex = -1;
+		skin_parm->second.m_nFallbackPaintKit = -1;
+		skin_parm->second.m_nFallbackSeed = -1;
+		skin_parm->second.m_flFallbackWear = -1;
+
+
+	
 	});
 }
 
