@@ -86,6 +86,7 @@ std::map<int, std::string> g_KnivesMap;
 std::map<int, int> g_ItemToSlotMap;
 std::map<uint64_t, SkinParm> g_PlayerSkins;
 std::map<uint64_t, int> g_PlayerMessages;
+uint32_t g_iItemIDHigh = 16384;
 
 class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
@@ -389,8 +390,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		static int IDHigh = 16384;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = IDHigh++;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh++;
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
