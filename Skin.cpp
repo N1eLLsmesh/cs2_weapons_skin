@@ -555,7 +555,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		if (pCEconEntityWeapon) {
 			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+			sprintf(buf, "i_subclass_change %d %d", weapon_id, index);
 			engine->ServerCommand(buf);
 			pCEconEntityWeapon->m_nFallbackPaintKit() = paint_kit;
 			pCEconEntityWeapon->m_nFallbackSeed() = pattern_id;
