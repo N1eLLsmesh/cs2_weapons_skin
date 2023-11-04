@@ -386,12 +386,12 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		// print out all 4 values
 		META_CONPRINTF("itemID: %lld itemID2: %lld temp_itemID: %lld temp_itemIDLow: %d temp_itemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID(), itemID2, temp_itemID, temp_itemIDLow, temp_itemIDHigh);
-
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+
 
 		// pBasePlayerWeapon->m_OriginalOwnerXuidLow() = -1;
 
