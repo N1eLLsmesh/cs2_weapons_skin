@@ -353,11 +353,17 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	if(!pBasePlayerWeapon) return;
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
 	{
-		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow();
+		int32_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow();
+		int32_t steamid1 = pCEconEntityWeapon->m_OriginalOwnerXuidHigh();
 		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
 
 		// print the steamid and weaponId
 		META_CONPRINTF( "steamId: %lld itemId: %d\n", steamid, weaponId);
+		META_CONPRINTF( "steamId1: %lld itemId: %d\n", steamid1, weaponId);
+
+		// combine steamid and steamid1 (low and high) into a single 64 bit steamid
+		steamid2 = steamid | (static_cast<int64_t>(steamid1) << 32);
+		META_CONPRINTF( "steamId2: %lld itemId: %d\n", steamid2, weaponId);
 
 		if(!steamid) {
 			return;
