@@ -23,6 +23,14 @@ class CUtlVector_NativeSdk {
     char pad1[0x8];  // no idea
 };
 
+
+
+class CAttributeContainer
+{
+public:
+	SCHEMA_FIELD(CEconItemView, CAttributeContainer, m_Item);
+};
+
 class CEconEntity : public CBaseFlex
 {
 public:
@@ -70,11 +78,6 @@ public:
 	SCHEMA_FIELD(char, CEconItemView, m_szCustomNameOverride);
 };
 
-class CAttributeContainer
-{
-public:
-	SCHEMA_FIELD(CEconItemView, CAttributeContainer, m_Item);
-};
 
 class CModelState
 {
