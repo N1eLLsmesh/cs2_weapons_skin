@@ -24,6 +24,28 @@ class CUtlVector_NativeSdk {
 };
 
 
+class CAttributeList
+{
+public:
+	SCHEMA_FIELD(int64_t, CAttributeList, m_Attributes);
+};
+
+class CEconItemView
+{
+public:
+	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
+	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityQuality);
+	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityLevel);
+	SCHEMA_FIELD(uint64_t, CEconItemView, m_iItemID);
+	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDLow);
+	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDHigh);
+	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
+	SCHEMA_FIELD(uint32_t, CEconItemView, m_iInventoryPosition);
+	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
+	SCHEMA_FIELD(CAttributeList, CEconItemView, m_AttributeList);
+	SCHEMA_FIELD(char, CEconItemView, m_szCustomName);
+	SCHEMA_FIELD(char, CEconItemView, m_szCustomNameOverride);
+};
 
 class CAttributeContainer
 {
@@ -54,30 +76,6 @@ public:
 	SCHEMA_FIELD(int32_t, CEconItemAttribute, m_nRefundableCurrency);
 	SCHEMA_FIELD(bool, CEconItemAttribute, m_bSetBonus);
 };
-
-class CAttributeList
-{
-public:
-	SCHEMA_FIELD(int64_t, CAttributeList, m_Attributes);
-};
-
-class CEconItemView
-{
-public:
-	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
-	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityQuality);
-	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityLevel);
-	SCHEMA_FIELD(uint64_t, CEconItemView, m_iItemID);
-	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDLow);
-	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDHigh);
-	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
-	SCHEMA_FIELD(uint32_t, CEconItemView, m_iInventoryPosition);
-	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
-	SCHEMA_FIELD(CAttributeList, CEconItemView, m_AttributeList);
-	SCHEMA_FIELD(char, CEconItemView, m_szCustomName);
-	SCHEMA_FIELD(char, CEconItemView, m_szCustomNameOverride);
-};
-
 
 class CModelState
 {
