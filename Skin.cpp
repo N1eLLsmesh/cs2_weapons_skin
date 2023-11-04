@@ -494,16 +494,16 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
     META_CONPRINTF("called by %lld\n", steamid);
     sprintf(buf, "%s%s%s %d%s %d%s %d%s %f", 
-	g_CHAT_PREFIX,
-	g_CHAT_MESSAGE_SUCCESS,  
-	g_CHAT_MESSAGE_INFO_ITEMDEFINDEX, 
-	g_PlayerSkins[steamid][weapon_id].m_iItemDefinitionIndex, 
-	g_CHAT_MESSAGE_INFO_PAINTKIT, 
-	g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, 
-	g_CHAT_MESSAGE_INFO_PATTERNID, 
-	g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, 
-	g_PlayerSkins[steamid][weapon_id].m_flFallbackWear
-	
+		g_CHAT_PREFIX,
+		g_CHAT_MESSAGE_SUCCESS,  
+		g_CHAT_MESSAGE_INFO_ITEMDEFINDEX, 
+		g_PlayerSkins[steamid][weapon_id].m_iItemDefinitionIndex, 
+		g_CHAT_MESSAGE_INFO_PAINTKIT, 
+		g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, 
+		g_CHAT_MESSAGE_INFO_PATTERNID, 
+		g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, 
+		g_CHAT_MESSAGE_INFO_FLOAT, 
+		g_PlayerSkins[steamid][weapon_id].m_flFallbackWear	
 	);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 }
