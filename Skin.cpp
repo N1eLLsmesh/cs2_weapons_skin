@@ -381,6 +381,11 @@ void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 			return;
 		}
 
+		new CTimer(0.5f, false, false, [pPlayerWeapon, weapon_name, pPlayerPawn]() {
+			FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+			// pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+		});
+
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
@@ -441,7 +446,11 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 
-		weapon->second.erase(skin_parm);
+		new CTimer(1.0f, false, false, [weapon, skin_parm]() {
+			weapon->second.erase(skin_parm);
+		});
+
+		
 	});
 }
 
@@ -517,7 +526,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 	}
 
-	new CTimer(1.0f, false, false, [pPlayerWeapon, weapon_name, pPlayerPawn]() {
+	new CTimer(0.1f, false, false, [pPlayerWeapon, weapon_name, pPlayerPawn]() {
 		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 		// pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 	});
