@@ -354,7 +354,7 @@ void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityIns
 			pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 			pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = -1;
-			weapon->second.erase(skin_parm);
+			// weapon->second.erase(skin_parm);
 			META_CONPRINTF( "ParentChanged - itemId: %d itemId2: %d\n", skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 		}
 	});
@@ -432,7 +432,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = -1;
 
 		META_CONPRINTF( "weaponId: %d\n", weaponId);
 		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
