@@ -365,13 +365,15 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		auto weapon = g_PlayerSkins.find(steamid);
 		if(weapon == g_PlayerSkins.end()) {
+			META_CONPRINTF("NOT g_PlayerSkins?\n");
 			return;
 		}
 		auto skin_parm = weapon->second.begin();
 		if(skin_parm == weapon->second.end()) {
+			META_CONPRINTF("NOT weapon?\n");
 			return;
 		}
-
+		META_CONPRINTF("#1\n");
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
