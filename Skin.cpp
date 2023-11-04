@@ -381,11 +381,6 @@ void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 			return;
 		}
 
-		new CTimer(0.5f, false, false, [weapon_name, pPlayerPawn]() {
-			FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-			// pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
-		});
-
 		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
