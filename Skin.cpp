@@ -75,7 +75,7 @@ SubClassChange_t FnSubClassChange;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*,uint64_t) = nullptr;
-void (*FnGiveNamedItem)(void* itemService,const char* pchName, void* iSubType, CEconItemView pScriptItem, void* a5, void* a6) = nullptr;
+void (*FnGiveNamedItem)(void* itemService,const char* pchName, void* iSubType, CEconItemView* pScriptItem, void* a5, void* a6) = nullptr;
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
@@ -551,13 +551,11 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 	}
 
-	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pPlayerWeapon);
-	CEconItemView econItemView = static_cast<CEconItemView>(pCEconEntityWeapon->m_AttributeManager().m_Item());
-	econItemView.m_iItemDefinitionIndex() = weapon_id;
-	econItemView.m_bInitialized() = true;
-	econItemView.m_iItemIDLow() = -1;
-	econItemView.m_iItemID() = -1;
+	CEconItemView* econItemView = new CEconItemView();
+	econItemView->m_iItemDefinitionIndex() = weapon_id;
+	econItemView->m_bInitialized() = true;
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, econItemView, nullptr, nullptr);
+	delete econItemView;
 	// pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
     // FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     // pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
