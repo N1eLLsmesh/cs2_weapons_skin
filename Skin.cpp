@@ -395,7 +395,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 
-		pBasePlayerWeapon->m_OriginalOwnerXuidLow() = -1;
+		pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
 
 		pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 		// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
