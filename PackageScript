@@ -35,3 +35,4 @@ for task in MMSPlugin.binaries:
     pdb_list.append(task.debug)
 
 builder.AddCopy(os.path.join(builder.buildPath, MMSPlugin.plugin_name + '.vdf'), metamod_folder)
+builder.AddCopy(os.path.join(builder.sourcePath, 'config.ini'), os.path.join('addons', MMSPlugin.plugin_name, 'config.ini'))
