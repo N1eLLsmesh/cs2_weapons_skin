@@ -362,7 +362,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF( "steamId1: %lld itemId: %d\n", steamid1, weaponId);
 
 		// combine steamid and steamid1 (low and high) into a single 64 bit steamid
-		steamid2 = steamid | (static_cast<int64_t>(steamid1) << 32);
+		int64_t steamid2 = steamid | (static_cast<int64_t>(steamid1) << 32);
 		META_CONPRINTF( "steamId2: %lld itemId: %d\n", steamid2, weaponId);
 
 		if(!steamid) {
