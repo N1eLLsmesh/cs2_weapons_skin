@@ -16,7 +16,6 @@ public:
 	bool Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool late);
 	bool Unload(char* error, size_t maxlen);
 	void NextFrame(std::function<void()> fn);
-	bool LoadConfig();
 private:
 	const char* GetAuthor();
 	const char* GetName();

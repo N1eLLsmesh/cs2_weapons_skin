@@ -37,16 +37,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 CEntityListener g_EntityListener;
 bool g_bPistolRound;
 
-auto g_CHAT_PREFIX = " \x05[Cobra]\x01";
-auto g_CHAT_MESSAGE_WELCOME = "\x0b Welcome to my Skin Server!";
-auto g_CHAT_MESSAGE_CMD = "\x01 Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float";
-auto g_CHAT_MESSAGE_WRONG_USAGE = "\x02 Wrong usage!";
-auto g_CHAT_MESSAGE_UNKNOWN_ITEM = "\x02 Unknown Weapon/Knife ID";
-auto g_CHAT_MESSAGE_SUCCESS = "\x04 Success!";
-auto g_CHAT_MESSAGE_INFO_ITEMDEFINDEX = "\x01 ItemDefIndex:\x04";
-auto g_CHAT_MESSAGE_INFO_PAINTKIT = "\x01 PaintKit:\x04";
-auto g_CHAT_MESSAGE_INFO_PATTERNID = "\x01 PatternID:\x04";
-auto g_CHAT_MESSAGE_INFO_FLOAT = "\x01 Float:\x04";
+#define CHAT_PREFIX	" \x05[Cobra]\x01"
 
 typedef struct SkinParm
 {
@@ -178,12 +169,6 @@ bool Skin::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool lat
 		VirtualProtect(vscript, 2, pOld, &pOld);
 	}
 	#endif
-
-	if (!g_Skin.LoadConfig())
-	{
-		META_CONPRINTF("Failed to load config\n");
-	}
-
 	return true;
 }
 
@@ -279,8 +264,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		}
 		char buf[255] = { 0 };
 		char buf2[255] = { 0 };
-		sprintf(buf, "%s%s", g_CHAT_PREFIX, g_CHAT_MESSAGE_WELCOME);
-		sprintf(buf2, "%s%s", g_CHAT_PREFIX, g_CHAT_MESSAGE_CMD);
+		sprintf(buf, "%s\x0b Welcome to my Skin Server!", CHAT_PREFIX);
+		sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
 		g_PlayerMessages[steamid] = 1;
@@ -349,75 +334,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	});
 }
 
-bool Skin::LoadConfig() {
-	KeyValues* pKVConfig = new KeyValues("Config");
-	KeyValues::AutoDelete autoDelete(pKVConfig);
-	if (!pKVConfig->LoadFromFile(g_pFullFileSystem, "addons/Skin/config.ini"))
-	{
-		META_CONPRINTF("Failed to load config.ini\n");
-		return false;
-	}
-
-	META_CONPRINTF("CHAT_PREFIX: %s\n", pKVConfig->GetString("CHAT_PREFIX"));
-	if (const char* config_chat_prefix = pKVConfig->GetString("CHAT_PREFIX"))
-	{
-		g_CHAT_PREFIX = config_chat_prefix;
-	}
-	META_CONPRINTF("CHAT_MESSAGE_WELCOME: %s\n", pKVConfig->GetString("MESSAGE_WELCOME"));
-	if (const char* config_chat_message_welcome = pKVConfig->GetString("MESSAGE_WELCOME"))
-	{
-		g_CHAT_MESSAGE_WELCOME = config_chat_message_welcome;
-	}
-	META_CONPRINTF("CHAT_MESSAGE_CMD: %s\n", pKVConfig->GetString("MESSAGE_CMD"));
-	if (const char* config_chat_message_cmd = pKVConfig->GetString("MESSAGE_CMD"))
-	{
-		g_CHAT_MESSAGE_CMD = config_chat_message_cmd;
-	}
-	META_CONPRINTF("CHAT_MESSAGE_WRONG_USAGE: %s\n", pKVConfig->GetString("MESSAGE_WRONG_USAGE"));
-	if (const char* config_chat_message_wrong_usage = pKVConfig->GetString("MESSAGE_WRONG_USAGE"))
-	{
-		g_CHAT_MESSAGE_WRONG_USAGE = config_chat_message_wrong_usage;
-	}
-	META_CONPRINTF("CHAT_MESSAGE_UNKNOWN_ITEM: %s\n", pKVConfig->GetString("MESSAGE_UNKNOWN_ITEM"));
-	if (const char* config_chat_message_unknown_item = pKVConfig->GetString("MESSAGE_UNKNOWN_ITEM"))
-	{
-		g_CHAT_MESSAGE_UNKNOWN_ITEM = config_chat_message_unknown_item;
-	}
-	META_CONPRINTF("CHAT_MESSAGE_SUCCESS: %s\n", pKVConfig->GetString("MESSAGE_SUCCESS"));
-	if (const char* config_chat_message_success = pKVConfig->GetString("MESSAGE_SUCCESS"))
-	{
-		g_CHAT_MESSAGE_SUCCESS = config_chat_message_success;
-	}
-	META_CONPRINTF("CHAT_MESSAGE_INFO_ITEMDEFINDEX: %s\n", pKVConfig->GetString("MESSAGE_INFO_ITEMDEFINDEX"));
-	if (const char* config_chat_message_info_itemdefindex = pKVConfig->GetString("MESSAGE_INFO_ITEMDEFINDEX"))
-	{
-		g_CHAT_MESSAGE_INFO_ITEMDEFINDEX = config_chat_message_info_itemdefindex;
-	}
-	META_CONPRINTF("CHAT_MESSAGE_INFO_PAINTKIT: %s\n", pKVConfig->GetString("MESSAGE_INFO_PAINTKIT"));
-	if (const char* config_chat_message_info_paintkit = pKVConfig->GetString("MESSAGE_INFO_PAINTKIT"))
-	{
-		g_CHAT_MESSAGE_INFO_PAINTKIT = config_chat_message_info_paintkit;
-	}
-	META_CONPRINTF("CHAT_MESSAGE_INFO_PATTERNID: %s\n", pKVConfig->GetString("MESSAGE_INFO_PATTERNID"));
-	if (const char* config_chat_message_info_patternid = pKVConfig->GetString("MESSAGE_INFO_PATTERNID"))
-	{
-		g_CHAT_MESSAGE_INFO_PATTERNID = config_chat_message_info_patternid;
-	}
-	META_CONPRINTF("CHAT_MESSAGE_INFO_FLOAT: %s\n", pKVConfig->GetString("MESSAGE_INFO_FLOAT"));
-	if (const char* config_chat_message_info_float = pKVConfig->GetString("MESSAGE_INFO_FLOAT"))
-	{
-		g_CHAT_MESSAGE_INFO_FLOAT = config_chat_message_info_float;
-	}
-	return true;
-}
-
-CON_COMMAND_F(skin_reload, "reload config file", FCVAR_NONE)
-{
-	if (!g_Skin.LoadConfig())
-	{
-		META_CONPRINTF("Failed to load config\n");
-	}
-}
 
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
@@ -432,8 +348,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (args.ArgC() != 5)
     {
         char buf2[255] = { 0 };
-		sprintf(buf, "%s%s", g_CHAT_PREFIX, g_CHAT_MESSAGE_WRONG_USAGE);
-		sprintf(buf2, "%s%s", g_CHAT_PREFIX, g_CHAT_MESSAGE_CMD);
+		sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
+		sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
         return;
@@ -454,7 +370,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	}
 
 	if (weapon_name == g_KnivesMap.end()) {
-		sprintf(buf, "%s%s", g_CHAT_PREFIX, g_CHAT_MESSAGE_UNKNOWN_ITEM);
+		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
 	}
@@ -467,7 +383,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
 	if (weapon_slot_map == g_ItemToSlotMap.end()) {
-		sprintf(buf, "%s%s", g_CHAT_PREFIX, g_CHAT_MESSAGE_UNKNOWN_ITEM);
+		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
 	}
@@ -493,18 +409,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
     META_CONPRINTF("called by %lld\n", steamid);
-    sprintf(buf, "%s%s%s %d%s %d%s %d%s %f", 
-		g_CHAT_PREFIX,
-		g_CHAT_MESSAGE_SUCCESS,  
-		g_CHAT_MESSAGE_INFO_ITEMDEFINDEX, 
-		g_PlayerSkins[steamid][weapon_id].m_iItemDefinitionIndex, 
-		g_CHAT_MESSAGE_INFO_PAINTKIT, 
-		g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, 
-		g_CHAT_MESSAGE_INFO_PATTERNID, 
-		g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, 
-		g_CHAT_MESSAGE_INFO_FLOAT, 
-		g_PlayerSkins[steamid][weapon_id].m_flFallbackWear	
-	);
+    sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid][weapon_id].m_iItemDefinitionIndex, g_PlayerSkins[steamid][weapon_id].m_nFallbackPaintKit, g_PlayerSkins[steamid][weapon_id].m_nFallbackSeed, g_PlayerSkins[steamid][weapon_id].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 }
 
