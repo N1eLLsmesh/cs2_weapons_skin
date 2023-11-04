@@ -45,6 +45,9 @@ public:
 	SCHEMA_FIELD(CAttributeList, CEconItemView, m_AttributeList);
 	SCHEMA_FIELD(char, CEconItemView, m_szCustomName);
 	SCHEMA_FIELD(char, CEconItemView, m_szCustomNameOverride);
+    auto GetCustomPaintKitIndex() { 
+		return CALL_VIRTUAL(int, 2, this);
+	}
 };
 
 class CAttributeContainer
