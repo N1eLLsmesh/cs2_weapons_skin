@@ -342,10 +342,19 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	META_CONPRINTF("OnEntitySpawned\n");
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
+	CEconEntity* CEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
+	if (!pBasePlayerWeapon) {
+		META_CONPRINTF("NOT pBasePlayerWeapon?\n");
+	}
+	if (!CEconEntityWeapon) {
+		META_CONPRINTF("NOT CEconEntityWeapon?\n");
+	}
+
+
 	if(!pBasePlayerWeapon) return;
-	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pEntity = pEntity]()
+	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, CEconEntityWeapon = CEconEntityWeapon]()
 	{
-		CEconEntity* CEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
+		
 		int64_t steamid = CEconEntityWeapon->m_OriginalOwnerXuidLow();
 		int64_t weaponId = CEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
 		if(!steamid) {
