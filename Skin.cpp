@@ -79,7 +79,7 @@ void (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, 
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
-CBaseEntity (*FnCreateEntityByName)(const char *szClassName) = nullptr;
+CBaseEntity* (*FnCreateEntityByName)(const char *szClassName) = nullptr;
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
