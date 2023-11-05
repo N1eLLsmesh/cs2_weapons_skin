@@ -79,6 +79,7 @@ void (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, 
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
+void (*FnCreateEntityByName)(const char *szClassName) = nullptr;
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
@@ -221,6 +222,9 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	FnEntityRemove = libserver.FindPatternSIMD("48 85 F6 74 0B 48 8B 76 10 E9 B2 FE FF FF").RCast<decltype(FnEntityRemove)>();
 	FnUTIL_ClientPrint = libserver.FindPatternSIMD("55 48 89 E5 41 57 49 89 CF 41 56 49 89 D6 41 55 41 89 F5 41 54 4C 8D A5 A0 FE FF FF").RCast<decltype(FnUTIL_ClientPrint)>();
 	FnSubClassChange = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC C8 00 00 00 83 BE 38 04 00 00 01 0F 8E 47 02").RCast<decltype(FnSubClassChange)>();
+	FnCreateEntityByName = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 49 89 D6 41 55 49 89 F5 41 54 49 89 CC 53 48 89 FB 48 83 EC 58").RCast<decltype(FnCreateEntityByName)>();
+	// 55 48 89 E5 41 57 41 56 49 89 D6 41 55 49 89 F5 41 54 49 89 CC 53 48 89 FB 48 83 EC 58 
+	// CreateEntityByName(const char* szClassName)
 	#endif
 	g_pGameRules = nullptr;
 
@@ -587,6 +591,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 			FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
 		}
 	}
+
+	FnCreateEntityByName(weapon_name->second.c_str());
+
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     META_CONPRINTF("called by %lld\n", steamid);
     sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
