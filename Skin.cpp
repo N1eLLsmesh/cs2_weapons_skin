@@ -99,7 +99,7 @@ std::map<int, int> g_ItemToSlotMap;
 std::map<uint64_t, SkinParm> g_PlayerSkins;
 std::map<uint64_t, StickerParm> g_PlayerStickers;
 std::map<uint64_t, int> g_PlayerMessages;
-uint32_t g_iItemIDHigh = 16384;
+int g_iItemIDHigh = 16384;
 
 class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
@@ -484,9 +484,13 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
+		uint64_t newItemID 	= (static_cast<uint64_t>(g_iItemIDHigh) << 32) | static_cast<uint64_t>(pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
 
 
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
