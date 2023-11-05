@@ -392,11 +392,26 @@ void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 			return;
 		}
 
+		if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
+		{
+			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+		}
+
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+
+		auto knife_name = g_KnivesMap.find(weaponId);
+		if(knife_name != g_KnivesMap.end()) {
+			char buf[64] = {0};
+			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
+			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+			engine->ServerCommand(buf);
+			META_CONPRINTF( "i_subclass_change triggered\n");
+		}
+
 
 		META_CONPRINTF( "--------------------after----------------------------\n");
 		META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
@@ -446,8 +461,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+			// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
 
 
@@ -459,14 +474,14 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		// pCEconEntityWeapon->m_OriginalOwnerXuidHigh() = -1;
 
 
-		if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
-		{
-			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-		}
+			// if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
+			// {
+				// pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+			// }
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
-		auto knife_name = g_KnivesMap.find(weaponId);
-		if(knife_name != g_KnivesMap.end()) {
+		// auto knife_name = g_KnivesMap.find(weaponId);
+		/*if(knife_name != g_KnivesMap.end()) {
 			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
@@ -523,7 +538,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				skin_parm->second.m_nFallbackSeed = -1;
 				skin_parm->second.m_flFallbackWear = 0;
 			});
-		} else {
+		} else {*/
 			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
@@ -532,7 +547,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			skin_parm->second.m_nFallbackPaintKit = -1;
 			skin_parm->second.m_nFallbackSeed = -1;
 			skin_parm->second.m_flFallbackWear = 0;
-		}
+		// }
 
 		META_CONPRINTF("low: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
 		META_CONPRINTF("high: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
