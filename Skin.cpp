@@ -443,8 +443,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 				pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = g_iItemIDHigh + pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow();
+				// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
 
 				pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
@@ -466,6 +466,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				META_CONPRINTF("skin_parm->second.m_flFallbackWear: %f\n", skin_parm->second.m_flFallbackWear);
 				META_CONPRINTF("skin_parm->second.m_iItemDefinitionIndex: %d\n", skin_parm->second.m_iItemDefinitionIndex);
 				META_CONPRINTF( "--------------------end----------------------------\n");
+				g_iItemIDHigh++;
 				skin_parm->second.m_iItemDefinitionIndex = -1;
 				skin_parm->second.m_nFallbackPaintKit = -1;
 				skin_parm->second.m_nFallbackSeed = -1;
