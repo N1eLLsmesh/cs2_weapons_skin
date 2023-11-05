@@ -443,16 +443,34 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			engine->ServerCommand(buf);
 			META_CONPRINTF( "i_subclass_change triggered\n");
 
-			new CTimer(0.01f, false, false, [pCEconEntityWeapon, skin_parm]() {
+			new CTimer(0.25f, false, false, [pCEconEntityWeapon, skin_parm]() {
+				META_CONPRINTF( "Timer executed\n");
 				char buf[255] = { 0 };
 				sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 				FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
+				META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+
+
 				pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 				pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 				pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
+
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
+				META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+				META_CONPRINTF("skin_parm->second.m_nFallbackPaintKit: %d\n", skin_parm->second.m_nFallbackPaintKit);
+				META_CONPRINTF("skin_parm->second.m_nFallbackSeed: %d\n", skin_parm->second.m_nFallbackSeed);
+				META_CONPRINTF("skin_parm->second.m_flFallbackWear: %f\n", skin_parm->second.m_flFallbackWear);
+				META_CONPRINTF("skin_parm->second.m_iItemDefinitionIndex: %d\n", skin_parm->second.m_iItemDefinitionIndex);
+
+
 			});
 		}
 
