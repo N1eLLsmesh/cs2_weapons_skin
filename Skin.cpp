@@ -456,13 +456,14 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
 		return;
 	}
+	
     CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
     CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
 		return;
 	}
-    char buf[255] = { 0 };
 
+    char buf[255] = { 0 };
 	int32_t argDefIndex = 0;
 	int64_t argPaintIndex = 0;
 	int64_t argPattern = 0;
@@ -556,7 +557,6 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 	}
 
-	char buf[255] = { 0 };
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 	if (DEBUG_OUTPUT) { META_CONPRINTF("called by %lld\n", steamid); }
 	sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
