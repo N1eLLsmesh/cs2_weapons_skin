@@ -403,6 +403,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		}
 
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
 
 
