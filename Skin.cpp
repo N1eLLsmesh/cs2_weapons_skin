@@ -43,6 +43,8 @@ float g_flLastTickedTime;
 bool g_bHasTicked;
 
 #define CHAT_PREFIX	" \x05[Cobra]\x01"
+#define DEBUG_OUTPUT 1
+#define FEATURE_STICKERS 0
 
 typedef struct SkinParm
 {
@@ -341,127 +343,22 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityInstance *pNewParent) {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
-	/*if(!pBasePlayerWeapon) return;
-	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
-	{
-		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
-		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-		if(!steamid) {
-			return;
-		}
-
-		auto skin_parm = g_PlayerSkins.find(steamid);
-		if(skin_parm == g_PlayerSkins.end()) {
-			return;
-		}
-
-		if(skin_parm->second.m_iItemDefinitionIndex == -1 || skin_parm->second.m_nFallbackPaintKit == -1 || skin_parm->second.m_nFallbackSeed == -1 || skin_parm->second.m_flFallbackWear == -1) {
-			return;
-		}
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
-		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = g_iItemIDHigh++;
-		
-
-		META_CONPRINTF("skin_parm->second.m_nFallbackPaintKit: %d\n", skin_parm->second.m_nFallbackPaintKit);
-		META_CONPRINTF("skin_parm->second.m_nFallbackSeed: %d\n", skin_parm->second.m_nFallbackSeed);
-		META_CONPRINTF("skin_parm->second.m_flFallbackWear: %f\n", skin_parm->second.m_flFallbackWear);
-		META_CONPRINTF("skin_parm->second.m_iItemDefinitionIndex: %d\n", skin_parm->second.m_iItemDefinitionIndex);
-
-		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
-		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
-		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-
-		// print those 4 values from the item itself
-		META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
-		META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
-		META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
-		META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-
-
-	});*/
+	if(!pBasePlayerWeapon) return;
+	if (DEBUG_OUTPUT) { META_CONPRINTF("OnpBasePlayerWeaponParentChanged\n"); }
 }
 
 void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
-	META_CONPRINTF("OnEntityCreated\n");
-	/*g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
-	{
-		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
-		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-		if(!steamid) {
-			return;
-		}
-
-		auto skin_parm = g_PlayerSkins.find(steamid);
-		if(skin_parm == g_PlayerSkins.end()) {
-			return;
-		}
-
-		if(skin_parm->second.m_iItemDefinitionIndex == -1 || skin_parm->second.m_nFallbackPaintKit == -1 || skin_parm->second.m_nFallbackSeed == -1 || skin_parm->second.m_flFallbackWear == -1) {
-			return;
-		}
-
-		auto knife_name = g_KnivesMap.find(weaponId);
-		if (knife_name == g_KnivesMap.end() && true) {
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, 76);
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117, 76);
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121, 76);
-			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125, 76);
-			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(129, 76);
-			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(133, 76);
-		}
-
-		if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
-		{
-			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-		}
-
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
-		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
-		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-
-		if(knife_name != g_KnivesMap.end()) {
-			char buf[64] = {0};
-			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
-			engine->ServerCommand(buf);
-			META_CONPRINTF( "i_subclass_change triggered\n");
-		}
-
-
-		META_CONPRINTF( "--------------------after----------------------------\n");
-		META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
-		META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
-		META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
-		META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-		META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
-		META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
-		META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
-		META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
-		META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
-		META_CONPRINTF( "--------------------data----------------------------\n");
-		META_CONPRINTF("skin_parm->second.m_nFallbackPaintKit: %d\n", skin_parm->second.m_nFallbackPaintKit);
-		META_CONPRINTF("skin_parm->second.m_nFallbackSeed: %d\n", skin_parm->second.m_nFallbackSeed);
-		META_CONPRINTF("skin_parm->second.m_flFallbackWear: %f\n", skin_parm->second.m_flFallbackWear);
-		META_CONPRINTF("skin_parm->second.m_iItemDefinitionIndex: %d\n", skin_parm->second.m_iItemDefinitionIndex);
-		META_CONPRINTF( "--------------------end----------------------------\n");
-
-	});*/
+	if (DEBUG_OUTPUT) { META_CONPRINTF("OnpBasePlayerWeaponCreated\n"); }
 }
 
-void CEntityListener::OnEntityDeleted(CEntityInstance *pEntity) {
-	// META_CONPRINTF("OnEntityDeleted\n");
-}
+void CEntityListener::OnEntityDeleted(CEntityInstance *pEntity) { }
 
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
-	META_CONPRINTF("OnEntitySpawned\n");
+	if (DEBUG_OUTPUT) { META_CONPRINTF("OnEntitySpawned\n"); }
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
@@ -483,44 +380,32 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		}
 
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
 		uint64_t newItemID 	= (static_cast<uint64_t>(g_iItemIDHigh) << 32) | static_cast<uint64_t>(pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
-		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
-
-
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 
-		pBasePlayerWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
-		pBasePlayerWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
-		pBasePlayerWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-
-
 		auto sticker_parm = g_PlayerStickers.find(steamid);
-		if(sticker_parm != g_PlayerStickers.end()) {
-			// 113 = 3th Slot
+		if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
+			// Work in progress
 			if (sticker_parm->second.stickerDefIndex1 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, sticker_parm->second.stickerDefIndex1);
-				META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1);
+				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1); }
 			}
-			// 117 = ???
 			if (sticker_parm->second.stickerDefIndex2 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117, sticker_parm->second.stickerDefIndex2);
-				META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2);
+				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2); }
 			}
 			if (sticker_parm->second.stickerDefIndex3 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(129, sticker_parm->second.stickerDefIndex3);
-				META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3);
+				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3); }
 			}
 			if (sticker_parm->second.stickerDefIndex4 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(133, sticker_parm->second.stickerDefIndex4);
-				META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4);
+				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4); }
 			}
 			sticker_parm->second.stickerDefIndex1 = 0;
 			sticker_parm->second.stickerDefIndex2 = 0;
@@ -531,112 +416,39 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			sticker_parm->second.stickerWear3 = 0;
 			sticker_parm->second.stickerWear4 = 0;
 		}
-
-
-
-		// pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
-		// pCEconEntityWeapon->m_OriginalOwnerXuidHigh() = -1;
-
 		if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
 		{
 			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 		}
-		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
-
 		auto knife_name = g_KnivesMap.find(weaponId);
 		if(knife_name != g_KnivesMap.end()) {
 			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
 			engine->ServerCommand(buf);
-			META_CONPRINTF( "i_subclass_change triggered\n");
-
-			new CTimer(0.25f, false, false, [pCEconEntityWeapon, skin_parm, pBasePlayerWeapon]() {
-				META_CONPRINTF( "Timer executed\n");
-				char buf[255] = { 0 };
-				sprintf(buf, "%s Timer executed", CHAT_PREFIX);
-				FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
-				META_CONPRINTF( "--------------------before----------------------------\n");
-				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
-				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
-				META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
-				META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
-				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
-				META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
-				META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
-				META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
-
-
-				pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
-				pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
-				pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-				// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = g_iItemIDHigh + pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow();
-				// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
-				uint64_t newItemID 	= (static_cast<uint64_t>(g_iItemIDHigh) << 32) | static_cast<uint64_t>(pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
-				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
-
-				// pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
-				// pCEconEntityWeapon->m_OriginalOwnerXuidHigh() = -1;
-
-				META_CONPRINTF( "--------------------after----------------------------\n");
-				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
-				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
-				META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
-				META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
-				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
-				META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
-				META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
-				META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
-				META_CONPRINTF( "--------------------data----------------------------\n");
-				META_CONPRINTF("skin_parm->second.m_nFallbackPaintKit: %d\n", skin_parm->second.m_nFallbackPaintKit);
-				META_CONPRINTF("skin_parm->second.m_nFallbackSeed: %d\n", skin_parm->second.m_nFallbackSeed);
-				META_CONPRINTF("skin_parm->second.m_flFallbackWear: %f\n", skin_parm->second.m_flFallbackWear);
-				META_CONPRINTF("skin_parm->second.m_iItemDefinitionIndex: %d\n", skin_parm->second.m_iItemDefinitionIndex);
-				META_CONPRINTF( "--------------------end----------------------------\n");
-				g_iItemIDHigh++;
-				skin_parm->second.m_iItemDefinitionIndex = -1;
-				skin_parm->second.m_nFallbackPaintKit = -1;
-				skin_parm->second.m_nFallbackSeed = -1;
-				skin_parm->second.m_flFallbackWear = 0;
-			});
-		} else {
-			skin_parm->second.m_iItemDefinitionIndex = -1;
-			skin_parm->second.m_nFallbackPaintKit = -1;
-			skin_parm->second.m_nFallbackSeed = -1;
-			skin_parm->second.m_flFallbackWear = 0;
+			if (DEBUG_OUTPUT) { META_CONPRINTF( "i_subclass_change triggered\n"); }
 		}
 
-
-
-		META_CONPRINTF("low: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
-		META_CONPRINTF("high: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
-		META_CONPRINTF("id: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
-
-		META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
-		META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
-		META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
-		META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-
-		META_CONPRINTF( "weaponId: %d\n", weaponId);
-		META_CONPRINTF( "class: %s\n", static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_designerName.String());
-		META_CONPRINTF("New Item: %s\n", pBasePlayerWeapon->GetClassname());
-		META_CONPRINTF("index = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-		META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
-		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-
-		// skin_parm->second.m_iItemDefinitionIndex = -1;
-		// skin_parm->second.m_nFallbackPaintKit = -1;
-		// skin_parm->second.m_nFallbackSeed = -1;
-		// skin_parm->second.m_flFallbackWear = -1;
-
-		META_CONPRINTF( "----------------------------------------------------\n");
-
+		skin_parm->second.m_iItemDefinitionIndex = -1;
+		skin_parm->second.m_nFallbackPaintKit = -1;
+		skin_parm->second.m_nFallbackSeed = -1;
+		skin_parm->second.m_flFallbackWear = 0;
+		if (DEBUG_OUTPUT) {
+			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+			META_CONPRINTF("Entity Classname: %d\n", pBasePlayerWeapon->GetClassname());
+			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
+			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
+			META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
+			META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+			META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
+			META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
+			META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
+			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
+			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
+			META_CONPRINTF("Player SteamID: %d\n", steamid);
+			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
+			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+		}
 	});
 }
 
@@ -746,7 +558,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
 	char buf[255] = { 0 };
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-	META_CONPRINTF("called by %lld\n", steamid);
+	if (DEBUG_OUTPUT) { META_CONPRINTF("called by %lld\n", steamid); }
 	sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 }
