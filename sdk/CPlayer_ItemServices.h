@@ -25,9 +25,17 @@ class CUtlVector_NativeSdk {
 
 class CEconItemAttribute
 {
+private:
+	[[maybe_unused]] uint8_t __pad0000[0x30];
 public:
 	uint16_t m_iAttributeDefinitionIndex;
+private:
+	[[maybe_unused]] uint8_t __pad0032[0x2];
+public:
 	int m_flValue;
+	int m_flInitialValue;
+	int32_t m_nRefundableCurrency;
+	bool m_bSetBonus;
 	SCHEMA_FIELD(float, CEconItemAttribute, m_flInitialValue);
 	SCHEMA_FIELD(int32_t, CEconItemAttribute, m_nRefundableCurrency);
 	SCHEMA_FIELD(bool, CEconItemAttribute, m_bSetBonus);
@@ -40,8 +48,11 @@ public:
 
 class CAttributeList
 {
+private:
+	[[maybe_unused]] uint8_t __pad0000[0x8];
 public:
 	CUtlVector<CEconItemAttribute, CUtlMemory<CEconItemAttribute> > m_Attributes;
+	void* m_pManager;
 	inline void AddAttribute(int iIndex, int flValue)
 	{
 		m_Attributes.AddToTail(CEconItemAttribute(iIndex, flValue));
