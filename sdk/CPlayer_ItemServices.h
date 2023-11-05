@@ -80,7 +80,6 @@ public:
 	virtual const char* GetCustomName() const = 0;
 	virtual const char* GetCustomDesc() const = 0;
 	virtual int GetItemSetIndex() const = 0;
-	virtual void IterateAttributes(IEconItemAttributeIterator* pIterator) const = 0;
 
 	uint32 GetAccountID() { return m_iAccountID(); }
 	uint64 GetItemID() { return m_iItemID(); }

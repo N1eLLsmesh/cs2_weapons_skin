@@ -664,55 +664,19 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	int argStickerDefIndex4 = 0;
 	float argStickerWear4 = 0;
 
-	if (args.Arg(1)) {
-		argDefIndex = atoi(args.Arg(1));
-	}
+	if (args.Arg(1)) { argDefIndex = atoi(args.Arg(1)); }
+	if (args.Arg(2)) { argPaintIndex = atoi(args.Arg(2)); }
+	if (args.Arg(3)) { argPattern = atoi(args.Arg(3)); }
+	if (args.Arg(4)) { argWear = atof(args.Arg(4)); }
+	if (args.Arg(5)) { argStickerDefIndex1 = atoi(args.Arg(5)); }
+	if (args.Arg(6)) { argStickerWear1 = atof(args.Arg(6)); }
+	if (args.Arg(7)) { argStickerDefIndex2 = atoi(args.Arg(7)); }
+	if (args.Arg(8)) { argStickerWear2 = atof(args.Arg(8)); }
+	if (args.Arg(9)) { argStickerDefIndex3 = atoi(args.Arg(9)); }
+	if (args.Arg(10)) { argStickerWear3 = atof(args.Arg(10)); }
+	if (args.Arg(11)) { argStickerDefIndex4 = atoi(args.Arg(11)); }
+	if (args.Arg(12)) { argStickerWear4 = atof(args.Arg(12)); }
 
-	if (args.Arg(2)) {
-		argPaintIndex = atoi(args.Arg(2));
-	}
-
-	if (args.Arg(3)) {
-		argPattern = atoi(args.Arg(3));
-	}
-
-	if (args.Arg(4)) {
-		argWear = atof(args.Arg(4));
-	}
-
-	if (args.Arg(5)) {
-		argStickerDefIndex1 = atoi(args.Arg(5));
-	}
-
-	if (args.Arg(6)) {
-		argStickerWear1 = atof(args.Arg(6));
-	}
-
-	if (args.Arg(7)) {
-		argStickerDefIndex2 = atoi(args.Arg(7));
-	}
-
-	if (args.Arg(8)) {
-		argStickerWear2 = atof(args.Arg(8));
-	}
-
-	if (args.Arg(9)) {
-		argStickerDefIndex3 = atoi(args.Arg(9));
-	}
-
-	if (args.Arg(10)) {
-		argStickerWear3 = atof(args.Arg(10));
-	}
-
-	if (args.Arg(11)) {
-		argStickerDefIndex4 = atoi(args.Arg(11));
-	}
-
-	if (args.Arg(12)) {
-		argStickerWear4 = atof(args.Arg(12));
-	}
-
-	// check if at least argDefIndex, argPaintIndex, argPattern, argWear are set (not 0)
 	if (argDefIndex == 0 || argPaintIndex == 0 || argPattern == 0 || argWear == 0) {
         char buf2[255] = { 0 };
 		sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
@@ -780,15 +744,11 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 	}
 
-
-	new CTimer(0.5f, false, false, [pPlayerPawn, weapon_name, steamid, pPlayerController]() {
-		char buf[255] = { 0 };
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-		META_CONPRINTF("called by %lld\n", steamid);
-		sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
-		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-	});
-
+	char buf[255] = { 0 };
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+	META_CONPRINTF("called by %lld\n", steamid);
+	sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
+	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 }
 
 CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
