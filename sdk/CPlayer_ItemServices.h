@@ -27,7 +27,7 @@ class CUtlVector_NativeSdk {
 class CAttributeList
 {
 public:
-	SCHEMA_FIELD(CUtlVector<CEconItemAttribute, CUtlMemory<CEconItemAttribute>>, CAttributeList, m_Attributes);
+	CUtlVector<CEconItemAttribute, CUtlMemory<CEconItemAttribute> > m_Attributes;
 	inline void AddAttribute(int iIndex, int flValue)
 	{
 		m_Attributes.AddToTail(CEconItemAttribute(iIndex, flValue));
