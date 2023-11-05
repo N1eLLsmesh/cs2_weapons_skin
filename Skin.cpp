@@ -53,6 +53,18 @@ typedef struct SkinParm
 	bool used = false;
 }SkinParm;
 
+typedef struct StickerParm
+{
+	int stickerDefIndex1;
+	float stickerWear1;
+	int stickerDefIndex2;
+	float stickerWear2;
+	int stickerDefIndex3;
+	float stickerWear3;
+	int stickerDefIndex4;
+	float stickerWear4;
+}StickerParm;
+
 #ifdef _WIN32
 typedef void*(FASTCALL* SubClassChange_t)(const CCommandContext &context, const CCommand &args);
 typedef void*(FASTCALL* EntityRemove_t)(CGameEntitySystem*, void*, void*, uint64_t);
@@ -85,6 +97,7 @@ std::map<int, std::string> g_WeaponsMap;
 std::map<int, std::string> g_KnivesMap;
 std::map<int, int> g_ItemToSlotMap;
 std::map<uint64_t, SkinParm> g_PlayerSkins;
+std::map<uint64_t, StickerParm> g_PlayerStickers;
 std::map<uint64_t, int> g_PlayerMessages;
 uint32_t g_iItemIDHigh = 16384;
 
@@ -375,7 +388,7 @@ void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
 	META_CONPRINTF("OnEntityCreated\n");
-	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
+	/*g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
 	{
 		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
 		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
@@ -439,8 +452,7 @@ void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 		META_CONPRINTF("skin_parm->second.m_iItemDefinitionIndex: %d\n", skin_parm->second.m_iItemDefinitionIndex);
 		META_CONPRINTF( "--------------------end----------------------------\n");
 
-	});
-
+	});*/
 }
 
 void CEntityListener::OnEntityDeleted(CEntityInstance *pEntity) {
@@ -470,34 +482,54 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-			// pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 
 
 
-		// pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
-		// pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
-		// pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
+		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
+		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+
+
+		auto sticker_parm = g_PlayerStickers.find(steamid);
+		if(sticker_parm != g_PlayerStickers.end()) {
+			if (sticker_parm->second.stickerDefIndex1 != 0) {
+				pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, sticker_parm->second.stickerDefIndex1);
+			}
+			sticker_parm->second.stickerDefIndex1 = 0;
+			sticker_parm->second.stickerDefIndex2 = 0;
+			sticker_parm->second.stickerDefIndex3 = 0;
+			sticker_parm->second.stickerDefIndex4 = 0;
+			sticker_parm->second.stickerWear1 = 0;
+			sticker_parm->second.stickerWear2 = 0;
+			sticker_parm->second.stickerWear3 = 0;
+			sticker_parm->second.stickerWear4 = 0;
+		}
+
+		skin_parm->second.m_iItemDefinitionIndex = -1;
+		skin_parm->second.m_nFallbackPaintKit = -1;
+		skin_parm->second.m_nFallbackSeed = -1;
+		skin_parm->second.m_flFallbackWear = 0;
 
 		// pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
 		// pCEconEntityWeapon->m_OriginalOwnerXuidHigh() = -1;
 
-
-			// if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
-			// {
-				// pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-			// }
+		if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
+		{
+			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+		}
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
-		// auto knife_name = g_KnivesMap.find(weaponId);
-		/*if(knife_name != g_KnivesMap.end()) {
+		auto knife_name = g_KnivesMap.find(weaponId);
+		if(knife_name != g_KnivesMap.end()) {
 			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
 			engine->ServerCommand(buf);
 			META_CONPRINTF( "i_subclass_change triggered\n");
 
-			new CTimer(0.25f, false, false, [pCEconEntityWeapon, skin_parm]() {
+			/*new CTimer(0.25f, false, false, [pCEconEntityWeapon, skin_parm]() {
 				META_CONPRINTF( "Timer executed\n");
 				char buf[255] = { 0 };
 				sprintf(buf, "%s Timer executed", CHAT_PREFIX);
@@ -546,17 +578,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				skin_parm->second.m_nFallbackPaintKit = -1;
 				skin_parm->second.m_nFallbackSeed = -1;
 				skin_parm->second.m_flFallbackWear = 0;
-			});
-		} else {*/
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
-			skin_parm->second.m_iItemDefinitionIndex = -1;
-			skin_parm->second.m_nFallbackPaintKit = -1;
-			skin_parm->second.m_nFallbackSeed = -1;
-			skin_parm->second.m_flFallbackWear = 0;
-		// }
+			});*/
+		} else {
+		}
 
 		META_CONPRINTF("low: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
 		META_CONPRINTF("high: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
@@ -594,8 +618,70 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		return;
 	}
     char buf[255] = { 0 };
-    if (args.ArgC() != 5)
-    {
+
+	int32_t argDefIndex = 0;
+	int64_t argPaintIndex = 0;
+	int64_t argPattern = 0;
+	float argWear = 0;
+	int argStickerDefIndex1 = 0;
+	float argStickerWear1 = 0;
+	int argStickerDefIndex2 = 0;
+	float argStickerWear2 = 0;
+	int argStickerDefIndex3 = 0;
+	float argStickerWear3 = 0;
+	int argStickerDefIndex4 = 0;
+	float argStickerWear4 = 0;
+
+	if (args.Arg(1)) {
+		argDefIndex = atoi(args.Arg(1));
+	}
+
+	if (args.Arg(2)) {
+		argPaintIndex = atoi(args.Arg(2));
+	}
+
+	if (args.Arg(3)) {
+		argPattern = atoi(args.Arg(3));
+	}
+
+	if (args.Arg(4)) {
+		argWear = atof(args.Arg(4));
+	}
+
+	if (args.Arg(5)) {
+		argStickerDefIndex1 = atoi(args.Arg(5));
+	}
+
+	if (args.Arg(6)) {
+		argStickerWear1 = atof(args.Arg(6));
+	}
+
+	if (args.Arg(7)) {
+		argStickerDefIndex2 = atoi(args.Arg(7));
+	}
+
+	if (args.Arg(8)) {
+		argStickerWear2 = atof(args.Arg(8));
+	}
+
+	if (args.Arg(9)) {
+		argStickerDefIndex3 = atoi(args.Arg(9));
+	}
+
+	if (args.Arg(10)) {
+		argStickerWear3 = atof(args.Arg(10));
+	}
+
+	if (args.Arg(11)) {
+		argStickerDefIndex4 = atoi(args.Arg(11));
+	}
+
+	if (args.Arg(12)) {
+		argStickerWear4 = atof(args.Arg(12));
+	}
+
+	// check if at least argDefIndex, argPaintIndex, argPattern, argWear are set (not 0)
+	if (argDefIndex == 0 || argPaintIndex == 0 || argPattern == 0 || argWear == 0) {
         char buf2[255] = { 0 };
 		sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
 		sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
@@ -604,17 +690,13 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
         return;
     }
 
-	int32_t weapon_id = atoi(args.Arg(1));
-	int64_t paint_kit = atoi(args.Arg(2));
-	int64_t pattern_id = atoi(args.Arg(3));
-	float wear = atof(args.Arg(4));
-    auto weapon_name = g_WeaponsMap.find(weapon_id);
+    auto weapon_name = g_WeaponsMap.find(argDefIndex);
 	bool isKnife = false;
 	int64_t steamid = pPlayerController->m_steamID();
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
 	if (weapon_name == g_WeaponsMap.end()) {
-		weapon_name = g_KnivesMap.find(weapon_id);
+		weapon_name = g_KnivesMap.find(argDefIndex);
 		isKnife = true;
 	}
 
@@ -624,13 +706,23 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		return;
 	}
 
-	g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id;
-	g_PlayerSkins[steamid].m_nFallbackPaintKit = paint_kit;
-	g_PlayerSkins[steamid].m_nFallbackSeed = pattern_id;
-	g_PlayerSkins[steamid].m_flFallbackWear = wear;
+	g_PlayerSkins[steamid].m_iItemDefinitionIndex = argDefIndex;
+	g_PlayerSkins[steamid].m_nFallbackPaintKit = argPaintIndex;
+	g_PlayerSkins[steamid].m_nFallbackSeed = argPattern;
+	g_PlayerSkins[steamid].m_flFallbackWear = argWear;
+
+	g_PlayerStickers[steamid].stickerDefIndex1 = argStickerDefIndex1;
+	g_PlayerStickers[steamid].stickerWear1 = argStickerWear1;
+	g_PlayerStickers[steamid].stickerDefIndex2 = argStickerDefIndex2;
+	g_PlayerStickers[steamid].stickerWear2 = argStickerWear2;
+	g_PlayerStickers[steamid].stickerDefIndex3 = argStickerDefIndex3;
+	g_PlayerStickers[steamid].stickerWear3 = argStickerWear3;
+	g_PlayerStickers[steamid].stickerDefIndex4 = argStickerDefIndex4;
+	g_PlayerStickers[steamid].stickerWear4 = argStickerWear4;
+
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
+	auto weapon_slot_map = g_ItemToSlotMap.find(argDefIndex);
 	if (weapon_slot_map == g_ItemToSlotMap.end()) {
 		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
