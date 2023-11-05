@@ -472,8 +472,16 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				META_CONPRINTF("skin_parm->second.m_flFallbackWear: %f\n", skin_parm->second.m_flFallbackWear);
 				META_CONPRINTF("skin_parm->second.m_iItemDefinitionIndex: %d\n", skin_parm->second.m_iItemDefinitionIndex);
 				META_CONPRINTF( "--------------------end----------------------------\n");
-
+				skin_parm->second.m_iItemDefinitionIndex = -1;
+				skin_parm->second.m_nFallbackPaintKit = -1;
+				skin_parm->second.m_nFallbackSeed = -1;
+				skin_parm->second.m_flFallbackWear = 0;
 			});
+		} else {
+			skin_parm->second.m_iItemDefinitionIndex = -1;
+			skin_parm->second.m_nFallbackPaintKit = -1;
+			skin_parm->second.m_nFallbackSeed = -1;
+			skin_parm->second.m_flFallbackWear = 0;
 		}
 
 		META_CONPRINTF("low: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
