@@ -105,18 +105,6 @@ jobs:
         with:
           name: ${{ runner.os }}
           path: project/build/package
-      - name: 📂 SFTP uploader
-        uses: wangyucode/sftp-upload-action@v2.0.2
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          privateKey: ${{ secrets.PRIVATEKEY }}
-          compress: true
-          forceUpload: true
-          localDir: ${{ secrets.LOCALDIR }}
-          remoteDir: ${{ secrets.REMOTEDIR }}
-          exclude: ${{ secrets.EXCLUDE }}
-
 
   release:
     name: Release
