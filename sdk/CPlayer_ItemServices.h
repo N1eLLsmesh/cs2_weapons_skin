@@ -26,15 +26,15 @@ class CUtlVector_NativeSdk {
 class CEconItemAttribute
 {
 public:
-	SCHEMA_FIELD(uint16_t, CEconItemAttribute, m_iAttributeDefinitionIndex);
-	SCHEMA_FIELD(float, CEconItemAttribute, m_flValue);
+	uint16_t m_iAttributeDefinitionIndex;
+	int m_flValue;
 	SCHEMA_FIELD(float, CEconItemAttribute, m_flInitialValue);
 	SCHEMA_FIELD(int32_t, CEconItemAttribute, m_nRefundableCurrency);
 	SCHEMA_FIELD(bool, CEconItemAttribute, m_bSetBonus);
 	inline CEconItemAttribute(uint16_t iAttributeDefinitionIndex, int flValue)
 	{
-		m_iAttributeDefinitionIndex() = iAttributeDefinitionIndex;
-		m_flValue() = flValue;
+		m_iAttributeDefinitionIndex = iAttributeDefinitionIndex;
+		m_flValue = flValue;
 	}
 };
 
