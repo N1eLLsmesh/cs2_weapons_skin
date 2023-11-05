@@ -495,7 +495,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		auto sticker_parm = g_PlayerStickers.find(steamid);
 		if(sticker_parm != g_PlayerStickers.end()) {
 			if (sticker_parm->second.stickerDefIndex1 != 0) {
-				pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, sticker_parm->second.stickerDefIndex1);
+				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, sticker_parm->second.stickerDefIndex1);
+				META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1);
 			}
 			sticker_parm->second.stickerDefIndex1 = 0;
 			sticker_parm->second.stickerDefIndex2 = 0;

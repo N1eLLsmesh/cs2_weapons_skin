@@ -126,6 +126,12 @@ class CBasePlayerWeapon : public CEconEntity
 {
 public:
 	SCHEMA_FIELD(CBodyComponent*, CBaseEntity, m_CBodyComponent);
+	SCHEMA_FIELD(CAttributeContainer, CEconEntity, m_AttributeManager);
+	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackPaintKit);
+	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackSeed);
+	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackStatTrak);
+	SCHEMA_FIELD(float, CEconEntity, m_flFallbackWear);
+	SCHEMA_FIELD(uint64_t, CEconEntity, m_OriginalOwnerXuidLow);
 	SCHEMA_FIELD(uint32_t, CBaseEntity, m_nSubclassID);
 	SCHEMA_FIELD(int32_t, CBaseEntity, m_iOldOwnerClass);
 };
