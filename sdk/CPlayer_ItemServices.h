@@ -33,6 +33,7 @@ public:
 class CEconItemView
 {
 public:
+	virtual ~CEconItemView();
 	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityQuality);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityLevel);
