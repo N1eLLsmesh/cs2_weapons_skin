@@ -511,11 +511,11 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2);
 			}
 			if (sticker_parm->second.stickerDefIndex3 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121, sticker_parm->second.stickerDefIndex3);
+				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(129, sticker_parm->second.stickerDefIndex3);
 				META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3);
 			}
 			if (sticker_parm->second.stickerDefIndex4 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125, sticker_parm->second.stickerDefIndex4);
+				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(133, sticker_parm->second.stickerDefIndex4);
 				META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4);
 			}
 			sticker_parm->second.stickerDefIndex1 = 0;
@@ -528,10 +528,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			sticker_parm->second.stickerWear4 = 0;
 		}
 
-		skin_parm->second.m_iItemDefinitionIndex = -1;
-		skin_parm->second.m_nFallbackPaintKit = -1;
-		skin_parm->second.m_nFallbackSeed = -1;
-		skin_parm->second.m_flFallbackWear = 0;
+
 
 		// pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
 		// pCEconEntityWeapon->m_OriginalOwnerXuidHigh() = -1;
@@ -602,6 +599,11 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			});*/
 		} else {
 		}
+
+		skin_parm->second.m_iItemDefinitionIndex = -1;
+		skin_parm->second.m_nFallbackPaintKit = -1;
+		skin_parm->second.m_nFallbackSeed = -1;
+		skin_parm->second.m_flFallbackWear = 0;
 
 		META_CONPRINTF("low: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
 		META_CONPRINTF("high: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
