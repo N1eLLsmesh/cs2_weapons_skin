@@ -551,7 +551,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			engine->ServerCommand(buf);
 			META_CONPRINTF( "i_subclass_change triggered\n");
 
-			/*new CTimer(0.25f, false, false, [pCEconEntityWeapon, skin_parm]() {
+			new CTimer(0.25f, false, false, [pCEconEntityWeapon, skin_parm]() {
 				META_CONPRINTF( "Timer executed\n");
 				char buf[255] = { 0 };
 				sprintf(buf, "%s Timer executed", CHAT_PREFIX);
@@ -574,10 +574,14 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 				// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = g_iItemIDHigh + pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow();
 				// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = g_iItemIDHigh + pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID();
+				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
+				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
+				uint64_t newItemID 	= (static_cast<uint64_t>(g_iItemIDHigh) << 32) | static_cast<uint64_t>(pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
+				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
+				pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
 
-				pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
-				pCEconEntityWeapon->m_OriginalOwnerXuidHigh() = -1;
+				// pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
+				// pCEconEntityWeapon->m_OriginalOwnerXuidHigh() = -1;
 
 				META_CONPRINTF( "--------------------after----------------------------\n");
 				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
@@ -600,14 +604,15 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				skin_parm->second.m_nFallbackPaintKit = -1;
 				skin_parm->second.m_nFallbackSeed = -1;
 				skin_parm->second.m_flFallbackWear = 0;
-			});*/
+			});
 		} else {
+			skin_parm->second.m_iItemDefinitionIndex = -1;
+			skin_parm->second.m_nFallbackPaintKit = -1;
+			skin_parm->second.m_nFallbackSeed = -1;
+			skin_parm->second.m_flFallbackWear = 0;
 		}
 
-		skin_parm->second.m_iItemDefinitionIndex = -1;
-		skin_parm->second.m_nFallbackPaintKit = -1;
-		skin_parm->second.m_nFallbackSeed = -1;
-		skin_parm->second.m_flFallbackWear = 0;
+
 
 		META_CONPRINTF("low: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
 		META_CONPRINTF("high: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
