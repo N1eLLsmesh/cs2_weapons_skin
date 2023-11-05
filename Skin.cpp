@@ -75,7 +75,7 @@ SubClassChange_t FnSubClassChange;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*, uint64_t) = nullptr;
-auto (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, CEconItemView* pScriptItem, void* a5, void* a6) = nullptr;
+auto (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, CEconItemView* pScriptItem, void* a5, void* a6);
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
