@@ -27,7 +27,11 @@ class CUtlVector_NativeSdk {
 class CAttributeList
 {
 public:
-	SCHEMA_FIELD(int64_t, CAttributeList, m_Attributes);
+	SCHEMA_FIELD(CUtlVector<CEconItemAttribute, CUtlMemory<CEconItemAttribute>>, CAttributeList, m_Attributes);
+	inline void AddAttribute(int iIndex, int flValue)
+	{
+		m_Attributes.AddToTail(CEconItemAttribute(iIndex, flValue));
+	}
 };
 
 class CEconItemView
@@ -37,8 +41,8 @@ public:
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityQuality);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityLevel);
 	SCHEMA_FIELD(uint64_t, CEconItemView, m_iItemID);
-	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDLow);
-	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDHigh);
+	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDLow); // uint32 ??
+	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDHigh); // uint32 ??
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iInventoryPosition);
 	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
@@ -78,6 +82,11 @@ public:
 	SCHEMA_FIELD(float, CEconItemAttribute, m_flInitialValue);
 	SCHEMA_FIELD(int32_t, CEconItemAttribute, m_nRefundableCurrency);
 	SCHEMA_FIELD(bool, CEconItemAttribute, m_bSetBonus);
+	inline CEconItemAttribute(uint16_t iAttributeDefinitionIndex, int flValue)
+	{
+		m_iAttributeDefinitionIndex = iAttributeDefinitionIndex;
+		m_flValue = flValue;
+	}
 };
 
 class CModelState
@@ -130,4 +139,11 @@ class CPlayer_ItemServices : public CPlayerPawnComponent
 {
 public:
 	virtual ~CPlayer_ItemServices() = 0;
+};
+
+class CEconWearable : public CEconEntity
+{
+public:
+	SCHEMA_FIELD(int32_t, CEconWearable, m_nForceSkin);
+	SCHEMA_FIELD(bool, CEconWearable, m_bAlwaysAllow);
 };
