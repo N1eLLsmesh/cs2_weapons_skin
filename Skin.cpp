@@ -592,7 +592,14 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 	}
 
-	FnCreateEntityByName(weapon_name->second.c_str());
+	CBaseEntity *pEnt = FnCreateEntityByName(weapon_name->second.c_str());
+	if (!pEnt) {
+		META_CONPRINTF("Failed to create entity\n");
+	} else {
+		META_CONPRINTF("Entity created\n");
+	}
+
+	
 
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     META_CONPRINTF("called by %lld\n", steamid);
