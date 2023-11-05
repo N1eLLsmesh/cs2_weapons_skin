@@ -23,6 +23,20 @@ class CUtlVector_NativeSdk {
     char pad1[0x8];  // no idea
 };
 
+class CEconItemAttribute
+{
+public:
+	SCHEMA_FIELD(uint16_t, CEconItemAttribute, m_iAttributeDefinitionIndex);
+	SCHEMA_FIELD(float, CEconItemAttribute, m_flValue);
+	SCHEMA_FIELD(float, CEconItemAttribute, m_flInitialValue);
+	SCHEMA_FIELD(int32_t, CEconItemAttribute, m_nRefundableCurrency);
+	SCHEMA_FIELD(bool, CEconItemAttribute, m_bSetBonus);
+	inline CEconItemAttribute(uint16_t iAttributeDefinitionIndex, int flValue)
+	{
+		m_iAttributeDefinitionIndex = iAttributeDefinitionIndex;
+		m_flValue = flValue;
+	}
+};
 
 class CAttributeList
 {
@@ -72,21 +86,6 @@ public:
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackStatTrak);
 	SCHEMA_FIELD(CHandle<CBaseEntity>, CEconEntity, m_hOldProvidee);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_iOldOwnerClass);
-};
-
-class CEconItemAttribute
-{
-public:
-	SCHEMA_FIELD(uint16_t, CEconItemAttribute, m_iAttributeDefinitionIndex);
-	SCHEMA_FIELD(float, CEconItemAttribute, m_flValue);
-	SCHEMA_FIELD(float, CEconItemAttribute, m_flInitialValue);
-	SCHEMA_FIELD(int32_t, CEconItemAttribute, m_nRefundableCurrency);
-	SCHEMA_FIELD(bool, CEconItemAttribute, m_bSetBonus);
-	inline CEconItemAttribute(uint16_t iAttributeDefinitionIndex, int flValue)
-	{
-		m_iAttributeDefinitionIndex = iAttributeDefinitionIndex;
-		m_flValue = flValue;
-	}
 };
 
 class CModelState
