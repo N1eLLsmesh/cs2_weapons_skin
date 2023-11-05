@@ -33,8 +33,8 @@ public:
 	SCHEMA_FIELD(bool, CEconItemAttribute, m_bSetBonus);
 	inline CEconItemAttribute(uint16_t iAttributeDefinitionIndex, int flValue)
 	{
-		m_iAttributeDefinitionIndex = iAttributeDefinitionIndex;
-		m_flValue = flValue;
+		m_iAttributeDefinitionIndex() = iAttributeDefinitionIndex;
+		m_flValue() = flValue;
 	}
 };
 
