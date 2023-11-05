@@ -416,9 +416,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("itemID2: %d\n", itemID2);
 		
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = g_iItemIDHigh++;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = g_iItemIDHigh++;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
 
 		META_CONPRINTF("skin_parm->second.m_nFallbackPaintKit: %d\n", skin_parm->second.m_nFallbackPaintKit);
 		META_CONPRINTF("skin_parm->second.m_nFallbackSeed: %d\n", skin_parm->second.m_nFallbackSeed);
@@ -436,7 +436,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
 		auto knife_name = g_KnivesMap.find(weaponId);
-		/*if(knife_name != g_KnivesMap.end()) {
+		if(knife_name != g_KnivesMap.end()) {
 			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
@@ -450,8 +450,11 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 				pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 				pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
+				// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+				pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
 			});
-		}*/
+		}
 
 		META_CONPRINTF("low: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
 		META_CONPRINTF("high: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
@@ -550,12 +553,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 			FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
 		}
 	}
-
-	CEconItemView* econItemView = new CEconItemView;
-	econItemView->m_iItemDefinitionIndex() = weapon_id;
-	econItemView->m_bInitialized() = true;
-	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, econItemView, nullptr, nullptr);
-	delete econItemView;
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 	// pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
     // FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     // pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
