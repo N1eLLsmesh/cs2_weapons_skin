@@ -36,9 +36,6 @@ public:
 	int m_flInitialValue;
 	int32_t m_nRefundableCurrency;
 	bool m_bSetBonus;
-	SCHEMA_FIELD(float, CEconItemAttribute, m_flInitialValue);
-	SCHEMA_FIELD(int32_t, CEconItemAttribute, m_nRefundableCurrency);
-	SCHEMA_FIELD(bool, CEconItemAttribute, m_bSetBonus);
 	inline CEconItemAttribute(uint16_t iAttributeDefinitionIndex, int flValue)
 	{
 		m_iAttributeDefinitionIndex = iAttributeDefinitionIndex;
