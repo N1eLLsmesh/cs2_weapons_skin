@@ -394,12 +394,12 @@ void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 
 		auto knife_name = g_KnivesMap.find(weaponId);
 		if (knife_name == g_KnivesMap.end() && true) {
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, 75);
-			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117, 75);
-			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121, 75);
-			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125, 75);
-			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(129, 75);
-			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(133, 75);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, 76);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117, 76);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121, 76);
+			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125, 76);
+			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(129, 76);
+			// pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(133, 76);
 		}
 
 		if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
