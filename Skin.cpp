@@ -392,6 +392,16 @@ void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 			return;
 		}
 
+		auto knife_name = g_KnivesMap.find(weaponId);
+		if (knife_name == g_KnivesMap.end() && true) {
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, 75);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117, 75);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121, 75);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125, 75);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(129, 75);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(133, 75);
+		}
+
 		if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
 		{
 			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
@@ -403,7 +413,6 @@ void CEntityListener::OnEntityCreated(CEntityInstance *pEntity) {
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 
-		auto knife_name = g_KnivesMap.find(weaponId);
 		if(knife_name != g_KnivesMap.end()) {
 			char buf[64] = {0};
 			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
