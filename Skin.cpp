@@ -500,22 +500,24 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		auto sticker_parm = g_PlayerStickers.find(steamid);
 		if(sticker_parm != g_PlayerStickers.end()) {
+			// 113 = 3th Slot
 			if (sticker_parm->second.stickerDefIndex1 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, sticker_parm->second.stickerDefIndex1);
 				META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1);
 			}
+			// 117 = ???
 			if (sticker_parm->second.stickerDefIndex2 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117, sticker_parm->second.stickerDefIndex2);
 				META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2);
 			}
-			/*if (sticker_parm->second.stickerDefIndex3 != 0) {
+			if (sticker_parm->second.stickerDefIndex3 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121, sticker_parm->second.stickerDefIndex3);
 				META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3);
-			}*/
-			/*if (sticker_parm->second.stickerDefIndex4 != 0) {
+			}
+			if (sticker_parm->second.stickerDefIndex4 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125, sticker_parm->second.stickerDefIndex4);
 				META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4);
-			}*/
+			}
 			sticker_parm->second.stickerDefIndex1 = 0;
 			sticker_parm->second.stickerDefIndex2 = 0;
 			sticker_parm->second.stickerDefIndex3 = 0;
