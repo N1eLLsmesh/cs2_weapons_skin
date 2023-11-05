@@ -551,7 +551,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			engine->ServerCommand(buf);
 			META_CONPRINTF( "i_subclass_change triggered\n");
 
-			new CTimer(0.25f, false, false, [pCEconEntityWeapon, skin_parm]() {
+			new CTimer(0.25f, false, false, [pCEconEntityWeapon, skin_parm, pBasePlayerWeapon]() {
 				META_CONPRINTF( "Timer executed\n");
 				char buf[255] = { 0 };
 				sprintf(buf, "%s Timer executed", CHAT_PREFIX);
