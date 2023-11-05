@@ -452,7 +452,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
 				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
 				META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
-				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
 
 
 				pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
@@ -465,7 +468,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
 				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
 				META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
-				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
 				META_CONPRINTF( "--------------------data----------------------------\n");
 				META_CONPRINTF("skin_parm->second.m_nFallbackPaintKit: %d\n", skin_parm->second.m_nFallbackPaintKit);
 				META_CONPRINTF("skin_parm->second.m_nFallbackSeed: %d\n", skin_parm->second.m_nFallbackSeed);
