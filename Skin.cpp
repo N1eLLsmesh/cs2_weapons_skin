@@ -314,13 +314,6 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		return;
 	}
 
-	CBasePlayerController* pPlayerControllerAttacker = static_cast<CBasePlayerController*>(event->GetPlayerController("attacker"));
-
-	if (pPlayerControllerAttacker && pPlayerController) {
-		// disable damage
-		return;
-	}
-
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
 		int64_t steamid = pPlayerController->m_steamID();

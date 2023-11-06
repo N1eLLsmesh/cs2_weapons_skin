@@ -38,11 +38,6 @@ class CPlayerSpawnEvent : public IGameEventListener2
 	void FireGameEvent(IGameEvent* event) override;
 };
 
-class CPlayerHurtEvent : public IGameEventListener2
-{
-	void FireGameEvent(IGameEvent* event) override;
-};
-
 class CRoundPreStartEvent : public IGameEventListener2
 {
 	void FireGameEvent(IGameEvent* event) override;
