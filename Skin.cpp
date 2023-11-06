@@ -638,15 +638,15 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	econItemView->m_iEntityQuality() = true;
 
 	META_CONPRINTF( "--------------------CEconItemView---------------------\n");
-	META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView.m_iItemDefinitionIndex());
-	META_CONPRINTF("econItemView->m_iEntityQuality: %d\n", econItemView.m_iEntityQuality());
-	META_CONPRINTF("econItemView->m_iEntityLevel: %d\n", econItemView.m_iEntityLevel());
-	META_CONPRINTF("econItemView->m_iItemID: %d\n", econItemView.m_iItemID());
-	META_CONPRINTF("econItemView->m_iItemIDLow: %d\n", econItemView.m_iItemIDLow());
-	META_CONPRINTF("econItemView->m_iItemIDHigh: %d\n", econItemView.m_iItemIDHigh());
-	META_CONPRINTF("econItemView->m_iAccountID: %d\n", econItemView.m_iAccountID());
-	META_CONPRINTF("econItemView->m_iInventoryPosition: %d\n", econItemView.m_iInventoryPosition());
-	META_CONPRINTF("econItemView->m_bInitialized: %d\n", econItemView.m_bInitialized());
+	META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView->m_iItemDefinitionIndex());
+	META_CONPRINTF("econItemView->m_iEntityQuality: %d\n", econItemView->m_iEntityQuality());
+	META_CONPRINTF("econItemView->m_iEntityLevel: %d\n", econItemView->m_iEntityLevel());
+	META_CONPRINTF("econItemView->m_iItemID: %d\n", econItemView->m_iItemID());
+	META_CONPRINTF("econItemView->m_iItemIDLow: %d\n", econItemView->m_iItemIDLow());
+	META_CONPRINTF("econItemView->m_iItemIDHigh: %d\n", econItemView->m_iItemIDHigh());
+	META_CONPRINTF("econItemView->m_iAccountID: %d\n", econItemView->m_iAccountID());
+	META_CONPRINTF("econItemView->m_iInventoryPosition: %d\n", econItemView->m_iInventoryPosition());
+	META_CONPRINTF("econItemView->m_bInitialized: %d\n", econItemView->m_bInitialized());
 	META_CONPRINTF( "--------------------ENTITY----------------------------\n");
 	META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
 
