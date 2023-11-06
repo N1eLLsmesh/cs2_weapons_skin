@@ -70,7 +70,7 @@ typedef struct StickerParm
 #ifdef _WIN32
 typedef void*(FASTCALL* SubClassChange_t)(const CCommandContext &context, const CCommand &args);
 typedef void*(FASTCALL* EntityRemove_t)(CGameEntitySystem*, void*, void*, uint64_t);
-typedef void(FASTCALL* GiveNamedItem_t)(void* itemService, const char* pchName, void* iSubType, void* pScriptItem, void* a5, void* a6);
+typedef void(FASTCALL* GiveNamedItem_t)(void* itemService, const char* pchName, int iSubType, CEconItemView* pScriptItem, bool bForce, Vector* pOrigin);
 typedef void(FASTCALL* UTIL_ClientPrintAll_t)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4);
 typedef void(FASTCALL *ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 
@@ -89,7 +89,7 @@ SubClassChange_t FnSubClassChange;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*, uint64_t) = nullptr;
-void (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, CEconItemView* pScriptItem, void* a5, void* a6) = nullptr;
+void (*FnGiveNamedItem)(void* itemService, const char* pchName, int iSubType, CEconItemView* pScriptItem, bool bForce, Vector* pOrigin) = nullptr;
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
