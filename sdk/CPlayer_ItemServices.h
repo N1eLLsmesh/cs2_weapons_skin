@@ -60,6 +60,7 @@ class CEconItemView
 {
 	virtual ~CEconItemView() = 0;
 public:
+	CEconItemView();
 	virtual int GetCustomPaintKitIndex() const = 0;
 	virtual int GetCustomPaintKitSeed() const = 0;
 	virtual float GetCustomPaintKitWear(float flWearDefault = 0.0f) const = 0;
