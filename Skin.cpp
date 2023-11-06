@@ -437,7 +437,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		skin_parm->second.m_flFallbackWear = 0;
 		if (DEBUG_OUTPUT) {
 			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
-			META_CONPRINTF("Entity Classname: %d\n", pBasePlayerWeapon->GetClassname());
+			META_CONPRINTF("Entity Classname: %s\n", pBasePlayerWeapon->GetClassname());
 			META_CONPRINTF( "--------------------CEconEntity----------------------------\n");
 			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
 			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
@@ -455,8 +455,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			META_CONPRINTF("pCEconEntityWeapon->m_iAccountID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID());
 			META_CONPRINTF("pCEconEntityWeapon->m_iInventoryPosition: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition());
 			META_CONPRINTF("pCEconEntityWeapon->m_bInitialized: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_bInitialized());
-			META_CONPRINTF("pCEconEntityWeapon->m_szCustomName: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName());
-			META_CONPRINTF("pCEconEntityWeapon->m_szCustomNameOverride: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomNameOverride());
+			META_CONPRINTF("pCEconEntityWeapon->m_szCustomName: %s\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName());
+			META_CONPRINTF("pCEconEntityWeapon->m_szCustomNameOverride: %s\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomNameOverride());
 			META_CONPRINTF("Player SteamID: %d\n", steamid);
 			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
 		}
