@@ -599,6 +599,19 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 	CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	if (DEBUG_OUTPUT) { META_CONPRINTF("Count:%d\n", pPlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count()); }
+	// loop through all attributes
+	for (int i = 0; i < pPlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count(); i++) {
+		// get attribute
+		CEconItemAttribute* pAttribute = pPlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes[i];
+		// get attribute definition
+		CEconItemAttributeDefinition* pAttributeDefinition = pAttribute->m_pDefinition;
+		// get attribute name
+		const char* pAttributeName = pAttributeDefinition->m_pAttributeClass->m_pszName;
+		// get attribute value
+		int pAttributeValue = pAttribute->m_iValue;
+		// print attribute name and value
+		if (DEBUG_OUTPUT) { META_CONPRINTF("Attribute Name: %s, Attribute Value: %d\n", pAttributeName, pAttributeValue); }
+	}
 
 	new CTimer(10.0f, false, false, []() {
         char buf[255] = { 0 };
