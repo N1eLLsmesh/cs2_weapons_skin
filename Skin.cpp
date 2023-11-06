@@ -358,10 +358,10 @@ void CEntityListener::OnEntityDeleted(CEntityInstance *pEntity) { }
 
 void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
-	if (DEBUG_OUTPUT) { META_CONPRINTF("OnEntitySpawned\n"); }
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
+	if (DEBUG_OUTPUT) { META_CONPRINTF("OnBasePlayerWeaponSpawned\n"); }
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
 	{
 		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
@@ -379,14 +379,15 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = g_iItemIDHigh;
-		uint64_t newItemID 	= (static_cast<uint64_t>(g_iItemIDHigh) << 32) | static_cast<uint64_t>(pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
+
 
 		auto sticker_parm = g_PlayerStickers.find(steamid);
 		if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
@@ -456,7 +457,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
 		return;
 	}
-	
+
     CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
     CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
