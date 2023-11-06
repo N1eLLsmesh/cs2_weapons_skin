@@ -93,7 +93,7 @@ void (*FnGiveNamedItem)(void* itemService, const char* pchName, int iSubType, CE
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
-void (*FnNetworkStateChanged)(uint64_t chainEntity, uint64_t offset, uint64_t a3) = nullptr;
+void (*FnNetworkStateChanged)(void* chainEntity, void* offset, void* a3) = nullptr;
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
@@ -599,7 +599,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	}
 
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", 0, nullptr, nullptr, nullptr);
-	FnNetworkStateChanged();
+	FnNetworkStateChanged(nullptr, nullptr, nullptr);
 	
 	new CTimer(10.0f, false, false, []() {
         char buf[255] = { 0 };
