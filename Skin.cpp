@@ -70,7 +70,7 @@ typedef struct StickerParm
 #ifdef _WIN32
 typedef void*(FASTCALL* SubClassChange_t)(const CCommandContext &context, const CCommand &args);
 typedef void*(FASTCALL* EntityRemove_t)(CGameEntitySystem*, void*, void*, uint64_t);
-typedef void(FASTCALL* GiveNamedItem_t)(void* itemService, const char* pchName, int iSubType, CEconItemView* pScriptItem, void* bForce, void* pOrigin);
+typedef void(FASTCALL* GiveNamedItem_t)(void* itemService, const char* pchName, void* iSubType, CEconItemView* pScriptItem, void* bForce, void* pOrigin);
 typedef void(FASTCALL* UTIL_ClientPrintAll_t)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4);
 typedef void(FASTCALL *ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 
@@ -89,7 +89,7 @@ SubClassChange_t FnSubClassChange;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*, uint64_t) = nullptr;
-void (*FnGiveNamedItem)(void* itemService, const char* pchName, int iSubType, CEconItemView* pScriptItem, void* bForce, void* pOrigin) = nullptr;
+void (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, CEconItemView* pScriptItem, void* bForce, void* pOrigin) = nullptr;
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
@@ -581,7 +581,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 	}
 
-	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), 0, nullptr, nullptr, nullptr);
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 	if (DEBUG_OUTPUT) { META_CONPRINTF("called by %lld\n", steamid); }
 	sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
@@ -598,7 +598,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 		return;
 	}
 
-	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", 0, nullptr, nullptr, nullptr);
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", nullptr, nullptr, nullptr, nullptr);
 	FnNetworkStateChanged(nullptr, nullptr, nullptr);
 	
 	new CTimer(10.0f, false, false, []() {
