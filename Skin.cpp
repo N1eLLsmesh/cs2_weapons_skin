@@ -596,7 +596,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 		return;
 	}
 
-	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", 507, nullptr, nullptr, nullptr);
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", 0, nullptr, nullptr, nullptr);
 	
 	new CTimer(10.0f, false, false, []() {
         char buf[255] = { 0 };
