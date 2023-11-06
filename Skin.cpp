@@ -44,7 +44,7 @@ bool g_bHasTicked;
 
 #define CHAT_PREFIX	" \x05[Cobra]\x01"
 #define DEBUG_OUTPUT 1
-#define FEATURE_STICKERS 0
+#define FEATURE_STICKERS 1
 
 typedef struct SkinParm
 {
@@ -395,7 +395,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
 			// Work in progress
 			if (sticker_parm->second.stickerDefIndex1 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113, sticker_parm->second.stickerDefIndex1);
+				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113 + 1 * 4, sticker_parm->second.stickerDefIndex1);
+				if (sticker_parm->second.stickerWear1 != 0) {
+					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(114 + 1 * 4, sticker_parm->second.stickerWear1);
+				}
 				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1); }
 			}
 			if (sticker_parm->second.stickerDefIndex2 != 0) {
