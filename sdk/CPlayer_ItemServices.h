@@ -120,8 +120,8 @@ class CEconEntity : public CBaseFlex
 {
 public:
 	SCHEMA_FIELD(CAttributeContainer, CEconEntity, m_AttributeManager);
-	SCHEMA_FIELD(int32_t, CEconEntity, m_OriginalOwnerXuidLow);
-	SCHEMA_FIELD(int32_t, CEconEntity, m_OriginalOwnerXuidHigh);
+	SCHEMA_FIELD(uint32_t, CEconEntity, m_OriginalOwnerXuidLow);
+	SCHEMA_FIELD(uint32_t, CEconEntity, m_OriginalOwnerXuidHigh);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackPaintKit);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackSeed);
 	SCHEMA_FIELD(float, CEconEntity, m_flFallbackWear);
