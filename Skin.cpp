@@ -107,6 +107,21 @@ class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
 SH_DECL_HOOK3_void(IServerGameDLL, GameFrame, SH_NOATTRIB, 0, bool, bool, bool);
 
+
+CEconItemView::CEconItemView( void )
+{
+	m_iItemDefinitionIndex = 0;
+	m_iEntityQuality = (int)AE_UNDEFINED;
+	m_iEntityLevel = 0;
+	m_iItemID = 0;
+	m_iItemIDLow = 0;
+	m_iItemIDHigh = 0xFFFFFFFF;
+	m_iInventoryPosition = 0;
+	m_bInitialized = false;
+	m_iAccountID = 0;
+}
+
+
 CGlobalVars *GetGameGlobals()
 {
 	INetworkGameServer *server = g_pNetworkServerService->GetIGameServer();
@@ -386,9 +401,14 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition() = 0;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
+
+		uint64_t newItemID = 16384;
+		uint32_t newItemIDLow = newItemID & 0xFFFFFFFF;
+		uint32_t newItemIDHigh = newItemID >> 32;
+
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
 
 		if (DEBUG_OUTPUT) { META_CONPRINTF("Before Stickers\n"); }
 
@@ -628,7 +648,6 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
 	META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
-	META_CONPRINTF("Entity SubType: %s\n", pPlayerWeapon->GetSubType());
 
 	new CTimer(10.0f, false, false, []() {
         char buf[255] = { 0 };
