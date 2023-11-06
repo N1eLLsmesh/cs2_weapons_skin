@@ -396,6 +396,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		auto sticker_parm = g_PlayerStickers.find(steamid);
 		if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
 			// Work in progress
+			// print the count (Count()) of all m_AttributeList().m_Attributes() in the console
+			META_CONPRINTF("m_AttributeList().m_Attributes().Count(): %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes().Count());
+
 			if (sticker_parm->second.stickerDefIndex1 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113 + 1 * 4, sticker_parm->second.stickerDefIndex1);
 				if (sticker_parm->second.stickerWear1 != 0) {
@@ -442,6 +445,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			sticker_parm->second.stickerWear2 = 0;
 			sticker_parm->second.stickerWear3 = 0;
 			sticker_parm->second.stickerWear4 = 0;
+
+			META_CONPRINTF("m_AttributeList().m_Attributes().Count(): %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes().Count());
 		}
 
 		if (DEBUG_OUTPUT) { META_CONPRINTF("After Stickers\n"); }
