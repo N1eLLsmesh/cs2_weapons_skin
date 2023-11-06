@@ -85,6 +85,8 @@ public:
 	uint64 GetItemID() { return m_iItemID(); }
 	int GetKillEaterValue();
 
+	
+
 private:
 	bool m_bKillEaterTypesCached;
 	void* m_vCachedKillEaterTypes[7];
