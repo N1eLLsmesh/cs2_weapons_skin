@@ -634,8 +634,8 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
 	CEconItemView* econItemView = new CEconItemView();
-	econItemView->m_iItemDefinitionIndex() = 500;
-	econItemView->m_iEntityQuality() = true;
+	econItemView->m_iItemDefinitionIndex() = 507;
+	econItemView->m_bInitialized() = true;
 
 	META_CONPRINTF( "--------------------CEconItemView---------------------\n");
 	META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView->m_iItemDefinitionIndex());
@@ -650,10 +650,11 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	META_CONPRINTF( "--------------------ENTITY----------------------------\n");
 	META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
 
-	new CTimer(10.0f, false, false, []() {
+	new CTimer(3.0f, false, false, [econItemView, pPlayerPawn]() {
         char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", nullptr, nullptr, nullptr, nullptr);
 	});
 	char buf[255] = { 0 };
 	sprintf(buf, "%s Timer started", CHAT_PREFIX);
