@@ -492,7 +492,19 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	if (args.Arg(11)) { argStickerDefIndex4 = atoi(args.Arg(11)); }
 	if (args.Arg(12)) { argStickerWear4 = atof(args.Arg(12)); }
 
-	if (argDefIndex == 0 || argPaintIndex == 0 || argPattern == 0 || argWear == 0) {
+	// if argWear is 0 or less, set it to 0.00000001, if its set to 1 or higher, set it to 0.99999999
+	if (argWear <= 0) { argWear = 0.00000001; }
+	if (argWear >= 1) { argWear = 0.99999999; }
+
+	char bufWear[255] = { 0 };
+	sprintf(bufWear, "%.8f", argWear);
+	argWear = atof(bufWear);
+
+	// if argPattern is 0 or less, set it to 1, if its set to 1001 or higher, set it to 1000
+	if (argPattern <= 0) { argPattern = 1; }
+	if (argPattern >= 1001) { argPattern = 1000; }
+
+	if (argDefIndex == 0 || argPaintIndex == 0) {
         char buf2[255] = { 0 };
 		sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
 		sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
