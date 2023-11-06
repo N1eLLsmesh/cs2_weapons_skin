@@ -365,6 +365,32 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	if (DEBUG_OUTPUT) { META_CONPRINTF("OnBasePlayerWeaponSpawned\n"); }
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
 	{
+		
+		if (DEBUG_OUTPUT) {
+			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+			META_CONPRINTF("Entity Classname: %s\n", pBasePlayerWeapon->GetClassname());
+			META_CONPRINTF( "--------------------CEconEntity-----------------------\n");
+			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
+			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
+			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
+			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
+			META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
+			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackStatTrak: %d\n", pCEconEntityWeapon->m_nFallbackStatTrak());
+			META_CONPRINTF( "--------------------CEconItemView---------------------\n");
+			META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+			META_CONPRINTF("pCEconEntityWeapon->m_iEntityQuality: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityQuality());
+			META_CONPRINTF("pCEconEntityWeapon->m_iEntityLevel: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityLevel());
+			META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
+			META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
+			META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
+			META_CONPRINTF("pCEconEntityWeapon->m_iAccountID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID());
+			META_CONPRINTF("pCEconEntityWeapon->m_iInventoryPosition: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition());
+			META_CONPRINTF("pCEconEntityWeapon->m_bInitialized: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_bInitialized());
+			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+		}
+
+		
+		
 		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
 		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
 		if(!steamid) {
