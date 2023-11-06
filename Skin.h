@@ -43,6 +43,11 @@ class CRoundPreStartEvent : public IGameEventListener2
 	void FireGameEvent(IGameEvent* event) override;
 };
 
+class CPlayerChatEvent : public IGameEventListener2
+{
+	void FireGameEvent(IGameEvent* event) override;
+};
+
 class CEntityListener : public IEntityListener
 {
 	void OnEntitySpawned(CEntityInstance* pEntity) override;

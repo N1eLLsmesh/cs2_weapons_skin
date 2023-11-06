@@ -340,6 +340,11 @@ void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 	}
 }
 
+void CPlayerChatEvent::FireGameEvent(IGameEvent* event)
+{
+	META_CONPRINTF("CPlayerChatEvent\n");
+}
+
 void CEntityListener::OnEntityParentChanged(CEntityInstance *pEntity, CEntityInstance *pNewParent) {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
