@@ -586,6 +586,18 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 }
 
 CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
+    if (context.GetPlayerSlot() == -1) {
+		return;
+	}
+
+    CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
+    CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
+    if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
+		return;
+	}
+
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", 507, nullptr, nullptr, nullptr);
+	
 	new CTimer(10.0f, false, false, []() {
         char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
