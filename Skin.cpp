@@ -399,6 +399,17 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			// print the count (Count()) of all m_AttributeList().m_Attributes() in the console
 			META_CONPRINTF("m_AttributeList().m_Attributes().Count(): %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count());
 
+			// if there is something in the m_Attributes (Count < 0), loop through it and remove all attributes
+			if (pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count() > 0) {
+				META_CONPRINTF("m_AttributeList().m_Attributes().Count() > 0\nRemoving all attributes\n");
+				for (int i = 0; i < pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count(); i++) {
+					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Remove(i);
+				}
+			}
+
+
+
+
 			if (sticker_parm->second.stickerDefIndex1 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113 + 1 * 4, sticker_parm->second.stickerDefIndex1);
 				if (sticker_parm->second.stickerWear1 != 0) {
