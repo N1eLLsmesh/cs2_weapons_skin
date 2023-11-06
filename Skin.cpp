@@ -392,7 +392,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		if (DEBUG_OUTPUT) { META_CONPRINTF("Before Stickers\n"); }
 
-
 		auto sticker_parm = g_PlayerStickers.find(steamid);
 		if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
 			// Work in progress
@@ -624,6 +623,12 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
 		return;
 	}
+
+	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
+	CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
+
+	META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
+	META_CONPRINTF("Entity SubType: %s\n", pPlayerWeapon->GetSubType());
 
 	new CTimer(10.0f, false, false, []() {
         char buf[255] = { 0 };
