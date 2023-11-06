@@ -58,7 +58,6 @@ public:
 
 class CEconItemView
 {
-	virtual ~CEconItemView() = 0;
 public:
 	CEconItemView();
 	virtual int GetCustomPaintKitIndex() const = 0;
@@ -85,8 +84,6 @@ public:
 	uint32 GetAccountID() { return m_iAccountID(); }
 	uint64 GetItemID() { return m_iItemID(); }
 	int GetKillEaterValue();
-
-	
 
 private:
 	bool m_bKillEaterTypesCached;
