@@ -596,8 +596,10 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 		return;
 	}
 
-	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", nullptr, nullptr, nullptr, nullptr);
-	
+	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
+	CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
+	if (DEBUG_OUTPUT) { META_CONPRINTF("Count:%d\n", pPlayerWeapon->m_AttributeManager().m_Item().m_AttributeList()->m_Attributes.Count()); }
+
 	new CTimer(10.0f, false, false, []() {
         char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
