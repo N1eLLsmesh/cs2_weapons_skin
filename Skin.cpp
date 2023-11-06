@@ -10,6 +10,7 @@
 #include "sdk/CBasePlayerPawn.h"
 #include "sdk/CCSPlayerController.h"
 #include "sdk/CCSPlayer_ItemServices.h"
+#include "sdk/CCSPlayer_ItemServices.cpp"
 #include "sdk/CSmokeGrenadeProjectile.h"
 #include <map>
 #include <iostream>
@@ -106,21 +107,6 @@ int g_iItemIDHigh = 16384;
 class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
 SH_DECL_HOOK3_void(IServerGameDLL, GameFrame, SH_NOATTRIB, 0, bool, bool, bool);
-
-
-CEconItemView::CEconItemView( void )
-{
-	m_iItemDefinitionIndex = 0;
-	m_iEntityQuality = -1;
-	m_iEntityLevel = 0;
-	m_iItemID = 0;
-	m_iItemIDLow = 0;
-	m_iItemIDHigh = 0xFFFFFFFF;
-	m_iInventoryPosition = 0;
-	m_bInitialized = false;
-	m_iAccountID = 0;
-}
-
 
 CGlobalVars *GetGameGlobals()
 {
