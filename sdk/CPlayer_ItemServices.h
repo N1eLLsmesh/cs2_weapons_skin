@@ -60,31 +60,6 @@ class CEconItemView
 {
 public:
 	CEconItemView();
-	virtual int GetCustomPaintKitIndex() const = 0;
-	virtual int GetCustomPaintKitSeed() const = 0;
-	virtual float GetCustomPaintKitWear(float flWearDefault = 0.0f) const = 0;
-	virtual bool IsTradable() const = 0;
-	virtual bool IsMarketable() const = 0;
-	virtual bool IsCommodity() const = 0;
-	virtual bool IsUsableInCrafting() const = 0;
-	virtual bool IsHiddenFromDropList() const = 0;
-	virtual RTime32 GetExpirationDate() const = 0;
-	virtual uint32 GetAccountID() const = 0;
-	virtual uint64 GetItemID() const = 0;
-	virtual int32 GetQuality() const = 0;
-	virtual int32 GetRarity() const = 0;
-	virtual uint8 GetFlags() const = 0;
-	virtual uint16 GetQuantity() const = 0;
-	virtual uint32 GetItemLevel() const = 0;
-	virtual bool GetInUse() const = 0;
-	virtual const char* GetCustomName() const = 0;
-	virtual const char* GetCustomDesc() const = 0;
-	virtual int GetItemSetIndex() const = 0;
-
-	uint32 GetAccountID() { return m_iAccountID(); }
-	uint64 GetItemID() { return m_iItemID(); }
-	int GetKillEaterValue();
-
 private:
 	bool m_bKillEaterTypesCached;
 	void* m_vCachedKillEaterTypes[7];
