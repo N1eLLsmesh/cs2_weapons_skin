@@ -638,8 +638,8 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	econItemView->m_iEntityQuality() = 3;
 	econItemView->m_iEntityLevel() = 1;
 	econItemView->m_iItemID() = 16384;
-	econItemView->m_iItemIDLow() = 16384 & 0xFFFFFFFF;
-	econItemView->m_iItemIDHigh() = 16384 >> 32;
+	econItemView->m_iItemIDLow() = 16384;
+	econItemView->m_iItemIDHigh() = 0;
 	econItemView->m_iAccountID() = 9727743;
 	econItemView->m_iInventoryPosition() = 0;
 	econItemView->m_bInitialized() = true;
