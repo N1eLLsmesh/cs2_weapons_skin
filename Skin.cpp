@@ -314,9 +314,9 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		return;
 	}
 
-	CBasePlayerController* pPlayerControllerVictim = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+	CBasePlayerController* pPlayerControllerAttacker = static_cast<CBasePlayerController*>(event->GetPlayerController("attacker"));
 
-	if (pPlayerControllerVictim) {
+	if (pPlayerControllerAttacker && pPlayerController) {
 		// disable damage
 		return;
 	}
