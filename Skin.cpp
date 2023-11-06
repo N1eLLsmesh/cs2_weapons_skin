@@ -10,7 +10,7 @@
 #include "sdk/CBasePlayerPawn.h"
 #include "sdk/CCSPlayerController.h"
 #include "sdk/CCSPlayer_ItemServices.h"
-#include "sdk/CCSPlayer_ItemServices.cpp"
+#include "sdk/CPlayer_ItemServices.cpp"
 #include "sdk/CSmokeGrenadeProjectile.h"
 #include <map>
 #include <iostream>
