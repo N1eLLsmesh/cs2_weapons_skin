@@ -390,6 +390,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
 
+		if (DEBUG_OUTPUT) { META_CONPRINTF("Before Stickers\n"); }
+
 
 		auto sticker_parm = g_PlayerStickers.find(steamid);
 		if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
@@ -441,6 +443,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			sticker_parm->second.stickerWear3 = 0;
 			sticker_parm->second.stickerWear4 = 0;
 		}
+
+		if (DEBUG_OUTPUT) { META_CONPRINTF("After Stickers\n"); }
+
 		if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
 		{
 			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
