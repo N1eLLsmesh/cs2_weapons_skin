@@ -437,6 +437,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		if (DEBUG_OUTPUT) {
 			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
 			META_CONPRINTF("Entity Classname: %d\n", pBasePlayerWeapon->GetClassname());
+			META_CONPRINTF("pCEconEntityWeapon->m_iInventoryPosition: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition());
 			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
 			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
 			META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
