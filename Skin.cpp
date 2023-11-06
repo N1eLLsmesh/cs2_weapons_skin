@@ -400,19 +400,38 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(114 + 1 * 4, sticker_parm->second.stickerWear1);
 				}
 				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1); }
+				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear1); }
 			}
-			if (sticker_parm->second.stickerDefIndex2 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117, sticker_parm->second.stickerDefIndex2);
+
+			if (sticker_parm->second.stickerDefIndex1 != 0) {
+				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117 + 2 * 4, sticker_parm->second.stickerDefIndex2);
+				if (sticker_parm->second.stickerWear1 != 0) {
+					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(118 + 2 * 4, sticker_parm->second.stickerWear2);
+				}
 				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2); }
+				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear2: %f\n", sticker_parm->second.stickerWear2); }
 			}
-			if (sticker_parm->second.stickerDefIndex3 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(129, sticker_parm->second.stickerDefIndex3);
+
+			if (sticker_parm->second.stickerDefIndex1 != 0) {
+				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121 + 3 * 4, sticker_parm->second.stickerDefIndex3);
+				if (sticker_parm->second.stickerWear1 != 0) {
+					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(122 + 3 * 4, sticker_parm->second.stickerWear3);
+				}
 				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3); }
+				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear3: %f\n", sticker_parm->second.stickerWear3); }
 			}
-			if (sticker_parm->second.stickerDefIndex4 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(133, sticker_parm->second.stickerDefIndex4);
+
+			if (sticker_parm->second.stickerDefIndex1 != 0) {
+				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125 + 4 * 4, sticker_parm->second.stickerDefIndex4);
+				if (sticker_parm->second.stickerWear1 != 0) {
+					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(126 + 4 * 4, sticker_parm->second.stickerWear4);
+				}
 				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4); }
+				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear4: %f\n", sticker_parm->second.stickerWear4); }
 			}
+
+
+
 			sticker_parm->second.stickerDefIndex1 = 0;
 			sticker_parm->second.stickerDefIndex2 = 0;
 			sticker_parm->second.stickerDefIndex3 = 0;
