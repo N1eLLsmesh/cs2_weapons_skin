@@ -111,7 +111,7 @@ SH_DECL_HOOK3_void(IServerGameDLL, GameFrame, SH_NOATTRIB, 0, bool, bool, bool);
 CEconItemView::CEconItemView( void )
 {
 	m_iItemDefinitionIndex = 0;
-	m_iEntityQuality = (int)AE_UNDEFINED;
+	m_iEntityQuality = -1;
 	m_iEntityLevel = 0;
 	m_iItemID = 0;
 	m_iItemIDLow = 0;
