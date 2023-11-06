@@ -44,7 +44,7 @@ bool g_bHasTicked;
 
 #define CHAT_PREFIX	" \x05[Cobra]\x01"
 #define DEBUG_OUTPUT 1
-#define FEATURE_STICKERS 1
+#define FEATURE_STICKERS 0
 
 typedef struct SkinParm
 {
@@ -396,20 +396,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		auto sticker_parm = g_PlayerStickers.find(steamid);
 		if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
 			// Work in progress
-			// print the count (Count()) of all m_AttributeList().m_Attributes() in the console
-			META_CONPRINTF("m_AttributeList().m_Attributes().Count(): %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count());
-
-			// if there is something in the m_Attributes (Count < 0), loop through it and remove all attributes
-			if (pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count() > 0) {
-				META_CONPRINTF("m_AttributeList().m_Attributes().Count() > 0\nRemoving all attributes\n");
-				for (int i = 0; i < pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count(); i++) {
-					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Remove(i);
-				}
-			}
-
-
-
-
 			if (sticker_parm->second.stickerDefIndex1 != 0) {
 				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113 + 1 * 4, sticker_parm->second.stickerDefIndex1);
 				if (sticker_parm->second.stickerWear1 != 0) {
