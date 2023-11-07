@@ -118,6 +118,7 @@ jobs:
           ignore: |
               *.git
               */**/*git*
+              ./hl2sdk-cs2/*
           delete: 'true'
 
 
