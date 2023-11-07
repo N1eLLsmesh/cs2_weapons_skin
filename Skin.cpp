@@ -701,7 +701,6 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 		META_CONPRINTF("econItemView->m_iInventoryPosition: %d\n", econItemView->m_iInventoryPosition());
 		META_CONPRINTF("econItemView->m_bInitialized: %d\n", econItemView->m_bInitialized());
 		META_CONPRINTF( "--------------------ENTITY----------------------------\n");
-		META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
 
 
         char buf[255] = { 0 };
@@ -734,7 +733,6 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 		META_CONPRINTF("econItemView->m_iInventoryPosition: %d\n", econItemView->m_iInventoryPosition());
 		META_CONPRINTF("econItemView->m_bInitialized: %d\n", econItemView->m_bInitialized());
 		META_CONPRINTF( "--------------------ENTITY----------------------------\n");
-		META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
 
 		
 		char buf[255] = { 0 };
