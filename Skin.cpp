@@ -90,7 +90,7 @@ SubClassChange_t FnSubClassChange;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*, uint64_t) = nullptr;
-void (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, CEconItemView* pScriptItem, void* bForce, void* pOrigin) = nullptr;
+void (*FnGiveNamedItem)(void* itemService, const char* pchName, int iSubType, CEconItemView* pScriptItem, void* bForce, void* pOrigin) = nullptr;
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
@@ -691,7 +691,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
         char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", nullptr, econItemView, nullptr, nullptr);
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", 507, econItemView, nullptr, nullptr);
 	});
 	char buf[255] = { 0 };
 	sprintf(buf, "%s Timer started", CHAT_PREFIX);
