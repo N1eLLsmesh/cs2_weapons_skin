@@ -639,7 +639,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 	}
 
-	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), 0, nullptr, nullptr, nullptr);
 	if (DEBUG_OUTPUT) { META_CONPRINTF("called by %lld\n", steamid); }
 	sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
@@ -666,7 +666,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	econItemView->m_iItemID() = 16384;
 	econItemView->m_iItemIDLow() = 16384;
 	econItemView->m_iItemIDHigh() = 0;
-	econItemView->m_iAccountID() = 9727743;
+	econItemView->m_iAccountID() = 0;
 	econItemView->m_iInventoryPosition() = 0;
 	econItemView->m_bInitialized() = true;
 
