@@ -119,6 +119,7 @@ jobs:
               *.git
               */**/*git*
               ./hl2sdk-cs2/*
+              ./metamod-source/*
           delete: 'true'
 
 
