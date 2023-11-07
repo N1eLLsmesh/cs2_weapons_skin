@@ -495,6 +495,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		skin_parm->second.m_nFallbackPaintKit = -1;
 		skin_parm->second.m_nFallbackSeed = -1;
 		skin_parm->second.m_flFallbackWear = 0;
+
 		if (DEBUG_OUTPUT) {
 			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
 			META_CONPRINTF("Entity Classname: %s\n", pBasePlayerWeapon->GetClassname());
@@ -639,6 +640,14 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	}
 
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+
+
+	new CTimer(1.0f, false, false, [pPlayerPawn]() {
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife", nullptr, nullptr, nullptr, nullptr);
+	});
+
+
+
 	if (DEBUG_OUTPUT) { META_CONPRINTF("called by %lld\n", steamid); }
 	sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
