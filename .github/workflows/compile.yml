@@ -118,8 +118,8 @@ jobs:
           ignore: |
               *.git
               */**/*git*
-              ./hl2sdk-cs2/*
-              ./metamod-source/*
+              *hl2sdk-cs2*
+              *metamod-source*
           delete: 'true'
 
 
