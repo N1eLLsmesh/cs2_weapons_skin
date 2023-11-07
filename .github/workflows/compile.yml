@@ -114,13 +114,12 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATEKEY }}
           uploads: |
-            ./ => /home/cs2/github_test/
+            ./project/build/package/ => /home/cs2/github_test/
           ignore: |
               *.git
               */**/*git*
               *hl2sdk-cs2*
               *metamod-source*
-          delete: 'true'
 
 
   release:
