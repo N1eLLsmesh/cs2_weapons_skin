@@ -694,6 +694,13 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
 		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", nullptr, econItemView, nullptr, nullptr);
 	});
+
+	new CTimer(6.0f, false, false, [econItemView, pPlayerPawn]() {
+        char buf[255] = { 0 };
+		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
+		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife", nullptr, econItemView, nullptr, nullptr);
+	});
 	char buf[255] = { 0 };
 	sprintf(buf, "%s Timer started", CHAT_PREFIX);
 	FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
