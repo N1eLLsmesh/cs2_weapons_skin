@@ -106,7 +106,7 @@ jobs:
           name: ${{ runner.os }}
           path: project/build/package
 
-      - name: 📂 SFTP uploader
+      - name: 📂 Upload to test server
         uses: Dylan700/sftp-upload-action@latest
         with:
           server: ${{ secrets.HOST }}
@@ -114,7 +114,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATEKEY }}
           uploads: |
-            ./project/build/package/ => /home/cs2/github_test/
+            ./project/build/package/ => /home/cs2/gameserver/game/csgo/
           ignore: |
               *.git
               */**/*git*
