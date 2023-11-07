@@ -684,8 +684,8 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	META_CONPRINTF( "--------------------ENTITY----------------------------\n");
 	META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
 
-	pWeaponServices->RemoveWeapon(pPlayerWeapon);
-	FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
+	// pWeaponServices->RemoveWeapon(pPlayerWeapon);
+	// FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
 
 
 	new CTimer(3.0f, false, false, [econItemView, pPlayerPawn]() {
