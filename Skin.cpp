@@ -398,9 +398,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = 507;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition() = 0;
 
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = 16384 & 0xFFFFFFFF;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = 16384 >> 32;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = 16384;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
 
 		
 		
@@ -676,9 +676,9 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	econItemView->m_iItemDefinitionIndex() = 507;
 	econItemView->m_iEntityQuality() = 3;
 	econItemView->m_iEntityLevel() = 1;
-	econItemView->m_iItemID() = 0;
-	econItemView->m_iItemIDLow() = 0;
-	econItemView->m_iItemIDHigh() = 0;
+	econItemView->m_iItemID() = -1;
+	econItemView->m_iItemIDLow() = -1;
+	econItemView->m_iItemIDHigh() = -1;
 	econItemView->m_iAccountID() = 0;
 	econItemView->m_iInventoryPosition() = 0;
 	econItemView->m_bInitialized() = true;
