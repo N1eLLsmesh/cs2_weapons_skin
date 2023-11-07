@@ -115,6 +115,9 @@ jobs:
           key: ${{ secrets.PRIVATEKEY }}
           uploads: |
             ./ => /home/cs2/github_test/
+          ignore: |
+              *.git
+              */**/*git*
           delete: 'true'
 
 
