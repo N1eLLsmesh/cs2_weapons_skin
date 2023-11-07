@@ -366,7 +366,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	CSmokeGrenadeProjectile* pGrenadeProjectile = dynamic_cast<CSmokeGrenadeProjectile*>(pEntity);
 
 	if (pGrenadeProjectile) {
-		g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]() {
+		g_Skin.NextFrame([hGrenadeProjectile = CHandle<CSmokeGrenadeProjectile>(pGrenadeProjectile)]() {
 
 			CSmokeGrenadeProjectile* pGrenadeProjectile = hGrenadeProjectile;
 			if (!pGrenadeProjectile)
