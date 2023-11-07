@@ -399,8 +399,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition() = 0;
 
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
+		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
+		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
 
 		
 		
