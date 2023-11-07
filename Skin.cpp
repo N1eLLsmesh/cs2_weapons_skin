@@ -90,7 +90,7 @@ SubClassChange_t FnSubClassChange;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*, uint64_t) = nullptr;
-void (*FnGiveNamedItem)(void* itemService, const char* pchName, int iSubType, CEconItemView* pScriptItem, void* bForce, void* pOrigin) = nullptr;
+void (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, CEconItemView* pScriptItem, void* bForce, void* pOrigin) = nullptr;
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
@@ -233,7 +233,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	#else
 	CModule libserver(g_pSource2Server);
 	FnUTIL_ClientPrintAll = libserver.FindPatternSIMD("55 48 89 E5 41 57 49 89 D7 41 56 49 89 F6 41 55 41 89 FD").RCast< decltype(FnUTIL_ClientPrintAll) >();
-	FnGiveNamedItem = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 49 89 CE 41 55 49 89 F5 41 54 49 89 D4").RCast<decltype(FnGiveNamedItem)>();
+	FnGiveNamedItem = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 49 89 CE 41 55 49 89 F5 41 54 49 89 D4 53 48 89").RCast<decltype(FnGiveNamedItem)>();
 	FnEntityRemove = libserver.FindPatternSIMD("48 85 F6 74 0B 48 8B 76 10 E9 B2 FE FF FF").RCast<decltype(FnEntityRemove)>();
 	FnUTIL_ClientPrint = libserver.FindPatternSIMD("55 48 89 E5 41 57 49 89 CF 41 56 49 89 D6 41 55 41 89 F5 41 54 4C 8D A5 A0 FE FF FF").RCast<decltype(FnUTIL_ClientPrint)>();
 	FnSubClassChange = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC C8 00 00 00 83 BE 38 04 00 00 01 0F 8E 47 02").RCast<decltype(FnSubClassChange)>();
@@ -639,7 +639,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		}
 	}
 
-	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), 0, nullptr, nullptr, nullptr);
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 	if (DEBUG_OUTPUT) { META_CONPRINTF("called by %lld\n", steamid); }
 	sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
 	FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
@@ -691,7 +691,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
         char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", 1, econItemView, nullptr, nullptr);
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", nullptr, econItemView, nullptr, nullptr);
 	});
 	char buf[255] = { 0 };
 	sprintf(buf, "%s Timer started", CHAT_PREFIX);
