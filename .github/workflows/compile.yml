@@ -107,17 +107,15 @@ jobs:
           path: project/build/package
 
       - name: 📂 SFTP uploader
-        uses: wangyucode/sftp-upload-action@v2.0.2
+        uses: Dylan700/sftp-upload-action@latest
         with:
-          host: ${{ secrets.HOST }}
+          server: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
-          privateKey: ${{ secrets.PRIVATEKEY }}
-          compress: true
-          forceUpload: true
-          localDir: ${{ secrets.LOCALDIR }}
-          remoteDir: ${{ secrets.REMOTEDIR }}
-          exclude: ${{ secrets.EXCLUDE }}
+          passphrase: ${{ secrets.PRIVATEKEY }}
+          uploads: |
+            ${{ secrets.LOCALDIR }} => ${{ secrets.REMOTEDIR }}
+          delete: 'true'
 
 
   release:
