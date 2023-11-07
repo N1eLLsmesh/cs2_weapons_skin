@@ -390,6 +390,22 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
 		}
 
+		pCEconEntityWeapon->m_nFallbackPaintKit() = 420;
+		pCEconEntityWeapon->m_nFallbackSeed() = 1;
+		pCEconEntityWeapon->m_flFallbackWear() = 0.001;
+		pCEconEntityWeapon->m_nFallbackStatTrak() = -1;
+
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = 507;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition() = 0;
+
+		uint64_t newItemID = 16384;
+		uint32_t newItemIDLow = newItemID & 0xFFFFFFFF;
+		uint32_t newItemIDHigh = newItemID >> 32;
+
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
+
 		
 		
 		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
