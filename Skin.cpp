@@ -380,10 +380,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			if (!pPlayerController || pPlayerController->m_steamID() == 0)
 				return;
 
-			auto vipPlayer = g_VipPlayers.find(static_cast<uint32>(pPlayerController->m_steamID()));
-			if (vipPlayer == g_VipPlayers.end())
-				return;
-
 			Vector* pvSmokeColor = Vector(rand() % 255, rand() % 255, rand() % 255);
 			if (!pvSmokeColor)
 				return;
