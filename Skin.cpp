@@ -672,43 +672,72 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 	CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
-	CEconItemView* econItemView = new CEconItemView();
-	econItemView->m_iItemDefinitionIndex() = 507;
-	econItemView->m_iEntityQuality() = 3;
-	econItemView->m_iEntityLevel() = 1;
-	econItemView->m_iItemID() = -1;
-	econItemView->m_iItemIDLow() = -1;
-	econItemView->m_iItemIDHigh() = -1;
-	econItemView->m_iAccountID() = 0;
-	econItemView->m_iInventoryPosition() = 0;
-	econItemView->m_bInitialized() = true;
-
-	META_CONPRINTF( "--------------------CEconItemView---------------------\n");
-	META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView->m_iItemDefinitionIndex());
-	META_CONPRINTF("econItemView->m_iEntityQuality: %d\n", econItemView->m_iEntityQuality());
-	META_CONPRINTF("econItemView->m_iEntityLevel: %d\n", econItemView->m_iEntityLevel());
-	META_CONPRINTF("econItemView->m_iItemID: %d\n", econItemView->m_iItemID());
-	META_CONPRINTF("econItemView->m_iItemIDLow: %d\n", econItemView->m_iItemIDLow());
-	META_CONPRINTF("econItemView->m_iItemIDHigh: %d\n", econItemView->m_iItemIDHigh());
-	META_CONPRINTF("econItemView->m_iAccountID: %d\n", econItemView->m_iAccountID());
-	META_CONPRINTF("econItemView->m_iInventoryPosition: %d\n", econItemView->m_iInventoryPosition());
-	META_CONPRINTF("econItemView->m_bInitialized: %d\n", econItemView->m_bInitialized());
-	META_CONPRINTF( "--------------------ENTITY----------------------------\n");
-	META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
 
 	// pWeaponServices->RemoveWeapon(pPlayerWeapon);
 	// FnEntityRemove(g_pGameEntitySystem, pPlayerWeapon, nullptr, -1);
 
 
-	new CTimer(3.0f, false, false, [econItemView, pPlayerPawn]() {
+	new CTimer(3.0f, false, false, [pPlayerPawn]() {
+
+		CEconItemView* econItemView = new CEconItemView();
+		econItemView->m_iItemDefinitionIndex() = 507;
+		econItemView->m_iEntityQuality() = 3;
+		econItemView->m_iEntityLevel() = 1;
+		econItemView->m_iItemID() = -1;
+		econItemView->m_iItemIDLow() = -1;
+		econItemView->m_iItemIDHigh() = -1;
+		econItemView->m_iAccountID() = 0;
+		econItemView->m_iInventoryPosition() = 0;
+		econItemView->m_bInitialized() = true;
+
+		META_CONPRINTF( "--------------------CEconItemView---------------------\n");
+		META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView->m_iItemDefinitionIndex());
+		META_CONPRINTF("econItemView->m_iEntityQuality: %d\n", econItemView->m_iEntityQuality());
+		META_CONPRINTF("econItemView->m_iEntityLevel: %d\n", econItemView->m_iEntityLevel());
+		META_CONPRINTF("econItemView->m_iItemID: %d\n", econItemView->m_iItemID());
+		META_CONPRINTF("econItemView->m_iItemIDLow: %d\n", econItemView->m_iItemIDLow());
+		META_CONPRINTF("econItemView->m_iItemIDHigh: %d\n", econItemView->m_iItemIDHigh());
+		META_CONPRINTF("econItemView->m_iAccountID: %d\n", econItemView->m_iAccountID());
+		META_CONPRINTF("econItemView->m_iInventoryPosition: %d\n", econItemView->m_iInventoryPosition());
+		META_CONPRINTF("econItemView->m_bInitialized: %d\n", econItemView->m_bInitialized());
+		META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+		META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
+
+
         char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
 		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", nullptr, econItemView, nullptr, nullptr);
 	});
 
-	new CTimer(6.0f, false, false, [econItemView, pPlayerPawn]() {
-        char buf[255] = { 0 };
+	new CTimer(6.0f, false, false, [pPlayerPawn]() {
+        
+		CEconItemView* econItemView = new CEconItemView();
+		econItemView->m_iItemDefinitionIndex() = 507;
+		econItemView->m_iEntityQuality() = 3;
+		econItemView->m_iEntityLevel() = 1;
+		econItemView->m_iItemID() = -1;
+		econItemView->m_iItemIDLow() = -1;
+		econItemView->m_iItemIDHigh() = -1;
+		econItemView->m_iAccountID() = 0;
+		econItemView->m_iInventoryPosition() = 0;
+		econItemView->m_bInitialized() = true;
+
+		META_CONPRINTF( "--------------------CEconItemView---------------------\n");
+		META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView->m_iItemDefinitionIndex());
+		META_CONPRINTF("econItemView->m_iEntityQuality: %d\n", econItemView->m_iEntityQuality());
+		META_CONPRINTF("econItemView->m_iEntityLevel: %d\n", econItemView->m_iEntityLevel());
+		META_CONPRINTF("econItemView->m_iItemID: %d\n", econItemView->m_iItemID());
+		META_CONPRINTF("econItemView->m_iItemIDLow: %d\n", econItemView->m_iItemIDLow());
+		META_CONPRINTF("econItemView->m_iItemIDHigh: %d\n", econItemView->m_iItemIDHigh());
+		META_CONPRINTF("econItemView->m_iAccountID: %d\n", econItemView->m_iAccountID());
+		META_CONPRINTF("econItemView->m_iInventoryPosition: %d\n", econItemView->m_iInventoryPosition());
+		META_CONPRINTF("econItemView->m_bInitialized: %d\n", econItemView->m_bInitialized());
+		META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+		META_CONPRINTF("Entity Classname: %s\n", pPlayerWeapon->GetClassname());
+
+		
+		char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
 		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife", nullptr, econItemView, nullptr, nullptr);
