@@ -381,8 +381,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				return;
 
 			Vector pvSmokeColor = Vector(rand() % 255, rand() % 255, rand() % 255);
-			if (!pvSmokeColor)
-				return;
 
 			pGrenadeProjectile->m_vSmokeColor() = pvSmokeColor;
 		});
