@@ -666,8 +666,8 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	new CTimer(3.0f, false, false, [pPlayerPawn]() {
 
 		CEconItemView* econItemView = new CEconItemView();
-		econItemView->m_iItemDefinitionIndex() = 507;
-		econItemView->m_bInitialized() = true;
+		econItemView.m_iItemDefinitionIndex = 507;
+		econItemView.m_bInitialized = true;
 
 		META_CONPRINTF( "--------------------CEconItemView---------------------\n");
 		META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView->m_iItemDefinitionIndex());
@@ -685,14 +685,14 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
         char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knifegg", nullptr, econItemView, nullptr, nullptr);
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife", nullptr, econItemView, nullptr, nullptr);
 	});
 
 	new CTimer(6.0f, false, false, [pPlayerPawn]() {
         
 		CEconItemView* econItemView = new CEconItemView();
-		econItemView->m_iItemDefinitionIndex() = 500;
-		econItemView->m_bInitialized() = true;
+		econItemView.m_iItemDefinitionIndex = 500;
+		econItemView.m_bInitialized = true;
 
 		META_CONPRINTF( "--------------------CEconItemView---------------------\n");
 		META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView->m_iItemDefinitionIndex());
@@ -710,7 +710,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 		char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knifegg", nullptr, econItemView, nullptr, nullptr);
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife", nullptr, econItemView, nullptr, nullptr);
 	});
 	char buf[255] = { 0 };
 	sprintf(buf, "%s Timer started", CHAT_PREFIX);
