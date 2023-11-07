@@ -68,8 +68,8 @@ private:
 	// CUtlVector<stickerMaterialReference_t> m_pStickerMaterials;
 
 public:
-	void SetItemDefinitionIndex(uint16_t iIndex) { m_iItemDefinitionIndex = iIndex; }
-	void SetInitialized(bool bInitialized) { m_bInitialized = bInitialized; }
+	void SetItemDefinitionIndex(uint16_t iIndex) { m_iItemDefinitionIndex() = iIndex; }
+	void SetInitialized(bool bInitialized) { m_bInitialized() = bInitialized; }
 	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityQuality);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityLevel);
