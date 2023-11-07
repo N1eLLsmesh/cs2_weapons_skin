@@ -666,8 +666,8 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	new CTimer(3.0f, false, false, [pPlayerPawn]() {
 
 		CEconItemView* econItemView = new CEconItemView();
-		econItemView.SetItemDefinitionIndex(507);
-		econItemView.SetInitialized(true);
+		econItemView->SetItemDefinitionIndex(507);
+		econItemView->SetInitialized(true);
 
 		META_CONPRINTF( "--------------------CEconItemView---------------------\n");
 		META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView->m_iItemDefinitionIndex());
@@ -691,8 +691,8 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	new CTimer(6.0f, false, false, [pPlayerPawn]() {
         
 		CEconItemView* econItemView = new CEconItemView();
-		econItemView.SetItemDefinitionIndex(500);
-		econItemView.SetInitialized(true);
+		econItemView->SetItemDefinitionIndex(500);
+		econItemView->SetInitialized(true);
 
 		META_CONPRINTF( "--------------------CEconItemView---------------------\n");
 		META_CONPRINTF("econItemView->m_iItemDefinitionIndex: %d\n", econItemView->m_iItemDefinitionIndex());
