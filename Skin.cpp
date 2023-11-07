@@ -367,9 +367,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	if (DEBUG_OUTPUT) { META_CONPRINTF("OnBasePlayerWeaponSpawned\n"); }
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
 	{
-		
 		if (DEBUG_OUTPUT) {
-			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+			META_CONPRINTF( "----------------Spawned ENTITY------------------------\n");
 			META_CONPRINTF("Entity Classname: %s\n", pBasePlayerWeapon->GetClassname());
 			META_CONPRINTF( "--------------------CEconEntity-----------------------\n");
 			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
@@ -390,20 +389,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			META_CONPRINTF("pCEconEntityWeapon->m_bInitialized: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_bInitialized());
 			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
 		}
-
-		pCEconEntityWeapon->m_nFallbackPaintKit() = 420;
-		pCEconEntityWeapon->m_nFallbackSeed() = 1;
-		pCEconEntityWeapon->m_flFallbackWear() = 0.001;
-		pCEconEntityWeapon->m_nFallbackStatTrak() = -1;
-
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = 507;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition() = 0;
-
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = -1;
-		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
-		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = -1;
-
-		
 		
 		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
 		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
@@ -700,7 +685,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
         char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife_karambit", nullptr, econItemView, nullptr, nullptr);
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knifegg", nullptr, econItemView, nullptr, nullptr);
 	});
 
 	new CTimer(6.0f, false, false, [pPlayerPawn]() {
@@ -725,7 +710,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 		char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_bayonet", nullptr, econItemView, nullptr, nullptr);
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knifegg", nullptr, econItemView, nullptr, nullptr);
 	});
 	char buf[255] = { 0 };
 	sprintf(buf, "%s Timer started", CHAT_PREFIX);
