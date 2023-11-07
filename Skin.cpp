@@ -363,163 +363,193 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 {
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
-	if(!pBasePlayerWeapon) return;
-	if (DEBUG_OUTPUT) { META_CONPRINTF("OnBasePlayerWeaponSpawned\n"); }
-	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
-	{
-		if (DEBUG_OUTPUT) {
-			META_CONPRINTF( "----------------Spawned ENTITY------------------------\n");
-			META_CONPRINTF("Entity Classname: %s\n", pBasePlayerWeapon->GetClassname());
-			META_CONPRINTF( "--------------------CEconEntity-----------------------\n");
-			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
-			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
-			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
-			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
-			META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
-			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackStatTrak: %d\n", pCEconEntityWeapon->m_nFallbackStatTrak());
-			META_CONPRINTF( "--------------------CEconItemView---------------------\n");
-			META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-			META_CONPRINTF("pCEconEntityWeapon->m_iEntityQuality: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityQuality());
-			META_CONPRINTF("pCEconEntityWeapon->m_iEntityLevel: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityLevel());
-			META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
-			META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
-			META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
-			META_CONPRINTF("pCEconEntityWeapon->m_iAccountID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID());
-			META_CONPRINTF("pCEconEntityWeapon->m_iInventoryPosition: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition());
-			META_CONPRINTF("pCEconEntityWeapon->m_bInitialized: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_bInitialized());
-			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
-		}
-		
-		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
-		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-		if(!steamid) {
-			return;
-		}
+	CSmokeGrenadeProjectile* pGrenadeProjectile = dynamic_cast<CSmokeGrenadeProjectile*>(pEntity);
 
-		auto skin_parm = g_PlayerSkins.find(steamid);
-		if(skin_parm == g_PlayerSkins.end()) {
-			return;
-		}
+	if (pGrenadeProjectile) {
+		g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]() {
 
-		if(skin_parm->second.m_iItemDefinitionIndex == -1 || skin_parm->second.m_nFallbackPaintKit == -1 || skin_parm->second.m_nFallbackSeed == -1 || skin_parm->second.m_flFallbackWear == -1) {
-			return;
-		}
+			CSmokeGrenadeProjectile* pGrenadeProjectile = hGrenadeProjectile;
+			if (!pGrenadeProjectile)
+				return;
 
-		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
-		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
-		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-		pCEconEntityWeapon->m_nFallbackStatTrak() = -1;
+			CCSPlayerPawn* pPlayerPawn = pGrenadeProjectile->m_hThrower();
+			if (!pPlayerPawn)
+				return;
 
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition() = 0;
+			CBasePlayerController* pPlayerController = pPlayerPawn->m_hController();
+			if (!pPlayerController || pPlayerController->m_steamID() == 0)
+				return;
 
-		uint64_t newItemID = 16384;
-		uint32_t newItemIDLow = newItemID & 0xFFFFFFFF;
-		uint32_t newItemIDHigh = newItemID >> 32;
+			auto vipPlayer = g_VipPlayers.find(static_cast<uint32>(pPlayerController->m_steamID()));
+			if (vipPlayer == g_VipPlayers.end())
+				return;
 
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
+			Vector* pvSmokeColor = Vector(rand() % 255, rand() % 255, rand() % 255);
+			if (!pvSmokeColor)
+				return;
 
-		if (DEBUG_OUTPUT) { META_CONPRINTF("Before Stickers\n"); }
+			pGrenadeProjectile->m_vSmokeColor() = pvSmokeColor;
+		});
+	}
 
-		auto sticker_parm = g_PlayerStickers.find(steamid);
-		if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
-			// Work in progress
-			if (sticker_parm->second.stickerDefIndex1 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113 + 1 * 4, sticker_parm->second.stickerDefIndex1);
-				if (sticker_parm->second.stickerWear1 != 0) {
-					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(114 + 1 * 4, sticker_parm->second.stickerWear1);
-				}
-				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1); }
-				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear1); }
-			}
-
-			if (sticker_parm->second.stickerDefIndex2 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117 + 2 * 4, sticker_parm->second.stickerDefIndex2);
-				if (sticker_parm->second.stickerWear2 != 0) {
-					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(118 + 2 * 4, sticker_parm->second.stickerWear2);
-				}
-				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2); }
-				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear2: %f\n", sticker_parm->second.stickerWear2); }
-			}
-
-			if (sticker_parm->second.stickerDefIndex3 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121 + 3 * 4, sticker_parm->second.stickerDefIndex3);
-				if (sticker_parm->second.stickerWear3 != 0) {
-					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(122 + 3 * 4, sticker_parm->second.stickerWear3);
-				}
-				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3); }
-				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear3: %f\n", sticker_parm->second.stickerWear3); }
-			}
-
-			if (sticker_parm->second.stickerDefIndex4 != 0) {
-				pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125 + 4 * 4, sticker_parm->second.stickerDefIndex4);
-				if (sticker_parm->second.stickerWear4 != 0) {
-					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(126 + 4 * 4, sticker_parm->second.stickerWear4);
-				}
-				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4); }
-				if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear4: %f\n", sticker_parm->second.stickerWear4); }
-			}
-
-
-
-			sticker_parm->second.stickerDefIndex1 = 0;
-			sticker_parm->second.stickerDefIndex2 = 0;
-			sticker_parm->second.stickerDefIndex3 = 0;
-			sticker_parm->second.stickerDefIndex4 = 0;
-			sticker_parm->second.stickerWear1 = 0;
-			sticker_parm->second.stickerWear2 = 0;
-			sticker_parm->second.stickerWear3 = 0;
-			sticker_parm->second.stickerWear4 = 0;
-
-			META_CONPRINTF("m_AttributeList().m_Attributes().Count(): %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count());
-		}
-
-		if (DEBUG_OUTPUT) { META_CONPRINTF("After Stickers\n"); }
-
-		if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
+	if (pBasePlayerWeapon) {
+		if (DEBUG_OUTPUT) { META_CONPRINTF("OnBasePlayerWeaponSpawned\n"); }
+		g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
 		{
-			pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-		}
-		auto knife_name = g_KnivesMap.find(weaponId);
-		if(knife_name != g_KnivesMap.end()) {
-			char buf[64] = {0};
-			int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
-			sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
-			engine->ServerCommand(buf);
-			if (DEBUG_OUTPUT) { META_CONPRINTF( "i_subclass_change triggered\n"); }
-		}
+			if (DEBUG_OUTPUT) {
+				META_CONPRINTF( "----------------Spawned ENTITY------------------------\n");
+				META_CONPRINTF("Entity Classname: %s\n", pBasePlayerWeapon->GetClassname());
+				META_CONPRINTF( "--------------------CEconEntity-----------------------\n");
+				META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
+				META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
+				META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackStatTrak: %d\n", pCEconEntityWeapon->m_nFallbackStatTrak());
+				META_CONPRINTF( "--------------------CEconItemView---------------------\n");
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+				META_CONPRINTF("pCEconEntityWeapon->m_iEntityQuality: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityQuality());
+				META_CONPRINTF("pCEconEntityWeapon->m_iEntityLevel: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityLevel());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
+				META_CONPRINTF("pCEconEntityWeapon->m_iAccountID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID());
+				META_CONPRINTF("pCEconEntityWeapon->m_iInventoryPosition: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition());
+				META_CONPRINTF("pCEconEntityWeapon->m_bInitialized: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_bInitialized());
+				META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+			}
+			
+			int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
+			int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+			if(!steamid) {
+				return;
+			}
 
-		skin_parm->second.m_iItemDefinitionIndex = -1;
-		skin_parm->second.m_nFallbackPaintKit = -1;
-		skin_parm->second.m_nFallbackSeed = -1;
-		skin_parm->second.m_flFallbackWear = 0;
+			auto skin_parm = g_PlayerSkins.find(steamid);
+			if(skin_parm == g_PlayerSkins.end()) {
+				return;
+			}
 
-		if (DEBUG_OUTPUT) {
-			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
-			META_CONPRINTF("Entity Classname: %s\n", pBasePlayerWeapon->GetClassname());
-			META_CONPRINTF( "--------------------CEconEntity-----------------------\n");
-			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
-			META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
-			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
-			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
-			META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
-			META_CONPRINTF("pCEconEntityWeapon->m_nFallbackStatTrak: %d\n", pCEconEntityWeapon->m_nFallbackStatTrak());
-			META_CONPRINTF( "--------------------CEconItemView---------------------\n");
-			META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-			META_CONPRINTF("pCEconEntityWeapon->m_iEntityQuality: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityQuality());
-			META_CONPRINTF("pCEconEntityWeapon->m_iEntityLevel: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityLevel());
-			META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
-			META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
-			META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
-			META_CONPRINTF("pCEconEntityWeapon->m_iAccountID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID());
-			META_CONPRINTF("pCEconEntityWeapon->m_iInventoryPosition: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition());
-			META_CONPRINTF("pCEconEntityWeapon->m_bInitialized: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_bInitialized());
-			META_CONPRINTF("Player SteamID: %d\n", steamid);
-			META_CONPRINTF( "--------------------ENTITY----------------------------\n");
-		}
-	});
+			if(skin_parm->second.m_iItemDefinitionIndex == -1 || skin_parm->second.m_nFallbackPaintKit == -1 || skin_parm->second.m_nFallbackSeed == -1 || skin_parm->second.m_flFallbackWear == -1) {
+				return;
+			}
+
+			pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
+			pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
+			pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+			pCEconEntityWeapon->m_nFallbackStatTrak() = -1;
+
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition() = 0;
+
+			uint64_t newItemID = 16384;
+			uint32_t newItemIDLow = newItemID & 0xFFFFFFFF;
+			uint32_t newItemIDHigh = newItemID >> 32;
+
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
+
+			if (DEBUG_OUTPUT) { META_CONPRINTF("Before Stickers\n"); }
+
+			auto sticker_parm = g_PlayerStickers.find(steamid);
+			if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
+				// Work in progress
+				if (sticker_parm->second.stickerDefIndex1 != 0) {
+					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113 + 1 * 4, sticker_parm->second.stickerDefIndex1);
+					if (sticker_parm->second.stickerWear1 != 0) {
+						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(114 + 1 * 4, sticker_parm->second.stickerWear1);
+					}
+					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1); }
+					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear1); }
+				}
+
+				if (sticker_parm->second.stickerDefIndex2 != 0) {
+					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117 + 2 * 4, sticker_parm->second.stickerDefIndex2);
+					if (sticker_parm->second.stickerWear2 != 0) {
+						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(118 + 2 * 4, sticker_parm->second.stickerWear2);
+					}
+					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2); }
+					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear2: %f\n", sticker_parm->second.stickerWear2); }
+				}
+
+				if (sticker_parm->second.stickerDefIndex3 != 0) {
+					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121 + 3 * 4, sticker_parm->second.stickerDefIndex3);
+					if (sticker_parm->second.stickerWear3 != 0) {
+						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(122 + 3 * 4, sticker_parm->second.stickerWear3);
+					}
+					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3); }
+					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear3: %f\n", sticker_parm->second.stickerWear3); }
+				}
+
+				if (sticker_parm->second.stickerDefIndex4 != 0) {
+					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125 + 4 * 4, sticker_parm->second.stickerDefIndex4);
+					if (sticker_parm->second.stickerWear4 != 0) {
+						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(126 + 4 * 4, sticker_parm->second.stickerWear4);
+					}
+					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4); }
+					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear4: %f\n", sticker_parm->second.stickerWear4); }
+				}
+
+
+
+				sticker_parm->second.stickerDefIndex1 = 0;
+				sticker_parm->second.stickerDefIndex2 = 0;
+				sticker_parm->second.stickerDefIndex3 = 0;
+				sticker_parm->second.stickerDefIndex4 = 0;
+				sticker_parm->second.stickerWear1 = 0;
+				sticker_parm->second.stickerWear2 = 0;
+				sticker_parm->second.stickerWear3 = 0;
+				sticker_parm->second.stickerWear4 = 0;
+
+				META_CONPRINTF("m_AttributeList().m_Attributes().Count(): %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count());
+			}
+
+			if (DEBUG_OUTPUT) { META_CONPRINTF("After Stickers\n"); }
+
+			if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
+			{
+				pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+			}
+			auto knife_name = g_KnivesMap.find(weaponId);
+			if(knife_name != g_KnivesMap.end()) {
+				char buf[64] = {0};
+				int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
+				sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
+				engine->ServerCommand(buf);
+				if (DEBUG_OUTPUT) { META_CONPRINTF( "i_subclass_change triggered\n"); }
+			}
+
+			skin_parm->second.m_iItemDefinitionIndex = -1;
+			skin_parm->second.m_nFallbackPaintKit = -1;
+			skin_parm->second.m_nFallbackSeed = -1;
+			skin_parm->second.m_flFallbackWear = 0;
+
+			if (DEBUG_OUTPUT) {
+				META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+				META_CONPRINTF("Entity Classname: %s\n", pBasePlayerWeapon->GetClassname());
+				META_CONPRINTF( "--------------------CEconEntity-----------------------\n");
+				META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidLow: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidLow());
+				META_CONPRINTF("pCEconEntityWeapon->m_OriginalOwnerXuidHigh: %d\n", pCEconEntityWeapon->m_OriginalOwnerXuidHigh());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackPaintKit: %d\n", pCEconEntityWeapon->m_nFallbackPaintKit());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackSeed: %d\n", pCEconEntityWeapon->m_nFallbackSeed());
+				META_CONPRINTF("pCEconEntityWeapon->m_flFallbackWear: %f\n", pCEconEntityWeapon->m_flFallbackWear());
+				META_CONPRINTF("pCEconEntityWeapon->m_nFallbackStatTrak: %d\n", pCEconEntityWeapon->m_nFallbackStatTrak());
+				META_CONPRINTF( "--------------------CEconItemView---------------------\n");
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemDefinitionIndex: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+				META_CONPRINTF("pCEconEntityWeapon->m_iEntityQuality: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityQuality());
+				META_CONPRINTF("pCEconEntityWeapon->m_iEntityLevel: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iEntityLevel());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDLow: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
+				META_CONPRINTF("pCEconEntityWeapon->m_iItemIDHigh: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh());
+				META_CONPRINTF("pCEconEntityWeapon->m_iAccountID: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID());
+				META_CONPRINTF("pCEconEntityWeapon->m_iInventoryPosition: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iInventoryPosition());
+				META_CONPRINTF("pCEconEntityWeapon->m_bInitialized: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_bInitialized());
+				META_CONPRINTF("Player SteamID: %d\n", steamid);
+				META_CONPRINTF( "--------------------ENTITY----------------------------\n");
+			}
+		});
+	}
 }
 
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
