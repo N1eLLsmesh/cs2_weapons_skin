@@ -380,7 +380,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			if (!pPlayerController || pPlayerController->m_steamID() == 0)
 				return;
 
-			Vector* pvSmokeColor = Vector(rand() % 255, rand() % 255, rand() % 255);
+			Vector pvSmokeColor = Vector(rand() % 255, rand() % 255, rand() % 255);
 			if (!pvSmokeColor)
 				return;
 
