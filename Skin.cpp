@@ -90,7 +90,7 @@ SubClassChange_t FnSubClassChange;
 
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*, uint64_t) = nullptr;
-void (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType = nullptr, CEconItemView* pScriptItem, void* bForce = nullptr, void* pOrigin = nullptr) = nullptr;
+void (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, CEconItemView* pScriptItem, void* bForce = nullptr, void* pOrigin) = nullptr;
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
@@ -682,13 +682,6 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 
 		CEconItemView* econItemView = new CEconItemView();
 		econItemView->m_iItemDefinitionIndex() = 507;
-		econItemView->m_iEntityQuality() = 3;
-		econItemView->m_iEntityLevel() = 1;
-		econItemView->m_iItemID() = -1;
-		econItemView->m_iItemIDLow() = -1;
-		econItemView->m_iItemIDHigh() = -1;
-		econItemView->m_iAccountID() = 0;
-		econItemView->m_iInventoryPosition() = 0;
 		econItemView->m_bInitialized() = true;
 
 		META_CONPRINTF( "--------------------CEconItemView---------------------\n");
@@ -713,14 +706,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	new CTimer(6.0f, false, false, [pPlayerPawn]() {
         
 		CEconItemView* econItemView = new CEconItemView();
-		econItemView->m_iItemDefinitionIndex() = 507;
-		econItemView->m_iEntityQuality() = 3;
-		econItemView->m_iEntityLevel() = 1;
-		econItemView->m_iItemID() = -1;
-		econItemView->m_iItemIDLow() = -1;
-		econItemView->m_iItemIDHigh() = -1;
-		econItemView->m_iAccountID() = 0;
-		econItemView->m_iInventoryPosition() = 0;
+		econItemView->m_iItemDefinitionIndex() = 500;
 		econItemView->m_bInitialized() = true;
 
 		META_CONPRINTF( "--------------------CEconItemView---------------------\n");
@@ -739,7 +725,7 @@ CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 		char buf[255] = { 0 };
 		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_knife", nullptr, econItemView, nullptr, nullptr);
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), "weapon_bayonet", nullptr, econItemView, nullptr, nullptr);
 	});
 	char buf[255] = { 0 };
 	sprintf(buf, "%s Timer started", CHAT_PREFIX);
