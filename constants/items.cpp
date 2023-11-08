@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 namespace Constants {
     std::map<int, std::string> g_WeaponsMap;
     std::map<int, std::string> g_KnivesMap;
