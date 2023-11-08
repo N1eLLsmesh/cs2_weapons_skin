@@ -1,10 +1,7 @@
-#include <stdio.h>
+#include <string>
 
 namespace Constants {
-    std::map<int, std::string> g_WeaponsMap;
-    std::map<int, std::string> g_KnivesMap;
-    std::map<int, int> g_ItemToSlotMap;
-    g_WeaponsMap = {
+    std::map<int, std::string> g_WeaponsMap = {
         // ItemDefinitionIndex => Weapon Classname
         {1,  "weapon_deagle"}, 
         {2,  "weapon_elite"}, 
@@ -42,7 +39,7 @@ namespace Constants {
         {64, "weapon_revolver"} 
     };
 
-    g_KnivesMap = { 
+    std::map<int, std::string> g_KnivesMap = { 
         // ItemDefinitionIndex => Knife Classname
         {42,  "weapon_knife"}, 
         {59,  "weapon_knife"}, 
@@ -68,7 +65,7 @@ namespace Constants {
         {526, "weapon_knife_kukri"} 
     };
 
-    g_ItemToSlotMap = { 
+    std::map<int, int> g_ItemToSlotMap = { 
         // ItemDefinitionIndex => Slot
         {42, 0}, 
         {59, 0},
