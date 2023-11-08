@@ -98,7 +98,7 @@ void (*FnGiveNamedItem)(void* itemService, const char* pchName, void* iSubType, 
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
-void (*FnStateChanged)(void *networkTransmitComponent, CEntityInstance *ent, int64 offset, int16 a4, int16 a5) = nullptr;
+void (*FnStateChanged)(void* networkTransmitComponent, CEntityInstance* ent, int64 offset, int16 a4, int16 a5) = nullptr;
 #endif
 
 std::map<uint64_t, SkinParm> g_PlayerSkins;
@@ -542,7 +542,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			}
 
 			// void *networkTransmitComponent, CEntityInstance *ent, int64 offset, int16 a4, int16 a5
-			// FnStateChanged(static_cast<SC_CBaseEntity*>(pEntity)->m_NetworkTransmitComponent(), pEntity, 1, -1, -1);
+			FnStateChanged(static_cast<Z_CBaseEntity*>(pEntity)->m_NetworkTransmitComponent(), static_cast<Z_CBaseEntity*>(pEntity), 1, -1, -1);
 		});
 	}
 }
