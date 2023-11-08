@@ -1,5 +1,7 @@
 namespace Constants {
-
+    std::map<int, std::string> g_WeaponsMap;
+    std::map<int, std::string> g_KnivesMap;
+    std::map<int, int> g_ItemToSlotMap;
     g_WeaponsMap = {
         // ItemDefinitionIndex => Weapon Classname
         {1,  "weapon_deagle"}, 

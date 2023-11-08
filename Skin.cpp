@@ -101,9 +101,6 @@ void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) =
 void (*FnStateChanged)(void *networkTransmitComponent, CEntityInstance *ent, int64 offset, int16 a4, int16 a5) = nullptr;
 #endif
 
-std::map<int, std::string> g_WeaponsMap;
-std::map<int, std::string> g_KnivesMap;
-std::map<int, int> g_ItemToSlotMap;
 std::map<uint64_t, SkinParm> g_PlayerSkins;
 std::map<uint64_t, StickerParm> g_PlayerStickers;
 std::map<uint64_t, int> g_PlayerMessages;
