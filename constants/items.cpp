@@ -1,4 +1,5 @@
 #include <string>
+#include <map>
 
 namespace Constants {
     std::map<int, std::string> g_WeaponsMap = {
