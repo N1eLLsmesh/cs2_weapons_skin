@@ -549,7 +549,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			}
 
 			// void *networkTransmitComponent, CEntityInstance *ent, int64 offset, int16 a4, int16 a5
-			FnStateChanged(pEntity->m_NetworkTransmitComponent(), pEntity, -1, -1, -1);
+			FnStateChanged(static_cast<SC_CBaseEntity*>(pEntity)->m_NetworkTransmitComponent(), pEntity, -1, -1, -1);
 		});
 	}
 }
