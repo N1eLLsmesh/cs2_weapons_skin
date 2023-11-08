@@ -503,8 +503,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()) {
 				pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 			}
-			auto knife_name = g_KnivesMap.find(weaponId);
-			if(knife_name != g_KnivesMap.end()) {
+			auto knife_name = Constants::g_KnivesMap.find(weaponId);
+			if(knife_name != Constants::g_KnivesMap.end()) {
 				char buf[64] = {0};
 				int index = static_cast<CEntityInstance*>(pBasePlayerWeapon)->m_pEntity->m_EHandle.GetEntryIndex();
 				sprintf(buf, "i_subclass_change %d %d", skin_parm->second.m_iItemDefinitionIndex, index);
@@ -606,17 +606,17 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
         return;
     }
 
-    auto weapon_name = g_WeaponsMap.find(argDefIndex);
+    auto weapon_name = Constants::g_WeaponsMap.find(argDefIndex);
 	bool isKnife = false;
 	int64_t steamid = pPlayerController->m_steamID();
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
-	if (weapon_name == g_WeaponsMap.end()) {
-		weapon_name = g_KnivesMap.find(argDefIndex);
+	if (weapon_name == Constants::g_WeaponsMap.end()) {
+		weapon_name = Constants::g_KnivesMap.find(argDefIndex);
 		isKnife = true;
 	}
 
-	if (weapon_name == g_KnivesMap.end()) {
+	if (weapon_name == Constants::g_KnivesMap.end()) {
 		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
@@ -638,8 +638,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-	auto weapon_slot_map = g_ItemToSlotMap.find(argDefIndex);
-	if (weapon_slot_map == g_ItemToSlotMap.end()) {
+	auto weapon_slot_map = Constants::g_ItemToSlotMap.find(argDefIndex);
+	if (weapon_slot_map == Constants::g_ItemToSlotMap.end()) {
 		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
@@ -653,8 +653,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		auto weapon = static_cast<CEconEntity*>(currentWeapon.Get());
 		if (!weapon)
 			continue;
-		auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-		if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
+		auto weapon_slot_map_my_weapon = Constants::g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		if (weapon_slot_map_my_weapon == Constants::g_ItemToSlotMap.end()) {
 			continue;
 		}
 		auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
