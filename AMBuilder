@@ -24,6 +24,7 @@ for sdk_name in MMSPlugin.sdks:
       'utils/module.cpp',
       'utils/memaddr.cpp',
       'utils/ctimer.cpp',
+      'constants/items.cpp',
       os.path.join('sdk', 'schemasystem.cpp')
     ]
 
