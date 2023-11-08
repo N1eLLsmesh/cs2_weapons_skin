@@ -394,7 +394,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 	if (pBasePlayerWeapon) {
 		if (DEBUG_OUTPUT) { META_CONPRINTF("OnBasePlayerWeaponSpawned\n"); }
-		g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
+		g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon, pEntity]()
 		{
 			if (DEBUG_OUTPUT) {
 				META_CONPRINTF( "----------------Spawned ENTITY------------------------\n");
@@ -507,8 +507,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 			if (DEBUG_OUTPUT) { META_CONPRINTF("After Stickers\n"); }
 
-			if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode())
-			{
+			if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()) {
 				pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
 			}
 			auto knife_name = g_KnivesMap.find(weaponId);
@@ -548,6 +547,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				META_CONPRINTF("Player SteamID: %d\n", steamid);
 				META_CONPRINTF( "--------------------ENTITY----------------------------\n");
 			}
+
+			// void *networkTransmitComponent, CEntityInstance *ent, int64 offset, int16 a4, int16 a5
+			FnStateChanged(pEntity->m_NetworkTransmitComponent(), pEntity, -1, -1, -1);
 		});
 	}
 }
