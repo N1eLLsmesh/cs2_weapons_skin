@@ -23,28 +23,69 @@ class CUtlVector_NativeSdk {
     char pad1[0x8];  // no idea
 };
 
+class CEconItemAttribute
+{
+private:
+	[[maybe_unused]] uint8_t __pad0000[0x30];
+public:
+	uint16_t m_iAttributeDefinitionIndex;
+private:
+	[[maybe_unused]] uint8_t __pad0032[0x2];
+public:
+	int m_flValue;
+	int m_flInitialValue;
+	int32_t m_nRefundableCurrency;
+	bool m_bSetBonus;
+	inline CEconItemAttribute(uint16_t iAttributeDefinitionIndex, int flValue)
+	{
+		m_iAttributeDefinitionIndex = iAttributeDefinitionIndex;
+		m_flValue = flValue;
+	}
+};
 
 class CAttributeList
 {
+private:
+	[[maybe_unused]] uint8_t __pad0000[0x8];
 public:
-	SCHEMA_FIELD(int64_t, CAttributeList, m_Attributes);
+	CUtlVector<CEconItemAttribute, CUtlMemory<CEconItemAttribute> > m_Attributes;
+	void* m_pManager;
+	inline void AddAttribute(int iIndex, int flValue)
+	{
+		m_Attributes.AddToTail(CEconItemAttribute(iIndex, flValue));
+	}
 };
 
 class CEconItemView
 {
 public:
+	CEconItemView();
+private:
+	bool m_bKillEaterTypesCached;
+	void* m_vCachedKillEaterTypes[7];
+	int m_nKillEaterValuesCacheFrame;
+	void* m_vCachedKillEaterValues[6];
+	// CUtlVector<stickerMaterialReference_t> m_pStickerMaterials;
+
+public:
+	void SetItemDefinitionIndex(uint16_t iIndex) { m_iItemDefinitionIndex() = iIndex; };
+	void SetInitialized(bool bInitialized) { m_bInitialized() = bInitialized; };
 	SCHEMA_FIELD(uint16_t, CEconItemView, m_iItemDefinitionIndex);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityQuality);
 	SCHEMA_FIELD(int32_t, CEconItemView, m_iEntityLevel);
 	SCHEMA_FIELD(uint64_t, CEconItemView, m_iItemID);
-	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDLow);
-	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDHigh);
+	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDLow); // uint32 ??
+	SCHEMA_FIELD(uint32_t, CEconItemView, m_iItemIDHigh); // uint32 ??
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iAccountID);
 	SCHEMA_FIELD(uint32_t, CEconItemView, m_iInventoryPosition);
 	SCHEMA_FIELD(bool, CEconItemView, m_bInitialized);
 	SCHEMA_FIELD(CAttributeList, CEconItemView, m_AttributeList);
+	SCHEMA_FIELD(CAttributeList, CEconItemView, m_NetworkedDynamicAttributes);
 	SCHEMA_FIELD(char, CEconItemView, m_szCustomName);
 	SCHEMA_FIELD(char, CEconItemView, m_szCustomNameOverride);
+    auto GetCustomPaintKitIndex() { 
+		return CALL_VIRTUAL(int, 2, this);
+	}
 };
 
 class CAttributeContainer
@@ -57,24 +98,14 @@ class CEconEntity : public CBaseFlex
 {
 public:
 	SCHEMA_FIELD(CAttributeContainer, CEconEntity, m_AttributeManager);
-	SCHEMA_FIELD(int32_t, CEconEntity, m_OriginalOwnerXuidLow);
-	SCHEMA_FIELD(int32_t, CEconEntity, m_OriginalOwnerXuidHigh);
+	SCHEMA_FIELD(uint32_t, CEconEntity, m_OriginalOwnerXuidLow);
+	SCHEMA_FIELD(uint32_t, CEconEntity, m_OriginalOwnerXuidHigh);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackPaintKit);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackSeed);
 	SCHEMA_FIELD(float, CEconEntity, m_flFallbackWear);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackStatTrak);
 	SCHEMA_FIELD(CHandle<CBaseEntity>, CEconEntity, m_hOldProvidee);
 	SCHEMA_FIELD(int32_t, CEconEntity, m_iOldOwnerClass);
-};
-
-class CEconItemAttribute
-{
-public:
-	SCHEMA_FIELD(uint16_t, CEconItemAttribute, m_iAttributeDefinitionIndex);
-	SCHEMA_FIELD(float, CEconItemAttribute, m_flValue);
-	SCHEMA_FIELD(float, CEconItemAttribute, m_flInitialValue);
-	SCHEMA_FIELD(int32_t, CEconItemAttribute, m_nRefundableCurrency);
-	SCHEMA_FIELD(bool, CEconItemAttribute, m_bSetBonus);
 };
 
 class CModelState
@@ -107,6 +138,12 @@ class CBasePlayerWeapon : public CEconEntity
 {
 public:
 	SCHEMA_FIELD(CBodyComponent*, CBaseEntity, m_CBodyComponent);
+	SCHEMA_FIELD(CAttributeContainer, CEconEntity, m_AttributeManager);
+	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackPaintKit);
+	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackSeed);
+	SCHEMA_FIELD(int32_t, CEconEntity, m_nFallbackStatTrak);
+	SCHEMA_FIELD(float, CEconEntity, m_flFallbackWear);
+	SCHEMA_FIELD(uint64_t, CEconEntity, m_OriginalOwnerXuidLow);
 	SCHEMA_FIELD(uint32_t, CBaseEntity, m_nSubclassID);
 	SCHEMA_FIELD(int32_t, CBaseEntity, m_iOldOwnerClass);
 };
@@ -127,4 +164,11 @@ class CPlayer_ItemServices : public CPlayerPawnComponent
 {
 public:
 	virtual ~CPlayer_ItemServices() = 0;
+};
+
+class CEconWearable : public CEconEntity
+{
+public:
+	SCHEMA_FIELD(int32_t, CEconWearable, m_nForceSkin);
+	SCHEMA_FIELD(bool, CEconWearable, m_bAlwaysAllow);
 };

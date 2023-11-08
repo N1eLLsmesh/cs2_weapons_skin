@@ -18,6 +18,12 @@ inline CEntityInstance* UTIL_FindEntityByClassname(CEntityInstance* pStart, cons
 	return nullptr;
 }
 
+class CNetworkTransmitComponent
+{
+public:
+	SCHEMA_FIELD(uint8_t, CNetworkTransmitComponent, m_nTransmitStateOwnedCounter);
+};
+
 class SC_CBaseEntity : public CBaseEntity
 {
 public:
@@ -26,4 +32,13 @@ public:
 	SCHEMA_FIELD(LifeState_t, CBaseEntity, m_lifeState);
 	SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
 	SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
+};
+
+class Z_CBaseEntity : public CBaseEntity {
+   public:
+    SCHEMA_FIELD(float, CBaseEntity, m_lastNetworkChange)
+    SCHEMA_FIELD(CNetworkTransmitComponent*, CBaseEntity, m_NetworkTransmitComponent)
+    SCHEMA_FIELD(int, CBaseEntity, m_iHealth)
+    SCHEMA_FIELD(int, CBaseEntity, m_iTeamNum)
+    SCHEMA_FIELD(Vector, CBaseEntity, m_vecBaseVelocity)
 };

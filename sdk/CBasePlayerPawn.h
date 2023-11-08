@@ -11,4 +11,5 @@ public:
 	SCHEMA_FIELD(CPlayer_WeaponServices*, CBasePlayerPawn, m_pWeaponServices);
 	SCHEMA_FIELD(CPlayer_ItemServices*, CBasePlayerPawn, m_pItemServices);
 	SCHEMA_FIELD(CHandle<CBasePlayerController>, CBasePlayerPawn, m_hController);
+	SCHEMA_FIELD(CUtlVector<CHandle< CEconWearable >>, CBaseCombatCharacter, m_hMyWearables);
 };
